@@ -10,58 +10,14 @@
 			$this->parsedown = $parsedown;
 		}
 		
-		public function paginator( $post_array, $add_to_base, $template, $reverse_sort_applied ){
+		public function paginator( $last_timestamp, $url_add, $paginator_template ){
 			$data = array(
                 "base_url"=>$GLOBALS['base_url'],
-                "add_to_base"=>$add_to_base
+                "add_to_base"=>$url_add,
+                "after_ts"=>$last_timestamp
 			);
-			
-			if( count($post_array) > $GLOBALS['amount_on_main_page'] ){
-				$data["next"] = true;
-				array_pop( $post_array );
-				$last_item = end($post_array);
-				$data["after_ts"] = $last_item["lastModified"]->sec;
-			}else{
-				$data["next"] = false;
-			}
-			
-			if( true ){
-				$data["previous"] = true;
-				$first_item = $post_array[0];
-				$data["before_ts"] = $first_item["lastModified"]->sec;
-			}else{
-				$data["previous"] = false;
-			}
-			//what class of sort icon is to decide how to display, cookie is set with JS in blog_actions.js
-			$data["sort_title"] = ( !$reverse_sort_applied )? "Sort Oldest To Newest" : "Sort Newest To Oldest";
-			$data["sort_class"] = ( !$reverse_sort_applied )? "" : "sorted";
-			
-			return TemplateBinder::bindTemplate( $template, $data );
+			return TemplateBinder::bindTemplate( $paginator_template, $data );
 		}
-		
-		/*public function paginator( $page_num, $amount_retrieved, $amount_per_page, $add_to_base, $template, $reverse_sort_applied ){
-			$data = array(
-                "base_url"=>$GLOBALS['base_url'],
-                "add_to_base"=>$add_to_base,
-                "current_page"=>$page_num
-			);
-			
-			if( $page_num > 1 ){
-			    $data["back_page"] = true; 
-                $data["last_page"] = $page_num-1;			    
-			}
-			
-			if( $amount_retrieved > $amount_per_page ){
-                $data["third_page"] = true;
-                $data["next_page"] = $page_num+1; 
-			}
-			
-			//what class of sort icon is to decide how to display, cookie is set with JS in blog_actions.js
-			$data["sort_title"] = ( !$reverse_sort_applied )? "Sort Oldest To Newest" : "Sort Newest To Oldest";
-			$data["sort_class"] = ( !$reverse_sort_applied )? "" : "sorted";
-			
-			return TemplateBinder::bindTemplate( $template, $data );
-		}*/			
 		
 		private function makeItem( $post_data_array ){
 			$element = "";
@@ -189,7 +145,7 @@
 			$categories = $GLOBALS['post_categories'];
 			$count = count($categories);
 			$str = "";			
-			$li_tmplt = '<li class="{{ added_class }}" ><a href="/{{ current_cat }}/1" data-blogaction="category-link" >{{ uc_cat }}</a></li>';
+			$li_tmplt = '<li class="{{ added_class }}" ><a href="/{{ current_cat }}/" >{{ uc_cat }}</a></li>';
 			for( $i = 0; $i < $count; $i++ ) {
 				$current_cat = $categories[ $i ];
 				$data = array(

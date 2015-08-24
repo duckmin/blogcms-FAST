@@ -1,3 +1,7 @@
+img[src='']{
+	/* when lazy loading make images expand so we have a scrollbar */	
+	min-height:300px;
+}
 
 header{
 	margin-bottom:1rem;
@@ -97,33 +101,6 @@ ul.paginator > li:nth-last-child(1){
 
 ul.paginator > li:nth-last-child(1):hover{
     cursor:pointer;
-}
-
-/* for a rotateable bg image */
-ul.paginator > li:nth-last-child(1):before{
-    content: "";
-    position: absolute;
-    width: 200%;
-    height: 200%;
-    top: -50%;
-    left: -50%;
-    z-index:1;
-    background-image: url("resources/time_forward.png");
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-
-/*hide sort on botom for better look */
-.main > ul:last-child > li:nth-last-child(1) {
-    display:none;   
-}
-
-ul.paginator > li:nth-last-child(1).sorted:before{
-    transform: rotate(180deg);
-}
-
-ul.paginator > li:nth-last-child(1) > a{
-    padding:0 1.2rem;
 }
 
 header > ul > li.current-cat, header > ul > li:hover {

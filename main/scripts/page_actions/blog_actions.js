@@ -48,35 +48,7 @@ var sort_control = {
 
 addEvent( window, "load", function(){
 	attributeActions( document.body, "data-blogaction", {
-		"sort":function(sort_button){
-			sort_button.addEvent( "click", function(){
-			    if( !sort_control.isSortActive() ){
-			       //cookie does not exist set cookie for page reload
-			      sort_control.activateSortOldestToNewest();
-			    }else{
-			       sort_control.disableSortOldestToNewest(); 
-			    }
-			    window.location.reload();
-			})
-		},
-		"category-link":function(cat_link){
-			cat_link.addEvent( "click", function(e){
-			    if( sort_control.isSortActive() ){
-    			    e.preventDefault();
-    			    sort_control.disableSortOldestToNewest(); 
-    			    window.location.href = this.href;
-			    }
-			})
-		},
-		"search-submit":function(search_form){
-			search_form.addEvent( "submit", function(e){
-                if( sort_control.isSortActive() ){
-    			    e.preventDefault();
-    			    sort_control.disableSortOldestToNewest(); 
-    			    this.submit();
-			    }
-			})
-		}
+		
 	});
 	
 	//take the data-ts (UTC) attribute of every artical and convert to local time

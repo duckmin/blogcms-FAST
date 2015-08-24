@@ -14,28 +14,32 @@
 		    return ( isset($_COOKIE["sort"]) && (int)$_COOKIE["sort"] === 1 )? true : false;   
 		}	
 		
-		public function getHomePagePostsByTime( $time, $cat, $after ){
+		public function getHomePagePostsByTime( $time, $cat ){
 			$str="";
-			$reverse_sort_applied = $this->sortOldestToNewest();
-			$posts_from_db = $this->mongo_getter->getHomePagePostsFromDbByCategoryAfterDate( $time, $cat, $reverse_sort_applied );
-			$url_add = $cat;
+			$posts_from_db = $this->mongo_getter->getHomePagePostsFromDbByCategoryAfterDate( $time, $cat );
 			$L = $posts_from_db->count(true);
-			$i = 0;
 			if( $L === 0 ){ 
 				//no results return false and we will send them to 404 (paginator logic should not allow this to happen)
 				return false;
 			}
-			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );		
 			$post_array = iterator_to_array($posts_from_db, false);
-			foreach( $post_array as $single ){
-				if( $i < $GLOBALS['amount_on_main_page'] ){				
-					$post_html = $this->post_views->makePostHtmlFromData( $single, $cat, $post_template ); //pass in cat because post can have multiple cats and we want to know which one we are looking at					$str.=$post_html;
-					$i++;
-				}
+			if( $L > $GLOBALS['amount_on_main_page'] ){
+				$next_page = true;
+				array_pop( $post_array );
+				$url_add = $cat;
+				$last_item = end($post_array);
+				$last_timestamp = $last_item["lastModified"]->sec;
+				$paginator_template = file_get_contents( $GLOBALS['template_dir']."/paginator.txt" );
+				$paginator = $this->post_views->paginator( $last_timestamp, $url_add, $paginator_template );
+			}else{
+				$next_page = true;
+				$paginator = "";
 			}
-			$paginator_template = file_get_contents( $GLOBALS['template_dir']."/paginator.txt" );
-			$paginator = $this->post_views->paginator( $post_array, $url_add, $paginator_template, $reverse_sort_applied );
-			return $paginator.$str;
+			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );		
+			foreach( $post_array as $single ){		
+				$post_html = $this->post_views->makePostHtmlFromData( $single, $cat, $post_template ); //pass in cat because post can have multiple cats and we want to know which one we are looking at				$str .= $post_html;
+			}
+			return $str.$paginator;
 		}	
 		
 		public function getHomePagePosts( $page_num, $cat ){

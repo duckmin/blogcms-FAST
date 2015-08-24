@@ -1,3 +1,6 @@
+#first select DB
+use blog #name of the DB defined in server/configs.php
 
 #run this command on created DB to use search
 db.posts.ensureIndex({"post_data.text":"text","title":"text","description":"text"})
+db.posts.ensureIndex({lastModified:1})

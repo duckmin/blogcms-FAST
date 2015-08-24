@@ -1,6 +1,3 @@
 <ul class="paginator">
-    ##next
     <li><a href="{{ base_url }}/{{ add_to_base }}/?after={{ after_ts }}">Next</a></li>
-    next##
-    <li class="{{ sort_class }}" title="{{ sort_title }}" data-blogaction="sort" ><a></a></li>
 </ul>

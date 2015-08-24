@@ -1,8 +1,7 @@
 <?php
 	//included in index.php which has configs.php included already
 	$base = $GLOBALS['base_url'];
-	$sort_add = ( isset($_COOKIE["sort"]) && (int)$_COOKIE["sort"] === 1 )? "**" : "*"; //add 2 * if reverse sorted or 1 * if not, so the correct page can be cached   
-	$url = $_SERVER["REQUEST_URI"].$sort_add;
+	$url = $_SERVER["REQUEST_URI"];
 	$cache = new CacheController( $GLOBALS['cache_dir'], $url );
 	
 	if( $cache->urlInCache() && !$cache->cacheMinutesOverLimit( $GLOBALS['max_page_cache_mins'] ) ){   
@@ -18,31 +17,17 @@
 	
 	//part-count defined in index.php    
 	$_GET['cat'] = ( $url_parts[0] !== "" )? $url_parts[0] : $GLOBALS['post_categories'][0]; //cat is first url part or the default cat	
-	$_GET['page'] = ( $part_count > 1 )? (int)$url_parts[ $part_count-1 ] : 1; //page is always last part of url or 1		
 	$cat = $_GET['cat'];		
-	$page = $_GET['page'];
-	if( !isset($_GET['before']) && !isset($_GET['after']) ){
-		//defaut look for posts after certain time
-		$time = time();
-		$after = true;
-	}else if( isset($_GET['after']) ){
-		//if after is set look for posts after date
-		$time = (int)$_GET["after"];
-		$after = true;
-	}else if(isset($_GET['before']) ){
-		$time = (int)$_GET["before"];
-		$after = false;
-	}
 	
-	echo var_dump($time);
-    try{
+	$time = ( isset($_GET['after']) )? $_GET['after'] : time();
+   try{
 	   $db = MongoConnection();
 		$db_getter = new MongoGetter( $db ); 
 		$parsedown = new Parsedown();				
     	$post_views = new PostViews( $parsedown );
-    	$post_views->lazy_load_imgs = false; //turn on image lazy loading, false to turn off	
+    	$post_views->lazy_load_imgs = true; //turn on image lazy loading, false to turn off	
     	$post_controller = new PostController( $db_getter, $post_views );
-		$mongo_results = $post_controller->getHomePagePostsByTime( $time, $cat, $after ); //false if no result set
+		$mongo_results = $post_controller->getHomePagePostsByTime( $time, $cat ); //false if no result set
 	}catch( MongoException $e ){
 		//echo $e->getMessage();
 		//Mongo error, go to 404 page		
@@ -52,8 +37,8 @@
 
 	if( $mongo_results ){
     	$template = file_get_contents( $GLOBALS['template_dir']."/base_page.txt" );
-    	$title = $cat." page ".$page." - ".$_SERVER['HTTP_HOST'];		
-    	$desc= $_SERVER['HTTP_HOST']." - browse ".$cat." page ".$page;
+    	$title = $cat." - ".$_SERVER['HTTP_HOST'];		
+    	$desc= $_SERVER['HTTP_HOST']." - browse ".$cat;
 		$scripts = "<script src='/scripts/page_actions/main_analytics.js'></script>";
         $scripts .=( $post_views->lazy_load_imgs )? "<script src='/scripts/page_actions/blog_scroll_actions.js'></script>" : "";
 		
