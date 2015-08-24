@@ -69,6 +69,6 @@ function goTo404(){
 
 //mongo connection string can be changed here
 function MongoConnection(){
-	return new MongoClient(/*"mongodb:///tmp/mongodb-27017.sock"*/);
+	return new MongoClient("mongodb:///tmp/mongodb-27017.sock");
 }
 ?>

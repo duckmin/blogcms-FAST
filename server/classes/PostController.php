@@ -12,7 +12,31 @@
 		
 		private function sortOldestToNewest(){
 		    return ( isset($_COOKIE["sort"]) && (int)$_COOKIE["sort"] === 1 )? true : false;   
-		}		
+		}	
+		
+		public function getHomePagePostsByTime( $time, $cat, $after ){
+			$str="";
+			$reverse_sort_applied = $this->sortOldestToNewest();
+			$posts_from_db = $this->mongo_getter->getHomePagePostsFromDbByCategoryAfterDate( $time, $cat, $reverse_sort_applied );
+			$url_add = $cat;
+			$L = $posts_from_db->count(true);
+			$i = 0;
+			if( $L === 0 ){ 
+				//no results return false and we will send them to 404 (paginator logic should not allow this to happen)
+				return false;
+			}
+			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );		
+			$post_array = iterator_to_array($posts_from_db, false);
+			foreach( $post_array as $single ){
+				if( $i < $GLOBALS['amount_on_main_page'] ){				
+					$post_html = $this->post_views->makePostHtmlFromData( $single, $cat, $post_template ); //pass in cat because post can have multiple cats and we want to know which one we are looking at					$str.=$post_html;
+					$i++;
+				}
+			}
+			$paginator_template = file_get_contents( $GLOBALS['template_dir']."/paginator.txt" );
+			$paginator = $this->post_views->paginator( $post_array, $url_add, $paginator_template, $reverse_sort_applied );
+			return $paginator.$str;
+		}	
 		
 		public function getHomePagePosts( $page_num, $cat ){
 			$str="";

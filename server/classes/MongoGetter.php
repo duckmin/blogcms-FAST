@@ -38,6 +38,17 @@
 			return $cursor;
 		}
 		
+		public function getHomePagePostsFromDbByCategoryAfterDate( $after, $cat, $reverse_sort ){		
+			$start_d = new MongoDate( $after );
+			$count = $GLOBALS['amount_on_main_page']+1;
+			$sort = ($reverse_sort)? 1 : -1;
+			$collection = $this->db->posts;	
+			$cursor = $collection->find( array( "category"=>$cat, "lastModified"=>array( '$lt'=>$start_d ) ) )
+			->limit($count)
+			->sort( array( 'lastModified' => $sort ) );
+			return $cursor;
+		}
+		
 		public function getHomePagePostsFromDbByCategoryAndSearch( $page_num, $cat, $search, $reverse_sort ){
 			$count = ( $page_num-1 )*$GLOBALS['amount_on_main_page'];
 			$skip = $GLOBALS['amount_on_main_page']+1;

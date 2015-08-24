@@ -6,7 +6,7 @@
 	
 	if( in_array( $url_parts[0], $GLOBALS['post_categories'] ) || $url_parts[0] === "" ){
 		//if the first sction of url is a category bring to blog.php where the paginated code is
-		$file = '/server/pages/blog.php';
+		$file = '/server/pages/date_blog.php';
 	}else{	
 		switch ( $GLOBALS['url_parts'][0] ) {
 			
