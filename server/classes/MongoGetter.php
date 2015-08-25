@@ -48,14 +48,25 @@
 			return $cursor;
 		}
 		
-		public function getHomePagePostsFromDbByCategoryAndSearch( $page_num, $cat, $search, $reverse_sort ){
+		public function getHomePagePostsFromDbByCategoryAndSearchAfterDate( $after, $cat, $search ){		
+			$start_d = new MongoDate( $after );
+			$count = $GLOBALS['amount_on_main_page']+1; //get one extra so we can tell if there is a next page
+			$collection = $this->db->posts;	
+			$q = array( "category"=>$cat, '$text'=>array( '$search'=>$search ), "lastModified"=>array( '$lt'=>$start_d ) );
+			$cursor = $collection->find( $q )
+			->limit($count)
+			->sort( array( 'lastModified' => -1 ) );
+			return $cursor;
+		}
+		
+		/*public function getHomePagePostsFromDbByCategoryAndSearch( $page_num, $cat, $search, $reverse_sort ){
 			$count = ( $page_num-1 )*$GLOBALS['amount_on_main_page'];
 			$skip = $GLOBALS['amount_on_main_page']+1;
 			$sort = ($reverse_sort)? 1 : -1;
 			$collection = $this->db->posts;			
 			$cursor = $collection->find( array( "category"=>$cat, '$text'=>array( '$search'=>$search ) ) )->limit($skip)->skip($count)->sort( array( 'lastModified' => $sort ) );
 			return $cursor;
-		}
+		}*/
 		
 		public function getPostsFromDbBySearch( $page_num, $search ){
 			$count = ( $page_num-1 )*$GLOBALS['amount_on_manger_tab'];

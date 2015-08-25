@@ -12,7 +12,7 @@
 		
 		public function getHomePagePostsByTime( $time, $cat ){
 			$str="";
-			$posts_from_db = $this->mongo_getter->getHomePagePostsFromDbByCategoryAfterDate( $time, $cat );
+			$posts_from_db = $this->mongo_getter->getHomePagePostsFromDbByCategoryAfterDate( (int)$time, $cat );
 			$L = $posts_from_db->count(true);
 			if( $L === 0 ){ 
 				//no results return false and we will send them to 404 (paginator logic should not allow this to happen)
@@ -35,69 +35,36 @@
 			}
 			return $str.$paginator;
 		}	
-		
-		public function getHomePagePosts( $page_num, $cat ){
+
+		public function getSearchPagePostsAfterTime( $time, $cat, $search ){
 			$str="";
-			$i = 0;
-			$reverse_sort_applied = $this->sortOldestToNewest();
-			$posts_from_db = $this->mongo_getter->getHomePagePostsFromDbByCategory( $page_num, $cat, $reverse_sort_applied  );
-			$url_add = $cat;
+			$search = trim( $search );
+			$posts_from_db = $this->mongo_getter->getHomePagePostsFromDbByCategoryAndSearchAfterDate( (int)$time, $cat, $search );
 			$L = $posts_from_db->count(true);
-			
-			if( $L > 0 ){ 
-				$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );		
-				foreach( $posts_from_db as $single ){				
-					if( $i < $GLOBALS['amount_on_main_page'] ){
-						$post_html = $this->post_views->makePostHtmlFromData( $single, $cat, $post_template ); //pass in cat because post can have multiple cats and we want to know which one we are looking at
-						$str.=$post_html;
-						$i++;
-					}
-				}
-				$paginator_template = file_get_contents( $GLOBALS['template_dir']."/paginator.txt" );
-				$paginator = $this->post_views->paginator( $page_num, $L, $GLOBALS['amount_on_main_page'], $url_add, $paginator_template, $reverse_sort_applied );
-				return $paginator.$str.$paginator;
-			}else{			
-				//no results return false and we will send them to 404 (paginator logic should not allow this to happen)
-				return false;
+			if( $L === 0 ){
+				$empty_search_template = file_get_contents( $GLOBALS['template_dir']."/empty_search.txt" );				
+				//if search is set and count is 0 and page = one then search return no n results show them a non result page
+				return $this->post_views->emptySearchHtml( $cat, $search, $empty_search_template );
 			}
-		}
-		
-		public function getSearchPagePosts( $page_num, $cat, $search ){
-			$str="";
-			$i = 0;	
-			$reverse_sort_applied = $this->sortOldestToNewest();		
-			$posts_from_db = $this->mongo_getter->getHomePagePostsFromDbByCategoryAndSearch( $page_num, $cat, $search, $reverse_sort_applied );
-            $s = urlencode( $search );			
-			$url_add = "search/$cat/$s";
-			$L = $posts_from_db->count(true);
-			
-			if( $L > 0 ){	
-				$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );		
-				foreach( $posts_from_db as $single ){				
-					if( $i < $GLOBALS['amount_on_main_page'] ){
-						$post_html = $this->post_views->makePostHtmlFromData( $single, $cat, $post_template ); //pass in cat because post can have multiple cats and we want to know which one we are looking at
-						$str.=$post_html;
-						$i++;
-					}
-				}
+			$post_array = iterator_to_array($posts_from_db, false);
+			if( $L > $GLOBALS['amount_on_main_page'] ){
+				array_pop( $post_array );
+				$s = urlencode( $search );
+				$url_add = "search/$cat/$s";
+				$last_item = end($post_array);
+				$last_timestamp = $last_item["lastModified"]->sec;
 				$paginator_template = file_get_contents( $GLOBALS['template_dir']."/paginator.txt" );
-				$paginator = $this->post_views->paginator( $page_num, $L, $GLOBALS['amount_on_main_page'], $url_add, $paginator_template, $reverse_sort_applied );
-				return $paginator.$str.$paginator;
+				$paginator = $this->post_views->paginator( $last_timestamp, $url_add, $paginator_template );
 			}else{
-				if( $page_num === 1 ){	
-					$empty_search_template = file_get_contents( $GLOBALS['template_dir']."/empty_search.txt" );				
-					//if search is set and count is 0 and page = one then search return no n results show them a non result page
-					return $this->post_views->emptySearchHtml( $cat, $search, $empty_search_template );
-				}else{
-					//if page > 1 and search count is zero something is wrong send to 404						
-					return false;
-				}
+				$paginator = "";
 			}
+			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );		
+			foreach( $post_array as $single ){		
+				$post_html = $this->post_views->makePostHtmlFromData( $single, $cat, $post_template ); //pass in cat because post can have multiple cats and we want to know which one we are looking at				$str .= $post_html;
+			}
+			return $str.$paginator;
 		}
 		
-		public function getZoomedPost( $page_num ){
-			
-		}
 	}
 	
 ?>

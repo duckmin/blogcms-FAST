@@ -216,22 +216,32 @@ blockquote > p{
 	font-weight:bold;
 }
 
+ul.paginator{
+	list-style-type:none;
+}
+
 ul.paginator > li{
 	border-radius:5px;
 	margin-left:1rem;
 	border:2px solid navy;
 	font-size:1.9rem;
 	color:tomato;
+	/*padding-bottom:0.5rem;
+	background-image: url("resources/arrow-31-16.png");
+	background-position: right center;
+    background-repeat: no-repeat;*/
 }
 
-ul.paginator > li > a, .main > ul.paginator > li.current-cat{
+ul.paginator > li > a{
 	padding:0 0.8rem;
+	color:inherit;
+	text-decoration:none;
 }
 
 .main > ul.paginator > li:hover{
 	color:navy;
-	border-color:tomato;
 	cursor:pointer;
+	background-color:tomato;
 }
 
 .main > ul.paginator:last-child{
@@ -245,12 +255,6 @@ ul.paginator > li > a, .main > ul.paginator > li.current-cat{
 .main > ul.paginator > li, .main article.post > ul.post-head > li, header > ul > li{
 	display:inline-block;
 	
-}
-
-.main > ul.paginator > li a{
-	color:inherit;
-	text-decoration:none;
-	min-height:2rem;
 }
 
 .main > nav {

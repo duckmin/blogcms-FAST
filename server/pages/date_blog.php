@@ -18,10 +18,10 @@
 	//part-count defined in index.php    
 	$_GET['cat'] = ( $url_parts[0] !== "" )? $url_parts[0] : $GLOBALS['post_categories'][0]; //cat is first url part or the default cat	
 	$cat = $_GET['cat'];		
-	
 	$time = ( isset($_GET['after']) )? $_GET['after'] : time();
-   try{
-	   $db = MongoConnection();
+	
+	try{
+	    $db = MongoConnection();
 		$db_getter = new MongoGetter( $db ); 
 		$parsedown = new Parsedown();				
     	$post_views = new PostViews( $parsedown );
