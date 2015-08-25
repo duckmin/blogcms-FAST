@@ -10,11 +10,11 @@
         exit;	
     }
     
-    if( $part_count > 2 ){
+    if( $part_count > 1 ){
 	    goTo404();
 	    exit;
 	}	
-	
+
 	//part-count defined in index.php    
 	$_GET['cat'] = ( $url_parts[0] !== "" )? $url_parts[0] : $GLOBALS['post_categories'][0]; //cat is first url part or the default cat	
 	$cat = $_GET['cat'];		

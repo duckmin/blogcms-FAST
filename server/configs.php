@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 date_default_timezone_set('UTC');
 $GLOBALS['server_path'] = dirname(__FILE__);
@@ -6,7 +6,7 @@ $GLOBALS['index_path'] = $GLOBALS['server_path']."/../main";
 $GLOBALS['base_url'] = "http://".$_SERVER['HTTP_HOST'];
 $GLOBALS['template_dir'] = $GLOBALS['server_path']."/templates";
 $GLOBALS['cache_dir'] = dirname(__FILE__)."/page_cache";
-$GLOBALS['url_parts'] = preg_split( "/\//", preg_replace( "/\/$/", "", substr( $_SERVER['REQUEST_URI'], 1 ) ) );
+$GLOBALS['url_parts'] = preg_split( "/\//", preg_replace( "/\/$/", "", preg_replace( "/\?.+/", "", substr( $_SERVER['REQUEST_URI'], 1 ) ) ) );
 
 //audio and video files allowed to be uploaded through the manager
 //if adding new type add a new permitted extension & mime type

@@ -10,10 +10,6 @@
 			$this->post_views = $post_views;
 		}
 		
-		private function sortOldestToNewest(){
-		    return ( isset($_COOKIE["sort"]) && (int)$_COOKIE["sort"] === 1 )? true : false;   
-		}	
-		
 		public function getHomePagePostsByTime( $time, $cat ){
 			$str="";
 			$posts_from_db = $this->mongo_getter->getHomePagePostsFromDbByCategoryAfterDate( $time, $cat );
@@ -24,7 +20,6 @@
 			}
 			$post_array = iterator_to_array($posts_from_db, false);
 			if( $L > $GLOBALS['amount_on_main_page'] ){
-				$next_page = true;
 				array_pop( $post_array );
 				$url_add = $cat;
 				$last_item = end($post_array);
@@ -32,7 +27,6 @@
 				$paginator_template = file_get_contents( $GLOBALS['template_dir']."/paginator.txt" );
 				$paginator = $this->post_views->paginator( $last_timestamp, $url_add, $paginator_template );
 			}else{
-				$next_page = true;
 				$paginator = "";
 			}
 			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );		
