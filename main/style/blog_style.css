@@ -92,7 +92,7 @@ article.post{
 	margin-top:0;
 }
 
-.main > article:last-of-type{
+section.main > article:last-of-type{
 	margin-bottom:2rem;
 }
 

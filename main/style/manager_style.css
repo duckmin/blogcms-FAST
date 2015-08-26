@@ -511,6 +511,7 @@ li#edit-mode-form.hide{
 ul.login-bar{
 	list-style-type:none;
 	text-align:right;
+	padding: 0.5rem 0;
 }
 
 ul.login-bar > li form {
@@ -538,4 +539,16 @@ ul.login-bar > li:hover{
 	color:black;
 	cursor:pointer;
 }
+
+/* animation for when an edited post is selected */
+@keyframes editFade {
+    from {background-color: orangered;}
+    to {background-color: none;}
+}
+
+/* The element to apply the animation to */
+.highlight-edit {
+    animation-name: editFade;
+    animation-duration: 1.5s;
+} 
 	

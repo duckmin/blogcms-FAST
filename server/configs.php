@@ -29,7 +29,7 @@ $GLOBALS['manager_keyword'] = "manager";
 $GLOBALS['amount_on_main_page'] = 4;
 
 //# of posts that show up on the "posts" tab in the manager
-$GLOBALS['amount_on_manger_tab'] = 2;
+$GLOBALS['amount_on_manger_tab'] = 5;
 
 //minutes until cache file expires
 $GLOBALS['max_page_cache_mins'] = -5; //turned off for dev turn on for prod to resonable amount of mins
@@ -69,6 +69,6 @@ function goTo404(){
 
 //mongo connection string can be changed here
 function MongoConnection(){
-	return new MongoClient("mongodb:///tmp/mongodb-27017.sock");
+	return new MongoClient(/*"mongodb:///tmp/mongodb-27017.sock"*/);
 }
 ?>
