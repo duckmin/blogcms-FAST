@@ -14,9 +14,8 @@ BlogCms is an appication that revolves around an authenticated UI interface that
 2. php must have "Mongo" module
 3. Clone project into folder
 4. change your apache conf documentroot to be the "<path_to_blogcms>/main" ( same directory of index.php ) folder of the project 
-5. this application routes all urls through "index.php" file using apaches mod rewrite rules. Your vhost container should **atleast** have the following rules.
-
-```
+5. this application routes all urls through "index.php" file using apaches mod rewrite rules. Your vhost container should **atleast** have the following rules. 
+6. ``` 
 <VirtualHost *:80>
     ServerName www.blog.local
     DocumentRoot <path_to_blogcms>/main
