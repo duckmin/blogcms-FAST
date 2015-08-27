@@ -1,4 +1,4 @@
-##blogcms-Fast
+#blogcms-Fast
 BlogCms is fully responsive, and searchable, and **FAST**.
 BlogCms is an appication that revolves around an authenticated UI interface that is used to build individual postings under defined categories.  The UI is very easy to use, from the manager you can 
 - create postings with any combination of images, embedded videos, audio files, and markdown
@@ -10,12 +10,12 @@ BlogCms is an appication that revolves around an authenticated UI interface that
 - view analytic data graphs of your sites traffic
 
 ##Getting Started
-1. Install apache, php, mongo db
-2. php must have "Mongo" module
-3. Clone project into folder
-4. change your apache conf documentroot to be the "<path_to_blogcms>/main" ( same directory of index.php ) folder of the project 
-5. this application routes all urls through "index.php" file using apaches mod rewrite rules. Your vhost container should **atleast** have the following rules. 
-6. ``` 
+- Install apache, php, mongo db
+- php must have "Mongo" module
+- Clone project into folder
+- change your apache conf documentroot to be the "<path_to_blogcms>/main" ( same directory of index.php ) folder of the project 
+- this application routes all urls through "index.php" file using apaches mod rewrite rules. Your vhost container should **atleast** have the following rules. 
+``` 
 <VirtualHost *:80>
     ServerName www.blog.local
     DocumentRoot <path_to_blogcms>/main
@@ -34,14 +34,13 @@ BlogCms is an appication that revolves around an authenticated UI interface that
     </Directory>
 </VirtualHost>
 ```
-
-6. in blogcms/server/configs.php you will find many configuration settings most are obvious as to what they are and can be changed easily 
+- in blogcms/server/configs.php you will find many configuration settings most are obvious as to what they are and can be changed easily 
 **except** categories
-7. set the /blogcms/server/include/categories.json array to the categories you wish to start making postings under ( do not put spaces in category name ) **if you wish to edit a category name or remove a category read the warning in the 'things to note' section before doing so**
-8. In the /blogcms/server/includes/logins.json file set a user name and password used to enter the manager.php page ( use same format as examples ) **ATM json property "level" is not used leave at 1**
-9. run both commands in the /blogcms/mongo_instructions.txt one to put search indexs on the correct fields, the other to put on index on the main date field for faster pagination
-10. Navigate to { host }/manager in your browser and log in with credentials
-11.  Start creating posts!  
+- set the /blogcms/server/include/categories.json array to the categories you wish to start making postings under ( do not put spaces in category name ) **if you wish to edit a category name or remove a category read the warning in the 'things to note' section before doing so**
+- In the /blogcms/server/includes/logins.json file set a user name and password used to enter the manager.php page ( use same format as examples ) **ATM json property "level" is not used leave at 1**
+- run both commands in the /blogcms/mongo_instructions.txt one to put search indexs on the correct fields, the other to put on index on the main date field for faster pagination
+- Navigate to { host }/manager in your browser and log in with credentials
+-  Start creating posts!  
 
 ##Things to note
 - make sure permissions on the /blogcms/main/pics/ folder and sub folders give full permissions to the user server is running as
