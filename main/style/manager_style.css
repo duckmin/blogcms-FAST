@@ -166,7 +166,7 @@ section[data-tab='template'] > ul:first-child{
 }
 
 section[data-tab='preview'], section[data-tab='posts']{
-	background-color:white;
+	background-color: #F8F8F8;
 	padding:0 1em 0 1em;
 }
 
@@ -189,7 +189,7 @@ section[data-tab='analytics'] > ul.inline-list {
 }
 
 section[data-tab='posts'] > ul.inline-list {
-	margin:15px 0;
+	margin:15px 0 2rem 0;
 }
 
 section[data-tab='posts'] > ul.button-list {
