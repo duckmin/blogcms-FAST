@@ -29,10 +29,11 @@
     }
     
     function initialImageLoad(){
-	     var articles_on_page = document.querySelectorAll(".main > article"); 
+	    var articles_on_page = document.querySelectorAll(".main > article"); 
         for( var i = 0, L = articles_on_page.length; i < L; i++ ){
            isPostInViewLoadImgs( articles_on_page[i] ); 
-        }   
+        }
+        var img_in_view; 
     }
     
     addEvent( window, "load", function(){

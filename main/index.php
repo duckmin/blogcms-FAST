@@ -33,6 +33,10 @@
 			case "logout":
 				$file = '/server/pages/logout.php';
 				break;
+				
+			case "thumb":
+				$file = '/server/pages/thumbnail_view.php';
+				break;
 						
 			default:
 				$file = "";

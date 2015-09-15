@@ -22,6 +22,11 @@
 		$message = "Not Logged In";
 	}
 	
+	if( $valid_inputs && $title_length < 1 ){
+		$valid_inputs = false;
+		$message = "Title must not be blank";
+	}
+	
 	if( $valid_inputs && $title_length > $GLOBALS['max_title_length'] ){
 		$valid_inputs = false;
 		$message = "Title longer than ".$GLOBALS['max_title_length']." characters";
@@ -53,7 +58,7 @@
 		}
 	}
 	
-	if( isset( $procedure ) && $procedure === 1 ){
+	if( isset( $procedure ) ){
 		$post_data = $json["post_data"];
 		$post_data_length = count( $post_data );
 		
@@ -93,7 +98,7 @@
 			//procedure2 update listings meta data
 			if( $procedure === 2 && isset( $json["id"] ) ){
 				$mongo_id = new MongoId( $json["id"] ); 
-				$update_array = array( '$set'=> array( "category"=>$category, "title"=>$title, "description"=>$desc ) );	
+				$update_array = array( '$set'=> array( "category"=>$category, "title"=>$title, "description"=>$desc, "post_data"=>$post_data ) );	
 				$write_result = $collection->update( array( "_id"=>$mongo_id ), $update_array );
 				$written = ( $write_result['nModified'] === 1 )? true : false;				
 				$success = $written;

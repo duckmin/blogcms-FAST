@@ -39,7 +39,6 @@
 		<li data-tab='template' >Template</li>
 		<li data-tab='pictures' >Resources</li>
 		<li data-tab='posts' >Posts</li>
-		<li data-tab='preview' style="display:none" >Preview</li>
 		<li data-tab='analytics'  >Analytics</li>
 	</ul>
 	
@@ -92,10 +91,31 @@
 			<li data-templateaction="preview-post" >
 				Preview
 			</li>
-			<li class="red-button" data-templateaction="cancel-template" >
-				Cancel
-			</li>
 		</ul>
+		
+		<div class='save-preview-popup form' id='save-preview-popup' >
+			<label>Category:</label>
+			<select name="category" multiple="" ><?php
+				foreach( $GLOBALS['post_categories'] as $key => $post_type ){ 
+					echo "<option value='".$post_type."'>".$post_type."</option>";		
+				}
+			?></select>
+			
+			<label>Title:</label>
+			<input type="text" name="title" />
+			
+			<label>Description:</label>
+			<textarea name="description" ></textarea>
+			
+			<ul class="button-list" >
+				<li data-templateaction="save-new-post" >
+					Save
+				</li>
+				<li data-templateaction="cancel-template" class="red-button" >
+					Cancel
+				</li>
+			</ul>
+		</div>
 	</section>
 	
 	<section data-tab='posts' >
@@ -134,18 +154,6 @@
 		<div></div><div id="pic-files" ></div>
 	</section>
 	
-	<section data-tab='preview' >
-		<ul class="button-list" >
-			<li data-templateaction="save-preview" >
-				Save
-			</li>
-		</ul>		
-		<section class='main' id='preview' >
-		
-		</section>
-		
-	</section>
-	
 	<section class="clearfix" data-tab='analytics' >
 		<ul class="inline-list form-list" data-templateaction="date-picker">
 			<!--li><span>line</span><input type="radio" value="combo" name="chart_type" checked=""></li>				
@@ -180,7 +188,7 @@
 	
 </div>
 
-<div class='dark-shade hide' id='save-preview-popup' >
+<!--div class='dark-shade hide' id='save-preview-popup' >
 	<div class='fixed-box save-preview-popup form' >
 		<label>Category:</label>
 		<select name="category" multiple="" ><?php
@@ -204,7 +212,7 @@
 			</li>
 		</ul>
 	</div>
-</div>
+</div-->
 
 </body>
 </html>

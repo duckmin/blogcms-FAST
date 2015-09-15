@@ -321,14 +321,15 @@
 			controller.postJson( constants.ajax_url+'?action=3&procedure=1', values, function(d){
 				var resp = JSON.parse( d);
 				if( resp.result ){
-					save_form.nearestParentClass("dark-shade").addClass("hide");
-					form_class.clearForm();
-					save_form.querySelectorAll("ul.multi-replace > li.selected-multi" ).each( function(li){
-						li.removeClass("selected-multi");
-					} )
-					gEBI('template').removeChildren();
+					//save_form.nearestParentClass("dark-shade").addClass("hide");
+					//form_class.clearForm();
+					//save_form.querySelectorAll("ul.multi-replace > li.selected-multi" ).each( function(li){
+					//	li.removeClass("selected-multi");
+					//} )
+					//gEBI('template').removeChildren();
 					//tab_actions.tabShow( document.querySelector('[data-tab=template]') );
-					window.location.hash = "#template";
+					//window.location.hash = "#template";
+					templateaction.clearTemplateForm();
 					
 				}
 				showAlertMessage( resp.message, resp.result );
@@ -336,6 +337,18 @@
 		}else{
 			showAlertMessage("Template is Empty", false );
 		}
+	}
+	
+	var templateaction = {};
+	
+	templateaction.clearTemplateForm = function(){
+		var save_form = gEBI("save-preview-popup"),
+		form_class = new FormClass( save_form );
+		form_class.clearForm();
+		save_form.querySelectorAll("ul.multi-replace > li.selected-multi" ).each( function(li){
+			li.removeClass("selected-multi");
+		} );
+		gEBI('template').removeChildren();
 	}
 	
 	addEvent( window, "load", function(){
@@ -360,10 +373,11 @@
 					"Post is currently being edited and all changes will be lost if canceled are you sure you want to clear the template?";
 					showConfirm( message, false, gEBI("template"), function(elm){ 
 						( edited )? edit_mode.disable() : false;						
-						elm.removeChildren();	
+						templateaction.clearTemplateForm();	
 					} )			
 				})
 			},
+			/*	Not needed, dont save from preview page anymore		
 			"save-preview":function(elm){
 				
 				elm.addEvent( "click", function(e){
@@ -376,17 +390,15 @@
 					}
 				})
 				
-			},
-			"close-popup":function(elm){
-				elm.addEvent( "click", function(e){
-					var parent_shade = elm.nearestParentClass("dark-shade");
-					parent_shade.addClass('hide');
-				})
-			},
+			},*/
 			"save-new-post":function(elm){
 				elm.addEvent( "click", function(e){
-					var save_form = elm.nearestParentClass( "form" );
-					savePost( save_form );
+					if( !edit_mode.active() ){
+						var save_form = elm.nearestParentClass( "form" );
+						savePost( save_form );
+					}else{
+						saveEditedPostAction();
+					}
 				})
 			},
 			"select-post-filter":function(elm){
@@ -422,34 +434,20 @@
 	var edit_table_template="<table class='manage-table' >"+
 	"<thead>"+
     	"<tr>"+
-    	    "<th>Category</th>"+
-    		"<th>Description</th>"+
-    		"<th>Title</th>"+
-    		"<th>Posted</th>"+
+    		"<th>Created</th>"+
     		"<th>Action</th>"+
     	"</tr>"+
 	"</thead>"+
 	"<tbody>"+
-    	"<tr data-postid='{{ id }}' >"+
-    	"<td>"+
-    		"<select name='category' multiple='' >{{ post_type_options }}</select>"+
-    	"</td>"+
-    	"<td><textarea name='description' >{{ description }}</textarea></td>"+
-    	"<td>"+
-    		"<input type='hidden' name='id' value='{{ id }}' />"+
-    		"<input type='text' name='title' value='{{ title }}' />"+
-    	"</td>"+	
+    "<tr data-postid='{{ id }}' >"+	
     	"<td class='date' >{{ created }}<br> By: <b>{{ author }}</b></td>"+
     	"<td>"+
-    		"<img src='"+constants.base_url+"/style/resources/save.png' title='Save Changes' onclick='saveChangesAction( this )' />"+
+    		"<input type='hidden' name='id' value='{{ id }}' />"+
     		"<img src='"+constants.base_url+"/style/resources/pencil.png' title='Edit Post' onclick='editPostAction( this )' />"+
-    		"<a href='"+constants.base_url+"/post/{{ page_category }}/{{ year }}/{{ month }}/{{ day }}/{{ safe_title }}' target='_blank' >"+
-    			"<img src='"+constants.base_url+"/style/resources/application.png' title='View Post' />"+
-    		"</a>"+
     		"<img src='"+constants.base_url+"/style/resources/clock.png' title='Make most recent post (move to top of the)' onclick='postMoveToTop( this )' />"+
     		"<img src='"+base_url+"/style/resources/action_delete.png' title='Delete Post' onclick='deletePostAction( this )' />"+
     	"</td>"+
-    	"</tr>"+
+    "</tr>"+
 	"</tbody>"+
 	"</table>";
 	
@@ -493,9 +491,7 @@
 						inside_main += single_row.post_html;
 						inside_main += bindMustacheString( edit_table_template, single_row.post_data );
 					})
-					
 					post_space.innerHTML = inside_main;
-					setMultiSelects( post_space );
 					
 					if( json.data.prev===true ){
 						var prev = createElement('nav',{
@@ -556,6 +552,7 @@
 		}
 	}
 	
+	/* NOT NEEDED SINCE WE NOW SAVE FROM TEMPLATE PAGE
 	window.saveChangesAction = function( element ){
 		var form_values=table_actions.getTrValues( element );
 		
@@ -581,6 +578,7 @@
 			showAlertMessage( resp.message, resp.result );
 		})
 	}
+	*/
 	
 	window.deletePostAction = function( element ){
 		var message = "Are you sure you want to delete this post?";
@@ -612,10 +610,18 @@
     		controller.postJson( constants.ajax_url+'?action=6', send, function(d){
     			//var resp = JSON.parse( d);
     			if( d !== "" ){
+    				if( edit_mode.active() ){
+    					//if we were previously in edit mode clear old data 
+    					edit_mode.disable();
+    				}
+    				templateaction.clearTemplateForm();
     				var resp = JSON.parse( d ),
+    				post_data = resp.post_data,
+    				post_data_box = gEBI("save-preview-popup"),
+    				post_data_formclass = new FormClass( post_data_box ),
     				frag = documentFragment();
     				edit_mode.enable( form_values.id );
-    				resp.forEach(function( post ){
+    				post_data.forEach(function( post ){
     					var post_type = post["data-posttype"],
     					li = templatetype[ post_type ](),
     					form_class = new FormClass( li );
@@ -624,6 +630,20 @@
     				});
     				
     				gEBI("template").removeChildren().appendChild(frag);
+    				post_data_formclass.bindValues(resp);
+    				
+    				//after values are binded see which selects are selected and highlight in multi select replace
+    				var multi_select_replace = post_data_box.querySelector("ul.multi-replace"),
+    				multi_select_options = post_data_box.querySelectorAll("select[multiple] > option");
+    				multi_select_options.each(function(opt){
+    					if( opt.selected === true ){
+    						var multi_select_li = multi_select_replace.querySelector("li[data-val='"+opt.value+"']")
+    						if( multi_select_li !== null ){
+    							multi_select_li.addClass("selected-multi");
+    						}
+    					}
+    				});
+    				
     				window.location.hash = "#template";
     			}else{
     				showAlertMessage( "No Data For Post", false );
@@ -650,14 +670,16 @@
 	}
 	
 	window.saveEditedPostAction = function(){
-		var post_data = getPostDataFromTemplate();
+		var post_data = getPostDataFromTemplate(),
+		save_form = gEBI("save-preview-popup"),
+		form_class = new FormClass( save_form ),
+		values = form_class.getValues();
+		values.id = edit_mode.id_in_edit;
 		if( post_data.length > 0 ){
-			var values = { "id":edit_mode.id_in_edit, "post_data":post_data }
-			console.log( values );
-			controller.postJson( constants.ajax_url+'?action=7', values, function(d){
-				
+			values.post_data = post_data;
+			controller.postJson( constants.ajax_url+'?action=3&procedure=2', values, function(d){
 				var resp = JSON.parse( d);
-				if( resp.result){
+				if( resp.result ){
 					//if post being edited is in view on posts tab ajax back the id_in_edit
                     //to get post HTML then relace HTML of post on posts tab with edited version
                     //the tab_actions posts function must be overwritten so it will scroll to edited post
@@ -688,14 +710,13 @@
 					   window.location.hash = "#template";
 					   edit_mode.disable();    
 					}
-
-					gEBI('template').removeChildren();
+					templateaction.clearTemplateForm();
 					
 				}
 				showAlertMessage( resp.message, resp.result );
 			})
 		}else{
-			showAlertMessage( "Empty Post Can Not Be Saved", false );
+			showAlertMessage("Template is Empty", false );
 		}
 	}
 	

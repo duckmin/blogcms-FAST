@@ -139,7 +139,6 @@ body,ul,div,section,a,aside,article,h1,h2,h3,h4,h5,h6,p,pre,span,li,label,input,
 	display:block;
 	font-weight:500;
 	margin-top:10px;
-	margin-left:-4px;
 }
 
 .form textarea, .form input, .form select {
@@ -147,11 +146,12 @@ body,ul,div,section,a,aside,article,h1,h2,h3,h4,h5,h6,p,pre,span,li,label,input,
 	border-radius:3px;
 	font-size:1.3em;
 	padding:3px;
-	margin-left:-4px;
+	
 }
 
 .form textarea, .form input{
-	width:100%;
+	/* 8px, 3px padding x2 & 1px border x2 */
+	width:calc( 100% - 8px );
 }
 
 .form .button-list{

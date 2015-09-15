@@ -4,8 +4,8 @@
 	$id = $json["id"];
 	$db = MongoConnection();
 	$db_getter = new MongoGetter( $db );	
-	$data = $db_getter->getSinglePostDataById( $id );
-	$ret = json_encode( $data["post_data"] );
+	$data = $db_getter->getSingleRowById( $id );
+	$ret = json_encode( $data );
 	echo $ret;
 
 ?>

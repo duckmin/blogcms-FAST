@@ -1,3 +1,7 @@
+.wrapper{
+	margin-bottom:20px;
+}
+
 .folders {
 	padding-left:10px;
 }
@@ -281,24 +285,35 @@ ul.form-list > li > input[type='text'] {
    
 }
 
-.save-preview-popup{
-	/*width:400px;*/
-	max-height:70%;
-	overflow-y:auto;
-	overflow-x:none;
-	min-width:500px;
-	padding-bottom:10px;
+section[data-tab="template"] {
+	padding-bottom:0;
 }
 
-.save-preview-popup > .folders{
+.save-preview-popup{
+	/*width:400px;*/
+	width:50%;
+	padding:0 10px 10px 10px;
+	border:1px solid black;
+	border-bottom:none;
+	border-left:none;
 	margin-top:10px;
-	margin-left:0;
+	background-color:lemonchiffon;
+	border-top-right-radius:5px;
+}
+
+.save-preview-popup ul.multi-replace {
+	margin-top:0;
+}
+
+.save-preview-popup ul.button-list {
+	margin-left:-10px;
 }
 
 .manage-table {
-	width:100%;
+	width:40%;
 	border-collapse:collapse;
 	border:1px solid black;
+	border-top:none;
 	background-color: lightgoldenrodyellow;
 }
 
@@ -306,6 +321,7 @@ ul.form-list > li > input[type='text'] {
 section[data-tab='posts'] article.post {
     box-shadow:none;   
     border-right:1px dotted black;
+    border-bottom:1px solid black;
     margin-top:4rem;
 }
 
@@ -325,8 +341,8 @@ div#post-space > article:first-child{
 
 .manage-table tr td{
 	text-align: center;
-	vertical-align: top;
-	padding:0.5em 0;	
+	vertical-align: middle;
+	padding-bottom:0.5em;	
 }
 
 section > table.manage-table {
@@ -349,18 +365,11 @@ td.date {
 .manage-table thead th{
 	font-weight:600;
 	color:black;
-	font-size:0.8em;
-	padding:0.5em;    
-}
-
-.manage-table tbody tr td:nth-child(2){
-    padding-right:0.5rem;
+	font-size:0.8em;   
 }
 
 .manage-table tbody tr td:last-child img{
-	margin-left:calc( 50% - 8px );
-	margin-bottom:5px;
-	display:block;
+	margin-right:10px;
 }
 
 .manage-table tbody tr td:last-child img:hover{
