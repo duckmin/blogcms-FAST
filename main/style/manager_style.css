@@ -290,8 +290,6 @@ section[data-tab="template"] {
 }
 
 .save-preview-popup{
-	/*width:400px;*/
-	width:50%;
 	padding:0 10px 10px 10px;
 	border:1px solid black;
 	border-bottom:none;
@@ -299,6 +297,10 @@ section[data-tab="template"] {
 	margin-top:10px;
 	background-color:lemonchiffon;
 	border-top-right-radius:5px;
+}
+
+section[data-tab='template'] .save-preview-popup{
+	width:50%;
 }
 
 .save-preview-popup ul.multi-replace {

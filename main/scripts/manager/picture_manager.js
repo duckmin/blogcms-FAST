@@ -7,8 +7,8 @@ var resources_templates = {
 		"<span>{{ base_name }}</span>"+
 	"</li>",
 	
-	"image":"<li class='file' >"+
-		"<img src='/style/resources/image.png' title='Add Picture to Template' data-picturepath='{{ server_path }}' onclick='pictureClick(this)' onmouseover='imageOver(this)' onmouseout='imageOut(this)' />"+
+	"image":"<li class='file' data-filename='{{ resource_name }}' >"+
+		"<img src='/style/resources/image.png' title='Add Picture to Template' data-picturepath='{{ server_path }}' onclick='resources_action.pictureClick(this)' onmouseover='imageOver(this)' onmouseout='imageOut(this)' />"+
 		"<img src='/style/resources/action_delete.png' title='Delete Resource' data-filepath='{{ server_path }}' onclick='deleteResource(this)' />"+		
 		"<span>{{ resource_name }}</span>"+
 	"</li>",
@@ -121,17 +121,21 @@ function deleteResource( elm ){
 	})	
 }
 
-function pictureClick( element ){
-	var path = element.getAttribute( 'data-picturepath' );
-	//tab_actions.tabShow( document.querySelector('[data-tab=template]') ), //from extender_tabs.js
-	window.location.hash = "#template";
-	template_item = templatetype[ "image" ]( path );
-	gEBI("template").appendChild( template_item );
+resources_action.pictureClick = function( element ){
+	//brings up a popup with the option to either add to template or add as a thumbnail
+	var path = element.getAttribute( 'data-picturepath' ),
+	parent_li = element.nearestParent('li'),
+	file_name = parent_li.getAttribute("data-filename"),
+	picture_popup = gEBI("picture-popup"),
+	popup_form_class = new FormClass( picture_popup ),
+	vals = { picture_file_name:file_name, picture_path:path };
+	popup_form_class.bindValues( vals );
+	picture_popup.removeClass("hide");
+	box_action.centerFixedBox( picture_popup.querySelector("div.fixed-box") );
 }
 
 function audioClick( element ){
 	var path = element.getAttribute( 'data-audiopath' );
-	//tab_actions.tabShow( document.querySelector('[data-tab=template]') ), //from extender_tabs.js
 	window.location.hash = "#template";
 	template_item = templatetype[ "audio" ]( path );
 	gEBI("template").appendChild( template_item );

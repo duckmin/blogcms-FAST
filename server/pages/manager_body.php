@@ -188,31 +188,23 @@
 	
 </div>
 
-<!--div class='dark-shade hide' id='save-preview-popup' >
+<div class='dark-shade hide' id="picture-popup" >
 	<div class='fixed-box save-preview-popup form' >
-		<label>Category:</label>
-		<select name="category" multiple="" ><?php
-			foreach( $GLOBALS['post_categories'] as $key => $post_type ){ 
-				echo "<option value='".$post_type."'>".$post_type."</option>";		
-			}
-		?></select>
-		
-		<label>Title:</label>
-		<input type="text" name="title" />
-		
-		<label>Description:</label>
-		<textarea name="description" ></textarea>
-		
+		<input type="hidden" name="picture_file_name" >
+		<input type="hidden" name="picture_path" >
 		<ul class="button-list" >
-			<li data-templateaction="save-new-post" >
-				Save
+			<li data-templateaction="add-pictue-to-template" >
+				Add Picture To Template
 			</li>
-			<li data-templateaction="close-popup" >
-				Cancel
+			<li data-templateaction="make-image-thumbnail" >
+				Make Picture Thumbnail
+			</li>
+			<li class="red-button" data-templateaction="close-popup" >
+				Cancel			
 			</li>
 		</ul>
 	</div>
-</div-->
+</div>
 
 </body>
 </html>

@@ -391,6 +391,30 @@
 				})
 				
 			},*/
+			"add-pictue-to-template":function(elm){
+				elm.addEvent( "click", function(e){
+					picture_popup = gEBI("picture-popup"),
+					popup_form_class = new FormClass( picture_popup ),
+					vals = popup_form_class.getValues(),
+					path = vals.picture_path,
+					template_item = templatetype[ "image" ]( path );
+					gEBI("template").appendChild( template_item );
+					picture_popup.addClass("hide");
+					window.location.hash = "#template";
+					popup_form_class.clearForm();
+				})
+			},
+			"make-image-thumbnail":function(elm){
+				elm.addEvent( "click", function(e){
+					
+				})
+			},
+			"close-popup":function(elm){
+				elm.addEvent( "click", function(e){
+					var parent_shade = elm.nearestParentClass("dark-shade");
+					parent_shade.addClass('hide');
+				})
+			},
 			"save-new-post":function(elm){
 				elm.addEvent( "click", function(e){
 					if( !edit_mode.active() ){
@@ -551,34 +575,6 @@
 		    });
 		}
 	}
-	
-	/* NOT NEEDED SINCE WE NOW SAVE FROM TEMPLATE PAGE
-	window.saveChangesAction = function( element ){
-		var form_values=table_actions.getTrValues( element );
-		
-		controller.postJson( constants.ajax_url+'?action=3&procedure=2', form_values, function(d){
-			var resp = JSON.parse( d);
-			if( resp.result ){
-			   var post = element.nearestParentClass("manage-table").previousElementSibling,
-			   id = post.getAttribute("id"),
-			   category = post.getAttribute("data-postcategory");
-			   table_actions.getPostHtml( id, category, function(post_html){
-    			   if( post_html.length > 0 ){
-    			       var edited_post = createElement("div", {
-    				      innerHTML:post_html 
-    				   }).firstElementChild;
-    				   var replaced_post = post.replaceWith(edited_post),
-    				   replaced_post_link = replaced_post.querySelector("ul.post-head > li:first-child a[href]").href,
-    				   link_to_post_on_posts_tab = element.nearestParent("td").querySelector("a[href]");
-    				   //if the title was edited the link will be different to post, grab the link from the posts and change link on table to it
-    				   link_to_post_on_posts_tab.href = replaced_post_link;
-    		       } 
-    		   });	        
-			}
-			showAlertMessage( resp.message, resp.result );
-		})
-	}
-	*/
 	
 	window.deletePostAction = function( element ){
 		var message = "Are you sure you want to delete this post?";
