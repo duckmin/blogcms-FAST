@@ -107,6 +107,14 @@
 			return TemplateBinder::bindTemplate( $template, $structure );	
 		}
 		
+		public function makePostPreviewHtmlFromData( $row, $cat, $template ){		
+			$structure = $this->convertRowValues( $row );
+			$structure["time_stamp"] = $structure["lastModified"]->sec * 1000; //for js accurrate UTC conversion
+			$structure["page_category"] = $cat; //dont get from DB data get from page so we know which cat is currently in view on the page
+			$structure["base"] = $GLOBALS['base_url'];
+			return TemplateBinder::bindTemplate( $template, $structure );	
+		}
+		
 		//when search returns no results show this HTML
 		public function emptySearchHtml( $cat, $search, $template ){		
 			$structure = array();

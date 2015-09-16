@@ -29,12 +29,25 @@
 			return $cursor;
 		}*/
 		
-		public function getHomePagePostsFromDbByCategory( $page_num, $cat, $reverse_sort ){
+		public function getHomePagePostsFromDbByCategory( $page_num, $cat ){
 			$count = ( $page_num-1 )*$GLOBALS['amount_on_main_page'];
 			$skip = $GLOBALS['amount_on_main_page']+1;
-			$sort = ($reverse_sort)? 1 : -1;
 			$collection = $this->db->posts;			
-			$cursor = $collection->find( array( "category"=>$cat ) )->limit($skip)->skip($count)->sort( array( 'lastModified' => $sort ) );		
+			$cursor = $collection->find( array( "category"=>$cat ) )
+			->limit($skip)
+			->skip($count)
+			->sort( array( 'lastModified' => -1 ) );		
+			return $cursor;
+		}
+		
+		public function getHomePagePreviewsFromDbByCategoryAfterDate( $after, $cat ){ //only select info for previews
+			$start_d = new MongoDate( $after );
+			$count = $GLOBALS['amount_on_main_page']+1; //get one extra so we can tell if there is a next page
+			$collection = $this->db->posts;	
+		    $fields = array( "_id"=>true, "category"=>true, "title"=>true, "description"=>true, "lastModified"=>true, "author"=>true, "thumbnail"=>true );				
+			$cursor = $collection->find( array( "category"=>$cat, "lastModified"=>array( '$lt'=>$start_d ) ), $fields )
+			->limit($count)
+			->sort( array( 'lastModified' => -1 ) );
 			return $cursor;
 		}
 		
