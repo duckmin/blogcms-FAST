@@ -1,4 +1,4 @@
-<article ##show_id id="{{ id }}" data-postcategory="{{ page_category }}" show_id## class="post {{ page_category }}">
+<article class="preview {{ page_category }}">
 	<img src="/thumb/{{ thumbnail }}" alt="thumbnail image for {{ title }}" >
 	<p><a href="{{ base }}/post/{{ page_category }}/{{ year }}/{{ month }}/{{ day }}/{{ safe_title }}">{{ title }}</a></p>
 	<p data-ts="{{ time_stamp }}" >{{ created }} <span>By:</span> {{ author }}</p>

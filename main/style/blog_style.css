@@ -81,7 +81,7 @@ header a, .main article.post > ul.post-head a{
 	
 }
 
-article.post{
+article.post, article.preview{
 	/*background-color:orange;*/
 	margin-top:2rem;
 	padding:0em 1rem 1rem 1rem;
@@ -89,6 +89,31 @@ article.post{
 	border-left:1px dotted black;
 	box-shadow:5px 5px 5px rgba(0, 0, 0, 0.5);
 	background-color:white;
+}
+
+article.preview{
+	border-top:1px dotted black;
+	padding-top:1rem;
+	overflow:hidden;
+}
+
+article.preview > img {
+	float:left;
+	margin-right:1rem;
+}
+
+article.preview > p:first-of-type > a {
+	font-size: 1.2em;
+    line-height:0.9em;
+}
+
+article.preview > p:first-of-type {
+	font-size: 1.2em;
+    line-height:0.9em;
+}
+
+article.preview a {
+	text-decoration:none;
 }
 
 .main > article:first-of-type{
