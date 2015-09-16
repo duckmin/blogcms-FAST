@@ -12,8 +12,9 @@ if( $part_count === 2 ){
 		}else{
 			//use a default image
 		}
-	}catch( MongoException $e ){
-		//use a default image
+	}catch( MongoGridFSException $e ){
+		echo "XXXX";
+		echo $e->getMessage();
 	}	
 }
 

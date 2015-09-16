@@ -103,9 +103,17 @@ munchin ass niga shit mein!
 	//echo var_dump( isset($_COOKIE["sort"]) );
 	//echo var_dump((int)$_COOKIE["sort"]);
 	
-	$grid = $db->blog->getGridFS();
-	$path ="/opt/fun_projects/";
-	$filename="paradise.jpg";
-	$storedfile = $grid->storeFile($path . $filename, array("metadata" => array("filename" => $filename), 
-	"filename" => $filename));
+	
+	
+	try{
+	    $grid = $db->blog->getGridFS();
+	    $path ="/var/www/html/blogcms/main/pics/222/";
+	    $filename="crang.JPG";
+	    //$storedfile = $grid->storeFile($path . $filename, array("metadata" => array("filename" => $filename), 
+	    //"filename" => $filename));
+	    $grid->remove( array("filename" => $filename) );
+	}catch( MongoGridFSException $e ){
+		echo "XXXX";
+		echo $e->getMessage();
+	}	
 ?>

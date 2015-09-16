@@ -136,7 +136,7 @@
 		//for actions/get_post_info.php we must modify the posting to put in the form
 		public function generateModifedListingForPostInfo( $row, $page_cat ){
 			$row = $this->convertRowValues( $row );
-			$row["post_type_options"] = $this->getSelectedOption( $row['category'] );
+			//$row["post_type_options"] = $this->getSelectedOption( $row['category'] ); //dont need anymore, no longer save this on posts tab in manager
 			$row["page_category"] = $page_cat; //for link to post on manager tab
 			return $row;
 		}

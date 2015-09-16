@@ -406,7 +406,15 @@
 			},
 			"make-image-thumbnail":function(elm){
 				elm.addEvent( "click", function(e){
-					
+					picture_popup = gEBI("picture-popup"),
+					popup_form_class = new FormClass( picture_popup ),
+					vals = popup_form_class.getValues(),
+					thumbnail_space = gEBI("thumbnail-space"),
+					thumbnail_form_class = new FormClass( thumbnail_space );
+					thumbnail_form_class.bindValues(vals);
+					picture_popup.addClass("hide");
+					window.location.hash = "#template";
+					popup_form_class.clearForm();
 				})
 			},
 			"close-popup":function(elm){

@@ -4,4 +4,9 @@ use blog #name of the DB defined in server/configs.php
 
 #run these command on created DB to use search
 db.posts.ensureIndex({"post_data.text":"text","title":"text","description":"text"})
+
+#index on time field used for pagination
 db.posts.ensureIndex({lastModified:1})
+
+#index on thumbnail store to insure unique filename 
+db.fs.files.createIndex( { "filename": 1 }, { unique: true } )

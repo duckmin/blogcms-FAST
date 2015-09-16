@@ -101,12 +101,18 @@
 				}
 			?></select>
 			
+			<div id="thumbnail-space">
+    			<label>Thumbnail:<span></span></label>
+    			<input type="text" name="picture_file_name" readonly="" >
+    			<input type="hidden" name="picture_path" ><!--thumbnail used for post preview -->
+			</div>
+			
 			<label>Title:</label>
-			<input type="text" name="title" />
+			<input type="text" name="title" >
 			
 			<label>Description:</label>
 			<textarea name="description" ></textarea>
-			
+
 			<ul class="button-list" >
 				<li data-templateaction="save-new-post" >
 					Save
