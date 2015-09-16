@@ -12,13 +12,14 @@
 			$thumb_path = $GLOBALS['tmp_file_directory']."/".$thumb_file_name;
 
 			$img_info = getimagesize($image_path);
+			$mime_type = $img_info["mime"];
 			$width = $img_info[0];
 			$height = $img_info[1];
 			$aspect_width = self::$thumbnail_width;
 			$aspect_height = round( $height / $width * $aspect_width );
 			
 			//uploader already validates we only have these types of images in /pics
-			switch($img_info["mime"]){
+			switch($mime_type){
         		case "image/jpeg":
             		$img = imagecreatefromjpeg($image_path); //jpeg file
         			break;
@@ -33,7 +34,7 @@
 			imagecopyresampled($img_p, $img, 0, 0, 0, 0, $aspect_width, $aspect_height, $width, $height);
 			
 			//save resized img canvas to new src
-			switch($img_info["mime"]){
+			switch($mime_type){
         		case "image/jpeg":
             		$result = imagejpeg($img_p, $thumb_path, self::$quality); 
         			break;
@@ -44,7 +45,7 @@
           			$result = imagepng($img_p, $thumb_path, self::$quality); 
           			break;
           	}
-			return array( "result"=>$result, "thumb_path"=>$thumb_path );
+			return array( "result"=>$result, "thumb_path"=>$thumb_path, "mime"=>$mime_type );
   		} 
    
 	}

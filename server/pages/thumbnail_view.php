@@ -7,7 +7,8 @@ if( $part_count === 2 ){
 		$gridFS = $mongo->blog->getGridFS();
 		$image = $gridFS->findOne( $filename );
 		if( $image !== null ){
-			header('Content-type: image/jpeg');
+			$mime_type = $image->file["metadata"]["mime-type"];
+			header("Content-type: $mime_type");
 			echo $image->getBytes();
 		}else{
 			//use a default image
