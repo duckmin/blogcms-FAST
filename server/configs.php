@@ -8,6 +8,9 @@ $GLOBALS['template_dir'] = $GLOBALS['server_path']."/templates";
 $GLOBALS['cache_dir'] = dirname(__FILE__)."/page_cache";
 $GLOBALS['url_parts'] = preg_split( "/\//", preg_replace( "/\/$/", "", preg_replace( "/\?.+/", "", substr( $_SERVER['REQUEST_URI'], 1 ) ) ) );
 
+//folder where temp image thumbnail files are created and then copied into mongo file store
+$GLOBALS['tmp_file_directory'] = "/tmp";
+
 //audio and video files allowed to be uploaded through the manager
 //if adding new type add a new permitted extension & mime type
 $GLOBALS["upload_vars"] = array(

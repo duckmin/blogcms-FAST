@@ -103,8 +103,7 @@
 			
 			<div id="thumbnail-space">
     			<label>Thumbnail:<span></span></label>
-    			<input type="text" name="picture_file_name" readonly="" >
-    			<input type="hidden" name="picture_path" ><!--thumbnail used for post preview -->
+    			<input type="text" name="thumbnail" readonly="" >
 			</div>
 			
 			<label>Title:</label>

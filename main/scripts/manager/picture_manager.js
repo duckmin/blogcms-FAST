@@ -7,7 +7,7 @@ var resources_templates = {
 		"<span>{{ base_name }}</span>"+
 	"</li>",
 	
-	"image":"<li class='file' data-filename='{{ resource_name }}' >"+
+	"image":"<li class='file' data-filename='{{ resource_name }}' data-modified='{{ modified }}' >"+
 		"<img src='/style/resources/image.png' title='Add Picture to Template' data-picturepath='{{ server_path }}' onclick='resources_action.pictureClick(this)' onmouseover='imageOver(this)' onmouseout='imageOut(this)' />"+
 		"<img src='/style/resources/action_delete.png' title='Delete Resource' data-filepath='{{ server_path }}' onclick='deleteResource(this)' />"+		
 		"<span>{{ resource_name }}</span>"+
@@ -126,9 +126,10 @@ resources_action.pictureClick = function( element ){
 	var path = element.getAttribute( 'data-picturepath' ),
 	parent_li = element.nearestParent('li'),
 	file_name = parent_li.getAttribute("data-filename"),
+	modified = parent_li.getAttribute("data-modified"),
 	picture_popup = gEBI("picture-popup"),
 	popup_form_class = new FormClass( picture_popup ),
-	vals = { picture_file_name:file_name, picture_path:path };
+	vals = { picture_file_name:modified+file_name, picture_path:path };
 	popup_form_class.bindValues( vals );
 	picture_popup.removeClass("hide");
 	box_action.centerFixedBox( picture_popup.querySelector("div.fixed-box") );

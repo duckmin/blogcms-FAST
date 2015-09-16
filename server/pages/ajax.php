@@ -52,6 +52,9 @@ if( isset( $_GET['action'] ) ){
 		case 15:
 	        $file = '/get_post_html_by_id.php';
 			break;
+		case 16:
+	        $file = '/make_thumbnail.php';
+			break;
 	}
 
 	include $GLOBALS['server_path']."/actions".$file;

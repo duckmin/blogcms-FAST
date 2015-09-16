@@ -36,9 +36,13 @@
 		}
 		
 		public static function getResourceInfo( $type, $resource_path, $server_path, $resource_name ){
+			$file_path = $GLOBALS['index_path'].$server_path;
+			$file_info = new SplFileInfo( $file_path );
+            $last_modified = $file_info->getMTime (); //this will not change unless file is overwritten
 			return array(
 				"type"=>$type,
 				"data"=>array(
+					"modified"=>$last_modified,
 					"server_path"=>$server_path,
 					"resource_path"=>$resource_path,
 					"resource_name"=>$resource_name

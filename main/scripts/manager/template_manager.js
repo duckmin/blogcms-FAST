@@ -351,6 +351,26 @@
 		gEBI('template').removeChildren();
 	}
 	
+	templateaction.selectAndCreateThumbnail = function(){
+		//take the info from the popup and bind to the template form 
+		picture_popup = gEBI("picture-popup"),
+		popup_form_class = new FormClass( picture_popup ),
+		vals = popup_form_class.getValues(),
+		thumbnail_space = gEBI("thumbnail-space"),
+		thumbnail_form_class = new FormClass( thumbnail_space );
+		thumbnail_form_class.bindValues({thumbnail:vals.picture_file_name});
+		picture_popup.addClass("hide");
+		window.location.hash = "#template";
+		popup_form_class.clearForm();
+		
+		//take the filename and path of image and create a thumbnail and store in mongo (if it does not exist)
+		var picture_path = encodeURIComponent(vals.picture_path),
+		picture_key = encodeURIComponent(vals.picture_file_name);
+		controller.getText( constants.ajax_url+'?action=16&path='+picture_path+'&thumbname='+picture_key, function(resp){
+			console.log(resp);
+		})
+	}
+	
 	addEvent( window, "load", function(){
 		attributeActions( document.body, "data-templateaction", {
 			
@@ -405,17 +425,7 @@
 				})
 			},
 			"make-image-thumbnail":function(elm){
-				elm.addEvent( "click", function(e){
-					picture_popup = gEBI("picture-popup"),
-					popup_form_class = new FormClass( picture_popup ),
-					vals = popup_form_class.getValues(),
-					thumbnail_space = gEBI("thumbnail-space"),
-					thumbnail_form_class = new FormClass( thumbnail_space );
-					thumbnail_form_class.bindValues(vals);
-					picture_popup.addClass("hide");
-					window.location.hash = "#template";
-					popup_form_class.clearForm();
-				})
+				elm.addEvent( "click", templateaction.selectAndCreateThumbnail )
 			},
 			"close-popup":function(elm){
 				elm.addEvent( "click", function(e){

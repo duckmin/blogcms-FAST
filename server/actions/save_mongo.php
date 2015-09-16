@@ -14,6 +14,7 @@
 		$category = $json["category"];
 		$title = trim( strip_tags( $json["title"] ) );
 		$desc = trim( strip_tags( $json["description"] ) );
+		$thumbnail_path = trim($json["thumbnail"]);
 		
 		$title_length = strlen( $title );
 		$desc_length = strlen( $desc );
@@ -25,6 +26,11 @@
 	if( $valid_inputs && $title_length < 1 ){
 		$valid_inputs = false;
 		$message = "Title must not be blank";
+	}
+	
+	if( $valid_inputs && strlen($thumbnail_path) < 1 ){
+		$valid_inputs = false;
+		$message = "Please Select a thumbnail from the 'Resources' tab";
 	}
 	
 	if( $valid_inputs && $title_length > $GLOBALS['max_title_length'] ){
@@ -83,11 +89,12 @@
 				$document = array( 
 					'_id'=>$mongo_id,					
 					'category'=>$category,
-		   	   'title'=>$title,
-			   	'description'=>$desc,
-			   	'post_data'=> $post_data,
-			   	'lastModified'=>new MongoDate(),
-			   	'author'=>$author
+		   	    	'title'=>$title,
+			   		'description'=>$desc,
+			   		'post_data'=> $post_data,
+			   		'lastModified'=>new MongoDate(),
+			   		'thumbnail'=>$thumbnail_path,
+			   		'author'=>$author
 				);
 				$write_result = $collection->insert($document);				
 				$written = ( $write_result['ok'] >= 1 )? true : false;			
@@ -98,7 +105,15 @@
 			//procedure2 update listings meta data
 			if( $procedure === 2 && isset( $json["id"] ) ){
 				$mongo_id = new MongoId( $json["id"] ); 
-				$update_array = array( '$set'=> array( "category"=>$category, "title"=>$title, "description"=>$desc, "post_data"=>$post_data ) );	
+				$update_array = array( 
+					'$set'=> array( 
+						"category"=>$category, 
+						"title"=>$title, 
+						"description"=>$desc, 
+						"post_data"=>$post_data, 
+						"thumbnail"=>$thumbnail_path 
+					) 
+				);	
 				$write_result = $collection->update( array( "_id"=>$mongo_id ), $update_array );
 				$written = ( $write_result['nModified'] === 1 )? true : false;				
 				$success = $written;
