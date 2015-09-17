@@ -5,6 +5,9 @@
 	{
 		private $mongo_conn;
 		
+		//these are the mongo fields needed to generate a thumbnail preview div 
+		private $preview_fields = array( "_id"=>true, "category"=>true, "title"=>true, "description"=>true, "lastModified"=>true, "author"=>true, "thumbnail"=>true );				
+		
 		public function __construct( $mongo_conn )
 		{
 			$this->mongo_conn = $mongo_conn;
@@ -44,7 +47,7 @@
 			$start_d = new MongoDate( $after );
 			$count = $GLOBALS['amount_on_main_page']+1; //get one extra so we can tell if there is a next page
 			$collection = $this->db->posts;	
-		    $fields = array( "_id"=>true, "category"=>true, "title"=>true, "description"=>true, "lastModified"=>true, "author"=>true, "thumbnail"=>true );				
+		    $fields = $this->preview_fields;				
 			$cursor = $collection->find( array( "category"=>$cat, "lastModified"=>array( '$lt'=>$start_d ) ), $fields )
 			->limit($count)
 			->sort( array( 'lastModified' => -1 ) );
@@ -148,8 +151,10 @@
 		public function getPreviousPostsFromTimestamp( $cat, $time_stamp ){
 			$mongo_date = new MongoDate( $time_stamp );
 			$collection = $this->db->posts;
-			$fields = array( "_id"=>true, "title"=>true, "lastModified"=>true );					
-			$cursor = $collection->find( array( "category"=>$cat, "lastModified"=>array( '$lt'=>$mongo_date ) ), $fields )->limit(1)->sort( array( 'lastModified' => -1 ) );
+			$fields = $this->preview_fields;
+			$cursor = $collection->find( array( "category"=>$cat, "lastModified"=>array( '$lt'=>$mongo_date ) ), $fields )
+			->limit(1)
+			->sort( array( 'lastModified' => -1 ) );
 			return $cursor;
 		}
 		
