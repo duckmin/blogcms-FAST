@@ -476,18 +476,20 @@
 	var edit_table_template="<table class='manage-table' >"+
 	"<thead>"+
     	"<tr>"+
+    	    "<th></th>"+
     		"<th>Created</th>"+
     		"<th>Action</th>"+
     	"</tr>"+
 	"</thead>"+
 	"<tbody>"+
     "<tr data-postid='{{ id }}' >"+	
+    	"<td><img src='/thumb/{{ thumbnail }}' alt='no thumb' ></td>"+
     	"<td class='date' >{{ created }}<br> By: <b>{{ author }}</b></td>"+
     	"<td>"+
     		"<input type='hidden' name='id' value='{{ id }}' />"+
-    		"<img src='"+constants.base_url+"/style/resources/pencil.png' title='Edit Post' onclick='editPostAction( this )' />"+
-    		"<img src='"+constants.base_url+"/style/resources/clock.png' title='Make most recent post (move to top of the)' onclick='postMoveToTop( this )' />"+
-    		"<img src='"+base_url+"/style/resources/action_delete.png' title='Delete Post' onclick='deletePostAction( this )' />"+
+    		"<img src='/style/resources/pencil.png' title='Edit Post' onclick='editPostAction( this )' />"+
+    		"<img src='/style/resources/clock.png' title='Make most recent post (move to top of the)' onclick='postMoveToTop( this )' />"+
+    		"<img src='/style/resources/action_delete.png' title='Delete Post' onclick='deletePostAction( this )' />"+
     	"</td>"+
     "</tr>"+
 	"</tbody>"+

@@ -2,7 +2,7 @@
 	require_once dirname(__FILE__)."/../configs.php";
 		
 	class ImageModifier {
-        private static $quality = 25;
+        private static $quality = 35;
         private static $thumbnail_width = 100; //this is px width of thumbnail        
         
   		public static function createThumbFromExistingImage( $image_path ){

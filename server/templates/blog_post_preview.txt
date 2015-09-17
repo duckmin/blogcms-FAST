@@ -1,6 +1,16 @@
 <article class="preview {{ page_category }}">
-	<img src="/thumb/{{ thumbnail }}" alt="thumbnail image for {{ title }}" >
-	<p><a href="{{ base }}/post/{{ page_category }}/{{ year }}/{{ month }}/{{ day }}/{{ safe_title }}">{{ title }}</a></p>
-	<p data-ts="{{ time_stamp }}" >{{ created }} <span>By:</span> {{ author }}</p>
-	<p>{{ description }}</p>
+	<ul>
+	   <li>
+	       <a href="{{ base }}/post/{{ page_category }}/{{ year }}/{{ month }}/{{ day }}/{{ safe_title }}">
+	           <img src="/thumb/{{ thumbnail }}" alt="thumbnail image for {{ title }}" >
+	       </a>
+	   </li>
+	   <li>
+	       <p class="title" >
+	           <a class="title" href="{{ base }}/post/{{ page_category }}/{{ year }}/{{ month }}/{{ day }}/{{ safe_title }}">{{ title }}</a>
+	       </p>
+	       <p><span data-ts="{{ time_stamp }}" >{{ created }}</span> <b>By: {{ author }}</b></p>
+	       <p>{{ description }}</p>
+	   </li>
+	</ul>
 </article>

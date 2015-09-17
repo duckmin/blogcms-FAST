@@ -39,8 +39,7 @@
     	$template = file_get_contents( $GLOBALS['template_dir']."/base_page.txt" );
     	$title = $cat." - ".$_SERVER['HTTP_HOST'];		
     	$desc= $_SERVER['HTTP_HOST']." - browse ".$cat;
-		$scripts = "<script src='/scripts/page_actions/main_analytics.js'></script>";
-        $scripts .=( $post_views->lazy_load_imgs )? "<script src='/scripts/page_actions/blog_scroll_actions.js'></script>" : "";
+        $scripts = ( $post_views->lazy_load_imgs )? "<script src='/scripts/page_actions/blog_scroll_actions.js'></script>" : "";
 		
 		$tmplt_data = array();
 		$tmplt_data["title"] = $title;

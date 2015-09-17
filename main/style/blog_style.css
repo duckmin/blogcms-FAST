@@ -97,19 +97,44 @@ article.preview{
 	overflow:hidden;
 }
 
-article.preview > img {
-	float:left;
-	margin-right:1rem;
+article.preview > ul {
+
+    list-style-type: none;
 }
 
-article.preview > p:first-of-type > a {
-	font-size: 1.2em;
-    line-height:0.9em;
+article.preview > ul > li {
+    display:inline-block;
+    vertical-align: top;
 }
 
-article.preview > p:first-of-type {
-	font-size: 1.2em;
-    line-height:0.9em;
+article.preview > ul > li:last-of-type {
+    padding-left: 0.5rem;   
+}
+
+article.preview > ul > li:last-of-type .title {
+    font-size: larger;
+    font-weight:600;
+    line-height:1.2em;
+}
+
+article.preview > ul > li:last-of-type p:first-of-type {
+	/*font-size: 1.7em;
+    font-weight:600;*/
+}
+
+article.preview > ul > li:last-of-type p:nth-child(2) {
+	font-size: 0.8em;
+    color:gray;
+}
+
+article.preview > ul > li:last-of-type p:nth-child(2) > span {
+    color:lightgray;
+    margin-right:5px;
+}
+
+article.preview > ul > li:last-of-type p:nth-child(3) {
+	font-size: 1.4em;
+    color:dimgray;
 }
 
 article.preview a {
