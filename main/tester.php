@@ -24,11 +24,7 @@
 
 	//$parser = new Parsedown();
 	
-$t = 'Hello _Parsedown_! whus good my ninja
-I am a<b>baws</b> of this number
-munchin ass niga shit mein!
-	
-#_I am a king of this shite_';
+$t = 'Hello _Parsedown_! whats good my ninja';
 	
 	//echo $parser->text( $t );
 

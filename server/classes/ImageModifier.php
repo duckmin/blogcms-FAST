@@ -3,6 +3,7 @@
 		
 	class ImageModifier {
         private static $quality = 35;
+        private static $png_quality = 4;
         private static $thumbnail_width = 100; //this is px width of thumbnail        
         
   		public static function createThumbFromExistingImage( $image_path ){
@@ -31,6 +32,14 @@
           			break;
           	}
 			$img_p = imagecreatetruecolor( $aspect_width, $aspect_height ); //frame for img to be copied into
+			
+			//preserve transparency 
+			if($mime_type == "image/gif" or $mime_type == "image/png"){
+				imagecolortransparent($img_p, imagecolorallocatealpha($img_p, 0, 0, 0, 127));
+			    imagealphablending($img_p, false);
+			    imagesavealpha($img_p, true);
+			}
+			
 			imagecopyresampled($img_p, $img, 0, 0, 0, 0, $aspect_width, $aspect_height, $width, $height);
 			
 			//save resized img canvas to new src
@@ -42,7 +51,7 @@
            		    $result = imagegif($img_p, $thumb_path, self::$quality); 
       				break;
       			case "image/png":
-          			$result = imagepng($img_p, $thumb_path, self::$quality); 
+          			$result = imagepng($img_p, $thumb_path, self::$png_quality); 
           			break;
           	}
 			return array( "result"=>$result, "thumb_path"=>$thumb_path, "mime"=>$mime_type );

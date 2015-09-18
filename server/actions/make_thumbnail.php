@@ -30,6 +30,8 @@
 		    	    $grid = $db->blog->getGridFS();
 		    	    $storedfile = $grid->storeFile( $thumb_path, $meta_data );
 		    	    unlink($thumb_path);
+		    	    $success = true;
+		    	    $message = "Thumbnail Created";
 		    	}catch( MongoGridFSException $e ){
 		    		$message = "Already a thumbnail";
 		    		//$message = $e->getMessage();

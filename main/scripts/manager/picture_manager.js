@@ -9,13 +9,13 @@ var resources_templates = {
 	
 	"image":"<li class='file' data-filename='{{ resource_name }}' data-modified='{{ modified }}' >"+
 		"<img src='/style/resources/image.png' title='Add Picture to Template' data-picturepath='{{ server_path }}' onclick='resources_action.pictureClick(this)' onmouseover='imageOver(this)' onmouseout='imageOut(this)' />"+
-		"<img src='/style/resources/action_delete.png' title='Delete Resource' data-filepath='{{ server_path }}' onclick='deleteResource(this)' />"+		
+		"<img src='/style/resources/action_delete.png' title='Delete Resource' data-filepath='{{ server_path }}' onclick='resources_action.deleteResource(this)' />"+		
 		"<span>{{ resource_name }}</span>"+
 	"</li>",
 	
 	"audio":"<li class='file' >"+
 		"<img src='/style/resources/audio.png' title='Add Audio to Template' data-audiopath='{{ server_path }}' onclick='audioClick(this)' />"+
-		"<img src='/style/resources/action_delete.png' title='Delete Resource' data-filepath='{{ server_path }}' onclick='deleteResource(this)' />"+			
+		"<img src='/style/resources/action_delete.png' title='Delete Resource' data-filepath='{{ server_path }}' onclick='resources_action.deleteResource(this)' />"+			
 		"<span>{{ resource_name }}</span>"+
 	"</li>"
 }
@@ -100,13 +100,19 @@ resources_action.listSubDirectories = function(element){
     }
 }
 
-function deleteResource( elm ){
+resources_action.deleteResource = function( elm ){
 	var message = "Are You Sure You Want to Delete This Resource?";
 	showConfirm( message, false, elm, function(element){ //calback function fired if yes is selected
-		var file_path = element.getAttribute( 'data-filepath' ),//path from file from /main root	
+		var parent_li = element.nearestParent("li"),
+		file_path = element.getAttribute( 'data-filepath' ),//path from file from /main root	
 		send={ "file_path":file_path };
+		if( parent_li.hasAttribute("data-modified") && parent_li.hasAttribute("data-filename") ){
+			//if this is an image we send the thumbname to the service so the thumbnail can get deleted using the name as a key
+			var modified = parent_li.getAttribute("data-modified"),
+			filename = parent_li.getAttribute("data-filename");
+			send.thumbnail_key = modified+filename;
+		}
 		controller.postJson( constants.ajax_url+'?action=9', send, function(d){
-			//var resp = JSON.parse( d);
 			if( d !== "" ){
 				var resp = JSON.parse( d );
 				if( resp.result ){
