@@ -29,7 +29,7 @@
 		    	    $db = MongoConnection();
 		    	    $grid = $db->blog->getGridFS();
 		    	    $storedfile = $grid->storeFile( $thumb_path, $meta_data );
-		    	    unlink($thumb_path);
+		    	    unlink($thumb_path); //once thumb is stored in mongo remove temporary thumbnail from filesystem
 		    	    $success = true;
 		    	    $message = "Thumbnail Created";
 		    	}catch( MongoGridFSException $e ){
