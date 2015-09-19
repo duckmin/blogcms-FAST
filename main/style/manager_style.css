@@ -184,6 +184,10 @@ section[data-tab='preview'], section[data-tab='posts'], section[data-tab='analyt
 	border-bottom:none;
 }
 
+section[data-tab='preview'] section.main > article:first-of-type {
+    margin-top: 2rem;
+}
+
 section[data-tab='analytics']{
 	background-color:white;
 }
@@ -311,20 +315,21 @@ section[data-tab='template'] .save-preview-popup{
 	margin-left:-10px;
 }
 
-.manage-table {
-	width:40%;
-	border-collapse:collapse;
-	border:1px solid black;
-	border-top:none;
-	background-color: lightgoldenrodyellow;
-}
-
 /*no shadow on posts tab so table can align underneath*/
 section[data-tab='posts'] article.post {
     box-shadow:none;   
     border-right:1px dotted black;
     border-bottom:1px solid black;
     margin-top:4rem;
+}
+
+section[data-tab='posts'] article.post + div {
+    overflow:auto;
+}
+
+section[data-tab='posts'] article.post + div > img {
+    float:left;    
+    margin:0 10px;
 }
 
 /* reduce the margin of .ain first-child (post) */
@@ -341,10 +346,32 @@ div#post-space > article:first-child{
     background-color:salmon;   
 }
 
+.manage-table {
+	border-collapse:collapse;
+	border:1px solid black;
+	border-top:none;
+	background-color: lightgoldenrodyellow;
+}
+
+
 .manage-table tr td{
-	text-align: center;
-	vertical-align: middle;
-	padding-bottom:0.5em;	
+	text-align: left;
+	vertical-align: bottom;
+	padding:0.5em 1rem;	
+}
+
+.manage-table td.categories{
+    
+    vertical-align:bottom;    
+}
+
+.manage-table td.categories li{
+    list-style-type:none;  
+    font-size:0.8em; 
+}
+
+.manage-table td.categories li.current-cat{
+    text-decoration:underline;
 }
 
 section > table.manage-table {
@@ -361,13 +388,16 @@ section > table.manage-table {
 
 td.date {
 	font-size:0.75em;
-	text-align:center;
 }
 
 .manage-table thead th{
 	font-weight:600;
 	color:black;
-	font-size:0.8em;   
+	font-size:0.8em; 
+	text-align: left; 
+	padding:0 1rem; 
+	border-bottom:1px solid black;
+	border-right:1px solid black;
 }
 
 .manage-table tbody tr td:last-child img{

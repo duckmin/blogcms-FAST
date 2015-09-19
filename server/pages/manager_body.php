@@ -90,7 +90,7 @@
 		
 		<ul class="button-list" >
 			<li data-templateaction="preview-post" >
-				Preview
+				Preview Post
 			</li>
 		</ul>
 		

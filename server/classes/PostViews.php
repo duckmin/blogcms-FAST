@@ -139,12 +139,23 @@
 				$options .= $pre_opt." >".$post_cat."</option>";		
 			}
 			return $options;
+		}
+		
+		private function getPostCategoriesAsLis( $post_categoies, $page_category ){
+			$lis="";
+			foreach( $post_categoies as $post_cat ){ 
+				$pre_li = "<li";
+				( $page_category !== "" && $post_cat === $page_category )? $pre_li .= " class='current-cat' " : false;
+				$lis .= $pre_li.">".$post_cat."</li>";		
+			}
+			return $lis;
 		}				
 		
 		//for actions/get_post_info.php we must modify the posting to put in the form
 		public function generateModifedListingForPostInfo( $row, $page_cat ){
 			$row = $this->convertRowValues( $row );
 			//$row["post_type_options"] = $this->getSelectedOption( $row['category'] ); //dont need anymore, no longer save this on posts tab in manager
+			$row["category_lis"] = $this->getPostCategoriesAsLis( $row['category'], $page_cat );
 			$row["page_category"] = $page_cat; //for link to post on manager tab
 			return $row;
 		}

@@ -291,11 +291,17 @@
 		return holder
 	}
 	
-	function previewPost(){
-		var post_data = getPostDataFromTemplate();
-		console.log( post_data );
+	var templateaction = {};
+	
+	templateaction.previewPost = function(){
+		var template_data = getPostDataFromTemplate(),
+		save_form = gEBI("save-preview-popup"),
+		form_class = new FormClass( save_form ),
+		form_data = form_class.getValues(),
+		post_data = { template_data:template_data, post_data:form_data };
+		console.log(   );
 		
-		if( post_data.length > 0 ){
+		if( template_data.length > 0 ){
 			controller.postJson( constants.ajax_url+'?action=1', post_data, function(d){
 				console.log( d );
 				if( d.length > 0 ){
@@ -339,8 +345,6 @@
 		}
 	}
 	
-	var templateaction = {};
-	
 	templateaction.clearTemplateForm = function(){
 		var save_form = gEBI("save-preview-popup"),
 		form_class = new FormClass( save_form );
@@ -383,7 +387,7 @@
 			},
 			"preview-post":function(elm){
 				elm.addEvent( "click", function(e){
-					previewPost();
+					templateaction.previewPost();
 				})
 			},
 			"cancel-template":function(elm){
@@ -473,17 +477,18 @@
 //POSTS TAB EDIT FUNCS -----------------------------------------------------------------------------------------------------
 
 	window.POSTS_TABLE_PAGENUM = 1;
-	var edit_table_template="<table class='manage-table' >"+
+	var edit_table_template="<div><img src='/thumb/{{ thumbnail }}' alt='no thumb' >"+
+	"<table class='manage-table' >"+
 	"<thead>"+
     	"<tr>"+
-    	    "<th></th>"+
+    	    "<th>Categories</th>"+
     		"<th>Created</th>"+
-    		"<th>Action</th>"+
+    		"<th>Actions</th>"+
     	"</tr>"+
 	"</thead>"+
 	"<tbody>"+
     "<tr data-postid='{{ id }}' >"+	
-    	"<td><img src='/thumb/{{ thumbnail }}' alt='no thumb' ></td>"+
+    	"<td class='categories' ><ul>{{ category_lis }}</ul></td>"+
     	"<td class='date' >{{ created }}<br> By: <b>{{ author }}</b></td>"+
     	"<td>"+
     		"<input type='hidden' name='id' value='{{ id }}' />"+
@@ -493,7 +498,7 @@
     	"</td>"+
     "</tr>"+
 	"</tbody>"+
-	"</table>";
+	"</table></div>";
 	
 	window.searcher = {
 	    "frozen":false,
