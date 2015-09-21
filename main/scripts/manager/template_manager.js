@@ -492,9 +492,10 @@
     	"<td class='date' >{{ created }}<br> By: <b>{{ author }}</b></td>"+
     	"<td>"+
     		"<input type='hidden' name='id' value='{{ id }}' />"+
-    		"<img src='/style/resources/pencil.png' title='Edit Post' onclick='editPostAction( this )' />"+
-    		"<img src='/style/resources/clock.png' title='Make most recent post (move to top of the)' onclick='postMoveToTop( this )' />"+
-    		"<img src='/style/resources/action_delete.png' title='Delete Post' onclick='deletePostAction( this )' />"+
+    		"<img src='/style/resources/pencil.png' title='Edit Post' onclick='editPostAction(this)' />"+
+    		"<img src='/style/resources/clock.png' title='Make most recent post (move to top of the)' onclick='postMoveToTop(this)' />"+
+    		"<img src='/style/resources/action_delete.png' title='Delete Post' onclick='deletePostAction(this)' />"+
+    		"<img src='/style/resources/chart.gif' title='View Analytics' onclick='getAnalyticsGraph(this)' >"+
     	"</td>"+
     "</tr>"+
 	"</tbody>"+
@@ -593,12 +594,24 @@
 		getPostHtml:function( id, cat, callback ){
 		    controller.getText( constants.ajax_url+'?action=15&id='+id+'&cat='+cat, function(post_html){
 	            callback( post_html );
-	            /*var post_tab_posting = gEBI(id);
-	            if( post_tab_posting ! == null ){
-	                 
-	            } */ 
 		    });
 		}
+	}
+	
+	window.getAnalyticsGraph = function( element ){
+		var form_values=table_actions.getTrValues( element ),
+		send = { url:form_values.id },
+		table_div = element.nearestParent("div"), //send id to get all view for posting, which category does not matter 
+		chart_div = 
+		controller.postJson( constants.ajax_url+'?action=12', send, function(d){
+			var resp = JSON.parse( d);
+			if( resp.length > 0 ){
+				console.log( resp );
+				//use d3 to generate a graph?	
+			}else{
+				//showAlertMessage( "No Data For Date Range Selected", false );
+			}
+		})
 	}
 	
 	window.deletePostAction = function( element ){

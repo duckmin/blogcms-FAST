@@ -152,10 +152,10 @@
 		}				
 		
 		//for actions/get_post_info.php we must modify the posting to put in the form
-		public function generateModifedListingForPostInfo( $row, $page_cat ){
+		public function generateModifedListingForPostInfo( $row, $page_cat, $display_cat ){
 			$row = $this->convertRowValues( $row );
 			//$row["post_type_options"] = $this->getSelectedOption( $row['category'] ); //dont need anymore, no longer save this on posts tab in manager
-			$row["category_lis"] = $this->getPostCategoriesAsLis( $row['category'], $page_cat );
+			$row["category_lis"] = $this->getPostCategoriesAsLis( $row['category'], $display_cat );
 			$row["page_category"] = $page_cat; //for link to post on manager tab
 			return $row;
 		}

@@ -1,7 +1,8 @@
 (function(window){
 
 addEvent(window, "beforeunload", function(e){
-	var send = encodeURIComponent("url")+"="+encodeURIComponent(window.location.pathname);	
+	var analytics_key = document.querySelector("article.post").id,
+	send = encodeURIComponent("url")+"="+encodeURIComponent(analytics_key);	
 	Ajaxer({
 		url:constants.ajax_url+'?action=10',
 		method:"POST",

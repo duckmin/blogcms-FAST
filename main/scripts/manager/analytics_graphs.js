@@ -1,6 +1,6 @@
 (function(window){
 
-	var myAxes = {
+	window.myAxes = {
         Views:{
             keys:["views"],
             position:"right",
@@ -18,7 +18,7 @@
     };
 
 
-	var styleDef = {
+	window.styleDef = {
 	    axes:{
 	        Views:{
 	            label:{

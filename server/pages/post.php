@@ -23,7 +23,7 @@
 		$db_getter = new MongoGetter( $db );
 		$post_views = new PostViews( new Parsedown() );
 		$non_hyphenated_title = $post_views->convertPostTitleHyphensToSpaces( $title );
-		$single_post_data = $db_getter->getSingleRowFromDate( $non_hyphenated_title, $start, $end ); //NULL if not found	
+		$single_post_data = $db_getter->getSingleRowFromDate( $non_hyphenated_title, $start, $end ); //NULL if not found\	
 	}catch( MongoException $e ){
 		//echo $e->getMessage();
 		//Mongo error, go to 404 page		
@@ -32,6 +32,7 @@
 	}	
 		
 	if( $single_post_data !== NULL ){
+		$single_post_data["show_id"] = true; //show id on post so analytics can track views by ID
 		$page_template = file_get_contents( $GLOBALS['template_dir']."/base_page.txt" );
 		$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );
 		$tmplt_data = array();

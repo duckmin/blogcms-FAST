@@ -12,8 +12,8 @@
 		//$end_date = new DateTime( $json['end_date'] );
 		//$start = $start_date->format( DateTime::ISO8601 );
 		//$end = $end_date->format( DateTime::ISO8601 );
-		$start = strtotime( $json['start_date'] );
-		$end = strtotime( $json['end_date'] );
+		$start = ( isset($json['start_date']) )? strtotime( $json['start_date'] ) : strtotime( date( "m/d/Y", strtotime("-1 week") ) );
+		$end = ( isset( $json['end_date'] ) )? strtotime( $json['end_date'] ) : strtotime( date( "m/d/Y") );
 		$data = $db_getter->getPageCountsByUrlAndDateRange( $url, $start, $end );
 		
 		foreach( $data as $row ){
