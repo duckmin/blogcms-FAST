@@ -82,6 +82,7 @@
 			$db = $m->$GLOBALS['mongo_db_name'];
 			$collection = $db->posts;
 			$author = $_SESSION['user'];
+			$hashtags = PostUtils::extractHashtagsFromPostData( $post_data );  //any #hash in markdown block will get saved so it can be searched on 
 			
 			//procedure 1 create new listing with post_data
 			if( $procedure === 1 ){
@@ -94,7 +95,8 @@
 			   		'post_data'=> $post_data,
 			   		'lastModified'=>new MongoDate(),
 			   		'thumbnail'=>$thumbnail_path,
-			   		'author'=>$author
+			   		'author'=>$author,
+			   		'hashtags'=>$hashtags
 				);
 				$write_result = $collection->insert($document);				
 				$written = ( $write_result['ok'] >= 1 )? true : false;			
@@ -111,7 +113,8 @@
 						"title"=>$title, 
 						"description"=>$desc, 
 						"post_data"=>$post_data, 
-						"thumbnail"=>$thumbnail_path 
+						"thumbnail"=>$thumbnail_path,
+						"hashtags"=>$hashtags
 					) 
 				);	
 				$write_result = $collection->update( array( "_id"=>$mongo_id ), $update_array );

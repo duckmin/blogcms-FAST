@@ -18,6 +18,10 @@
 				$file = '/server/pages/search_page.php';
 				break;
 				
+			case "hashtag":
+				$file = '/server/pages/hashtag.php';
+				break;
+				
 			case "ajax":
 				$file = '/server/pages/ajax.php';
 				break;

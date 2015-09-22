@@ -36,19 +36,18 @@
 			return $str.$paginator;
 		}
 		
-		/* OLD WAY, SHOWS ENTIRE POST ON PAGE AND NOT A PREVIEW
-		public function getHomePagePostsByTime( $time, $cat ){
+		public function getHashtagPostsByTime( $time, $hashtag ){
 			$str="";
-			$posts_from_db = $this->mongo_getter->getHomePagePostsFromDbByCategoryAfterDate( (int)$time, $cat );
+			$posts_from_db = $this->mongo_getter->getHashtagPreviewsAfterDate( (int)$time, $hashtag );
 			$L = $posts_from_db->count(true);
 			if( $L === 0 ){ 
-				//no results return false and we will send them to 404 (paginator logic should not allow this to happen)
+				//no results return false and send to 404 (paginator logic should not allow this to happen)
 				return false;
 			}
 			$post_array = iterator_to_array($posts_from_db, false);
 			if( $L > $GLOBALS['amount_on_main_page'] ){
 				array_pop( $post_array );
-				$url_add = $cat;
+				$url_add = "hashtag/$hashtag";
 				$last_item = end($post_array);
 				$last_timestamp = $last_item["lastModified"]->sec;
 				$paginator_template = file_get_contents( $GLOBALS['template_dir']."/paginator.txt" );
@@ -56,13 +55,14 @@
 			}else{
 				$paginator = "";
 			}
-			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );		
+			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post_preview.txt" );		
 			foreach( $post_array as $single ){		
-				$post_html = $this->post_views->makePostHtmlFromData( $single, $cat, $post_template ); //pass in cat because post can have multiple cats and we want to know which one we are looking at				$str .= $post_html;
+				$category = $single["category"][0];  //since hashtag has no page cat, use first cat for every posting
+				$post_html = $this->post_views->makePostPreviewHtmlFromData( $single, $category, $post_template ); //use default cat since hashtag posts have no category				$str .= $post_html;
 			}
 			return $str.$paginator;
-		}*/
-
+		}
+		
 		public function getSearchPagePostsAfterTime( $time, $cat, $search ){
 			$str="";
 			$search = trim( $search );
@@ -85,9 +85,9 @@
 			}else{
 				$paginator = "";
 			}
-			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );		
+			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post_preview.txt" );		
 			foreach( $post_array as $single ){		
-				$post_html = $this->post_views->makePostHtmlFromData( $single, $cat, $post_template ); //pass in cat because post can have multiple cats and we want to know which one we are looking at				$str .= $post_html;
+				$post_html = $this->post_views->makePostPreviewHtmlFromData( $single, $cat, $post_template ); //pass in cat because post can have multiple cats and we want to know which one we are looking at				$str .= $post_html;
 			}
 			return $str.$paginator;
 		}

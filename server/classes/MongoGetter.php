@@ -54,6 +54,18 @@
 			return $cursor;
 		}
 		
+		public function getHashtagPreviewsAfterDate( $after, $hashtag ){ //only select info for previews
+			$start_d = new MongoDate( $after );
+			$count = $GLOBALS['amount_on_main_page']+1; //get one extra so we can tell if there is a next page
+			$collection = $this->db->posts;	
+		    $fields = $this->preview_fields;				
+			$cursor = $collection->find( array( "hashtags"=>$hashtag, "lastModified"=>array( '$lt'=>$start_d ) ), $fields )
+			->limit($count)
+			->sort( array( 'lastModified' => -1 ) );
+			return $cursor;
+		}
+		
+		//not used??
 		public function getHomePagePostsFromDbByCategoryAfterDate( $after, $cat ){		
 			$start_d = new MongoDate( $after );
 			$count = $GLOBALS['amount_on_main_page']+1; //get one extra so we can tell if there is a next page
@@ -68,8 +80,9 @@
 			$start_d = new MongoDate( $after );
 			$count = $GLOBALS['amount_on_main_page']+1; //get one extra so we can tell if there is a next page
 			$collection = $this->db->posts;	
+			$fields = $this->preview_fields;
 			$q = array( "category"=>$cat, '$text'=>array( '$search'=>$search ), "lastModified"=>array( '$lt'=>$start_d ) );
-			$cursor = $collection->find( $q )
+			$cursor = $collection->find( $q, $fields )
 			->limit($count)
 			->sort( array( 'lastModified' => -1 ) );
 			return $cursor;

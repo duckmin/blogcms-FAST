@@ -179,6 +179,10 @@ article.post > embed {
 	line-height:1.4em;
 }
 
+.main article.post b{	
+	font-weight:600;
+}
+
 .main article.post ul{
 	list-style-type: square;
 	font-size:1.5em;
@@ -225,7 +229,7 @@ article.post > embed {
 	border:none;
 }
 
-.main article.post blockquote > p{
+.main article.post blockquote {
 	font-size:1.3em;
 	background-repeat: no-repeat;
 	background-position:left center;
@@ -233,15 +237,15 @@ article.post > embed {
 	font-family: "Courier New",Courier,"Lucida Sans Typewriter","Lucida Typewriter",monospace;
 }
 
-.main article.post img + blockquote > p{
+.main article.post img + blockquote {
 	background-image: url('resources/arrow-31-16.png');
 	padding-left:18px;
 	margin-left:10px;
 }
 
-blockquote > p{
+blockquote {
 	background-image: url('resources/quotes.png');
-	padding-left:48px;
+	padding-left:55px;
 	margin-left:10px;
 }
 
