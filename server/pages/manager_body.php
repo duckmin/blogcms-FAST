@@ -75,6 +75,9 @@
 					</li>
 				</ul>
 			</li>
+			<li data-templateaction="show-markdown-help" >
+				Markdown Help			
+			</li>
 			<li class="hide" id="edit-mode-form" >
 				<input class="hide" type="checkbox" name="edit_mode" />
 				<input type="hidden" name="id_in_edit" /> 
@@ -85,14 +88,7 @@
 		</ul>
 		
 		
-		<ul class="template" id="template" >
-		</ul>
-		
-		<ul class="button-list" >
-			<li data-templateaction="preview-post" >
-				Preview Post
-			</li>
-		</ul>
+		<ul class="template" id="template" ></ul>
 		
 		<div class='save-preview-popup form' id='save-preview-popup' >
 			<label>Category:</label>
@@ -114,8 +110,8 @@
 			<textarea name="description" ></textarea>
 
 			<ul class="button-list" >
-				<li data-templateaction="save-new-post" >
-					Save
+				<li data-templateaction="preview-post" >
+					Preview Post
 				</li>
 				<li data-templateaction="cancel-template" class="red-button" >
 					Cancel
@@ -127,7 +123,12 @@
 	<section data-tab='preview' >	
 		<section class='main' id='preview' >
 		
-		</section>		
+		</section>
+		<ul class="button-list" >
+			<li data-templateaction="save-new-post" >
+				Save
+			</li>
+		</ul>		
 	</section>
 	
 	<section data-tab='posts' >
@@ -218,7 +219,7 @@
 	</div>
 </div>
 
-<div class='dark-shade' id="blogdown-popup" >
+<div class='dark-shade hide' id="blogdown-popup" >
 	<div class='save-preview-popup' >
 		<table class="popup-table" >
             <thead>
@@ -279,36 +280,42 @@
                 <tr>
                     <td colspan="2" >
                         <h4>you type:</h4>
-<pre>
+<textarea readonly="" style="height:485px;background-color:white;width:calc(100% - 5px);" >
 ! Headings must be on their own line with a space underneath
 
 #BlogDown as a simple way to markup blog posts.
 @ http://google.com | links | can be created in any block. **bold**,
 ~~strike ~~ and __italics__ can be used anywhere or **~~__combination__~~**!.
 
-!!!! Blog down is simple yex flexible
+!!!! Blog down is simple yet flexible
 
 > **quotes** must be own their __own line__
+
+A am a __lonely__ paragraph. Whether a paragraph, list, quote, or heading you 
+must put a line of space between each seperate block. 
 
 - each list **item** is a - then a space then text
 - must be kept on its own line
 - @ http://google.com | links | **bold** ~~__anything__~~ is #accepted
-</pre>
+</textarea>
                     </td>               
                 </tr>
                 <tr>
                     <td colspan="2" class="main" >
                         <h4>you see:</h4>
-                            <article class="post">
+                            <article class="post" style="">
                                 <h1>Headings must be on their own line with a space underneath</h1>
                                 
-                                <p><a href="/hashtag/BlogDown">BlogDown</a> as a simple way to markup blog posts.
+                                <p><a href="/hashtag/blogdown">#BlogDown</a> as a simple way to markup blog posts.
                                 <a href="http://google.com">links</a> can be created in any block. <b>bold</b>,
                                 <s>strike</s> and <em>italics</em> can be used anywhere or <b><s><em>combination</em></s></b>!.</p>
                                 
-                                <h4>Blog down is simple yex flexible</h4>
+                                <h4>Blog down is simple yet flexible</h4>
                                 
                                 <blockquote><b>quotes</b> must be own their <em>own line</em></blockquote>
+                                
+                                <p>A am a <em>lonely</em> paragraph. Whether a paragraph, list, quote, or heading you 
+								must put a line of space between each seperate block. </p>
                                 
                                 <ul>
                                     <li>each list <b>item</b> is a - then a space then text</li>
@@ -320,7 +327,7 @@
                 </tr>               
             </tbody>		
 		</table>
-		<ul class="button-list" >
+		<ul class="button-list" style="margin-bottom:10px;" >
 			<li class="red-button" data-templateaction="close-popup" >
 				Close			
 			</li>

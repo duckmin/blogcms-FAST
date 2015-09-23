@@ -97,7 +97,7 @@
 
 .tmplt-forum-container textarea{
 	width:75%;
-	height:155px;
+	height:205px;
 }
 
 .tmplt-forum-container input{
@@ -539,8 +539,12 @@ li.add-folder-li img{
 }
 
 /*blogdown explanation table*/
-.height-box{
-    height:100vh;   
+#blogdown-popup > div{
+	margin-top:0;
+	height:calc( 100vh - 10px );
+	overflow-y:auto;
+	width:35%;
+	margin:auto;
 }
    
 .popup-table {

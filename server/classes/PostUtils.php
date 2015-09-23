@@ -11,8 +11,8 @@
 				if( $post_type === "markdown" ){
 					 //$hash_matches = array();
 					 preg_match_all( "/#{1}([A-z0-9]+)/", $post_item["text"], $hash_matches );
-					 if( isset($hash_matches[1]) ){
-					 	 $hashes = array_merge ( $hashes, $hash_matches[1] );
+					 if( isset($hash_matches[1]) ){ 
+					 	 $hashes = array_merge ( $hashes, array_map("strtolower", $hash_matches[1]) );  //lower case all hashes
 					 }
 				}
 			}

@@ -44,7 +44,8 @@ class Parsedown {
 			
 			//turn all hashtags into links for hashtag pages
 			$block = preg_replace_callback( "/#{1}([A-z0-9]+)/", function($m){
-				return "<a href=\"/hashtag/$m[1]\">$m[1]</a>";
+				$lower_case_hash = strtolower($m[1]);
+				return "<a href=\"/hashtag/$lower_case_hash\">#$m[1]</a>";
 			}, $block );
 			
 			return $block;

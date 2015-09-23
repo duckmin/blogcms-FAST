@@ -336,6 +336,8 @@
 					//tab_actions.tabShow( document.querySelector('[data-tab=template]') );
 					//window.location.hash = "#template";
 					templateaction.clearTemplateForm();
+					gEBI('template').removeChildren(); //clear preview from template
+					window.location.hash = "#template";
 					
 				}
 				showAlertMessage( resp.message, resp.result );
@@ -440,7 +442,7 @@
 			"save-new-post":function(elm){
 				elm.addEvent( "click", function(e){
 					if( !edit_mode.active() ){
-						var save_form = elm.nearestParentClass( "form" );
+						var save_form = gEBI("save-preview-popup");
 						savePost( save_form );
 					}else{
 						saveEditedPostAction();
@@ -470,6 +472,14 @@
 			"date-picker":function(elm){
 				//initialize date picks in calendar.js
 				setDatePickers(elm)
+			},
+			"show-markdown-help":function(elm){
+				elm.addEvent( "click", function(e){
+					var md_popup = gEBI("blogdown-popup");
+					if( md_popup.hasClass("hide") ){
+						md_popup.removeClass("hide")
+					}
+				})
 			}
 		})
 	})
