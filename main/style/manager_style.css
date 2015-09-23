@@ -346,7 +346,7 @@ div#post-space > article:first-child{
     background-color:salmon;   
 }
 
-.manage-table {
+.manage-table, .popup-table {
 	border-collapse:collapse;
 	border:1px solid black;
 	border-top:none;
@@ -536,6 +536,20 @@ li.add-folder-li img{
 
 .backshade > div > ul > li:nth-child(2){
 	margin-left:40px;
+}
+
+/*blogdown explanation table*/
+.height-box{
+    height:100vh;   
+}
+   
+.popup-table {
+	margin:10px 0;
+}
+
+.popup-table td, .popup-table th {
+	border:1px solid black;
+	padding:5px;
 }
 
 li#edit-mode-form{

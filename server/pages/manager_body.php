@@ -218,5 +218,115 @@
 	</div>
 </div>
 
+<div class='dark-shade' id="blogdown-popup" >
+	<div class='save-preview-popup' >
+		<table class="popup-table" >
+            <thead>
+                <tr>
+                    <th>You Type</th>
+                    <th>You See</th>                 
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@ http://link.com | link text |</td>
+                    <td><a href="http://link.com">link text</a></td>                 
+                </tr> 
+                
+                <tr>
+                    <td>#HashTag</td>
+                    <td>
+                        <p>use hashtags to categorize posts into #hashtag</p>
+                        <a href="/hashtag/HashTag">HashTag</a>
+                    </td>                 
+                </tr> 
+                <tr>
+                    <td>!! Heading</td>
+                    <td>
+                        <h2>Heading</h2>
+                        <p>( The amount of !'s determine the size )</p>
+                        <h1>Less !'s</h1>
+                        <h6>More !!!!!!'s</h6>
+                    </td>                 
+                </tr>
+                <tr>
+                    <td>&gt; add a quoted block</td>
+                    <td><blockquote class="quote-block" >add a quoted block</blockquote></td>                 
+                </tr>  
+                <tr>
+                    <td>- one<br>- two<br>- three</td>
+                    <td>
+                        <ul style="padding-left:20px" >
+                            <li>one</li> 
+                            <li>two</li>
+                            <li>three</li>                       
+                        </ul> 
+                    </td>                 
+                </tr>
+                <tr>
+                    <td>**bold**</td>
+                    <td><b>bold</b></td>                 
+                </tr>  
+                <tr>
+                    <td>__italics__</td>
+                    <td><em>italics</em></td>                 
+                </tr>  
+                <tr>
+                    <td>~~strike~~</td>
+                    <td><s>strike</s></td>                 
+                </tr> 
+                
+                <tr>
+                    <td colspan="2" >
+                        <h4>you type:</h4>
+<pre>
+! Headings must be on their own line with a space underneath
+
+#BlogDown as a simple way to markup blog posts.
+@ http://google.com | links | can be created in any block. **bold**,
+~~strike ~~ and __italics__ can be used anywhere or **~~__combination__~~**!.
+
+!!!! Blog down is simple yex flexible
+
+> **quotes** must be own their __own line__
+
+- each list **item** is a - then a space then text
+- must be kept on its own line
+- @ http://google.com | links | **bold** ~~__anything__~~ is #accepted
+</pre>
+                    </td>               
+                </tr>
+                <tr>
+                    <td colspan="2" class="main" >
+                        <h4>you see:</h4>
+                            <article class="post">
+                                <h1>Headings must be on their own line with a space underneath</h1>
+                                
+                                <p><a href="/hashtag/BlogDown">BlogDown</a> as a simple way to markup blog posts.
+                                <a href="http://google.com">links</a> can be created in any block. <b>bold</b>,
+                                <s>strike</s> and <em>italics</em> can be used anywhere or <b><s><em>combination</em></s></b>!.</p>
+                                
+                                <h4>Blog down is simple yex flexible</h4>
+                                
+                                <blockquote><b>quotes</b> must be own their <em>own line</em></blockquote>
+                                
+                                <ul>
+                                    <li>each list <b>item</b> is a - then a space then text</li>
+                                    <li>must be kept on its own line</li>
+                                    <li><a href="http://google.com">links</a> <b>bold</b> <s><em>anything</em></s> is <a href="/hashtag/accepted">accepted</a></li>
+                                </ul>
+                            </article>
+                    </td>               
+                </tr>               
+            </tbody>		
+		</table>
+		<ul class="button-list" >
+			<li class="red-button" data-templateaction="close-popup" >
+				Close			
+			</li>
+		</ul>
+	</div>
+</div>
+
 </body>
 </html>

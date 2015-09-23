@@ -93,7 +93,6 @@ class Parsedown {
 				//if block starts with a >
 				$block = $this->makeBlockquoteBlock($block);
 			}elseif( preg_match( "/^-\s/", $block ) ){
-				//echo var_dump($block);
 				//if block starts with -
 				$block = $this->makeListBlock($block);
 			}else{

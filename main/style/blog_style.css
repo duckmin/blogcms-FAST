@@ -229,7 +229,7 @@ article.post > embed {
 	border:none;
 }
 
-.main article.post blockquote {
+.main article.post blockquote, .quote-block {
 	font-size:1.3em;
 	background-repeat: no-repeat;
 	background-position:left center;
