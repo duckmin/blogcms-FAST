@@ -1,34 +1,12 @@
 //PUT 'LOADSCRIPTS' 'GETOBJVALFROMSTRING' AND 'MUSTACHE' IN WORKER FRIENDLY LIB IF USING AF
 //LIB THEN TAKE THOSE FUNCTIONS OUT AND LOAD AF BEFORE THIS ONE
 
-/*
-	put array of scripts, then a callback thats called when all scripts are loaded
-	exp.  loadScripts( ['s1.js','s2.js'], function(){ alert(a+b) } );
-*/
-
-//if using element extender remove these as they are in lib
-function loadScripts( script_srcs, callback ){
-	var loaded=0,
-	finished=false,
-	head=document.getElementsByTagName('head')[0],
-	frag = document.createDocumentFragment(),
-	L=script_srcs.length,
-	tag;
-	
-	for( var i=0; i<L; i+=1 ){
-		tag=document.createElement('script');
-		tag.src=script_srcs[i]
-		tag.onload=function(){ 
-			loaded+=1; 
-			if( loaded===L ){
-				callback();
-				finished=true;
-			}
-		}
-		frag.appendChild( tag );
-	}
-	head.appendChild(frag);
-}
+//so onchange event can be fired programatically
+window.onchangeevent = new MouseEvent('change', {
+	'view': window,
+    'bubbles': true,
+    'cancelable': true
+});
 
 //put in obj and a string path to get value or false if undefined
 function getObjValueFromString(obj,name_path){
@@ -161,7 +139,8 @@ FormClass.prototype.bindValues=function( obj ){
 			"input":function( input ){
 				ifObjHasValueCallback( input, function( node, obj_val ){
 					if( node.type==='text' || node.type==='hidden' ){
-						node.value=obj_val
+						node.value=obj_val;
+						node.dispatchEvent(onchangeevent);
 					}
 					if( node.type==='checkbox' ){
 						if( obj_val===true || obj_val===false ){
@@ -252,6 +231,7 @@ FormClass.prototype.clearForm=function(){
 			"input":function( input ){
 				if( input.type==='text' || input.type==='hidden' || input.type==='password' ){
 					input.value="";
+					input.dispatchEvent(onchangeevent);
 				}
 				if( input.type==='checkbox' || input.type==='radio' ){
 					input.checked=false;

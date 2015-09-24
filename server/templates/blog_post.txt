@@ -1,5 +1,7 @@
 <article ##show_id id="{{ id }}" data-postcategory="{{ page_category }}" show_id## class="post {{ page_category }}">
-	<h2><b>{{ title }}</b></h2>
-	<p><b>by: {{ author }}</b> <time data-ts="{{ time_stamp }}" >{{ created }}</time></p>
+	<h2><b>
+		<a href="{{ base }}/post/{{ page_category }}/{{ year }}/{{ month }}/{{ day }}/{{ safe_title }}">{{ title }}</a>
+	</b></h2>
+	<p><b>by: {{ author }}</b>&nbsp;&nbsp;<time data-ts="{{ time_stamp }}" >{{ created }}</time></p>
 	{{ inner }}
 </article>

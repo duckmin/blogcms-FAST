@@ -166,7 +166,7 @@
 			$collection = $this->db->posts;
 			$fields = $this->preview_fields;
 			$cursor = $collection->find( array( "category"=>$cat, "lastModified"=>array( '$lt'=>$mongo_date ) ), $fields )
-			->limit(1)
+			->limit($GLOBALS['amount_of_next_posts'])
 			->sort( array( 'lastModified' => -1 ) );
 			return $cursor;
 		}

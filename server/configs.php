@@ -31,6 +31,9 @@ $GLOBALS['manager_keyword'] = "manager";
 //# of posts that show up per page
 $GLOBALS['amount_on_main_page'] = 4;
 
+//# of post previews that show up underneath post when viewing post url 
+$GLOBALS['amount_of_next_posts'] = 1;
+
 //# of posts that show up on the "posts" tab in the manager
 $GLOBALS['amount_on_manger_tab'] = 5;
 

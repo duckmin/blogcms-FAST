@@ -480,6 +480,22 @@
 						md_popup.removeClass("hide")
 					}
 				})
+			},
+			"thumbnail-input":function(elm){
+				elm.addEvent( "change", function(e){
+					var next = this.nextElementSibling,
+					has_img = ( next !== null && next.nodeName === "IMG" )? true : false;
+					if( has_img ){
+						if( this.value !== "" ){
+							//when value has been changed change existing src 
+							next.src = "/thumb/"+this.value;
+						}else{
+							//if input set to "" use default no thumbail 
+							next.src = "/style/resources/no-thumbnail.png";
+						}
+					}
+				})
+			//end last method
 			}
 		})
 	})

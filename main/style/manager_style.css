@@ -43,7 +43,7 @@
 }
 
 #template {
-	padding:10px 0;
+	padding-top:10px;
 }
 
 #template > li  {
@@ -93,6 +93,25 @@
 	border-radius:3px;
 	font-size:1.3em;
 	padding:3px;
+}
+
+.tmplt-forum-container ul.multi-replace{
+	margin-left:10px;
+}
+
+/* for save post form */
+[data-tab='template'] > div.tmplt-forum-container {
+	border-top:1px solid black;
+}
+
+#template > li:last-child {
+	border-bottom:none;
+}
+
+#thumbnail-space > img {
+	margin-top:0px;
+	height:auto;
+	border:none;
 }
 
 .tmplt-forum-container textarea{

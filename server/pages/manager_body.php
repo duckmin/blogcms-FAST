@@ -13,7 +13,7 @@
 	<link rel='stylesheet' type='text/css' href='style/manager_style.css'>
 	<link rel='stylesheet' type='text/css' href='style/blog_style.css'>
 	<link rel='stylesheet' type='text/css' href='style/date_picker.css'>
-	<script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>	
+	<!--script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script-->	
 	<script src="scripts/element_extender.js" ></script>
 	<script src="scripts/forms.js" ></script>
 	<script src="scripts/globals.js" ></script>	
@@ -24,7 +24,7 @@
 	<script src="scripts/extender_new_tabs.js" ></script>
 	<script src="scripts/multiple_select_replace.js" ></script>
 	<script src="scripts/manager/main_manager.js" ></script>
-	<script src="scripts/manager/analytics_graphs.js" ></script>
+	<!--script src="scripts/manager/analytics_graphs.js" ></script-->
 </head>
 
 <body>
@@ -40,7 +40,7 @@
 		<li data-tab='preview' style="display:none" >Preview</li>
 		<li data-tab='pictures' >Resources</li>
 		<li data-tab='posts' >Posts</li>
-		<li data-tab='analytics'  >Analytics</li>
+		<!--li data-tab='analytics'  >Analytics</li-->
 	</ul>
 	
 	<section data-tab='template' >
@@ -90,8 +90,8 @@
 		
 		<ul class="template" id="template" ></ul>
 		
-		<div class='save-preview-popup form' id='save-preview-popup' >
-			<label>Category:</label>
+		<div class='tmplt-forum-container' id='save-preview-popup' >
+			<h5>Category:</h5>
 			<select name="category" multiple="" ><?php
 				foreach( $GLOBALS['post_categories'] as $key => $post_type ){ 
 					echo "<option value='".$post_type."'>".$post_type."</option>";		
@@ -99,14 +99,15 @@
 			?></select>
 			
 			<div id="thumbnail-space">
-    			<label>Thumbnail:<span></span></label>
-    			<input type="text" name="thumbnail" readonly="" >
+    			<h5>Thumbnail:<span></span></h5>
+    			<input type="hidden" name="thumbnail" data-templateaction="thumbnail-input" readonly="" >
+    			<img src="/style/resources/no-thumbnail.png" alt="" >
 			</div>
 			
-			<label>Title:</label>
+			<h5>Title:</h5>
 			<input type="text" name="title" >
 			
-			<label>Description:</label>
+			<h5>Description:</h5>
 			<textarea name="description" ></textarea>
 
 			<ul class="button-list" >
@@ -167,10 +168,8 @@
 		<div></div><div id="pic-files" ></div>
 	</section>
 	
-	<section class="clearfix" data-tab='analytics' >
+	<!--section class="clearfix" data-tab='analytics' >
 		<ul class="inline-list form-list" data-templateaction="date-picker">
-			<!--li><span>line</span><input type="radio" value="combo" name="chart_type" checked=""></li>				
-			<li><span>bar</span><input type="radio" value="column" name="chart_type"></li-->
 			<li>
 				<span>start</span>
 				<input data-datepick="" type="text" value='<?php  echo date( "m/d/Y", strtotime("-1 week") ); ?>' name="start_date">
@@ -180,7 +179,6 @@
 				<input data-datepick="" type="text" value='<?php  echo date( "m/d/Y" ); ?>' name="end_date">
 			</li>
 			<li>
-				<!---input type="hidden" value="column" name="url" value='' -->
 				<script>
 					document.write( "<input type='hidden' name='url' value='/' >" );
 				</script>	
@@ -195,7 +193,7 @@
 			<div id='views-graph'>
 			</div>
 		</div>
-	</section>
+	</section-->
 	
 	
 	

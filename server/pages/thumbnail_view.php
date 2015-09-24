@@ -11,7 +11,12 @@ if( $part_count === 2 ){
 			header("Content-type: $mime_type");
 			echo $image->getBytes();
 		}else{
-			//use a default image
+			//not working browser wants to download 
+			//$stock_thumb = $GLOBALS['index_path']."/style/resources/no-thumbnail.png";
+			//$fp = fopen($stock_thumb, 'rb');
+			//header('Content-Type:img/png');
+			//header('Content-Length: ' . filesize($stock_thumb));
+			//fpassthru($fp);
 		}
 	}catch( MongoGridFSException $e ){
 		echo "XXXX";

@@ -53,10 +53,6 @@ header > ul > li:first-child{
 	border-left:2px solid tomato;
 }
 
-header > ul > li, .main > ul.paginator > li{
-	/*background-color: white;*/
-}
-
 header > ul > li > a {
 	color:inherit;
 }
@@ -85,7 +81,7 @@ header a{
 
 article.post, article.preview{
 	margin-top:2rem;
-	padding:1rem;
+	padding:1rem 1rem 1rem 1rem;
 	border-left:1px dotted black;
 	border-top:1px dotted black;
 	box-shadow:5px 5px 5px rgba(0, 0, 0, 0.5);
@@ -110,7 +106,7 @@ article.preview > ul > li {
 }
 
 article.preview > ul > li:last-of-type {
-    padding-left: 0.5rem;   
+    padding-left: 1rem;   
 }
 
 article.preview > ul > li:last-of-type .title {
@@ -154,17 +150,28 @@ article.preview a {
 .main article.post > h2:first-of-type {
 	font-size:2.2em;
 	margin-top:0px;
+	line-height:1.2em;
+}
+
+.main article.post > h2:first-of-type a {
+	text-decoration:none;
+	color:inherit;
 }
 
 .main article.post > p:first-of-type {
-	font-size:0.9em;
+	font-size:0.85em;
 	margin-top:0px;
 	margin-bottom:1rem;
 	color:lightgray;
+	text-indent:1em;
 }
 
 .main article.post > p:first-of-type > b {
     color: gray;
+}
+
+.main article.post > p:first-of-type > time {
+    
 }
 
 article.post p{
@@ -263,39 +270,6 @@ blockquote {
 	margin-left:10px;
 }
 
-ul.paginator{
-	list-style-type:none;
-}
-
-ul.paginator > li{
-	border-radius:5px;
-	margin-left:1rem;
-	border:2px solid navy;
-	font-size:1.9rem;
-	color:tomato;
-	/*padding-bottom:0.5rem;
-	background-image: url("resources/arrow-31-16.png");
-	background-position: right center;
-    background-repeat: no-repeat;*/
-}
-
-ul.paginator > li > a{
-	padding:0 0.8rem;
-	color:inherit;
-	text-decoration:none;
-	vertical-align: calc(50% - 1rem);
-}
-
-.main > ul.paginator > li:hover{
-	color:navy;
-	cursor:pointer;
-	background-color:tomato;
-}
-
-.main > ul.paginator:last-child{
-	margin-bottom:2rem;
-}
-
 .main > nav {
 	width:100%;
 	border:1px dotted black;
@@ -308,6 +282,7 @@ ul.paginator > li > a{
 
 .main > nav > a {
 	font-size:1.2em;
+	text-decoration:none;
 }
 
 /*at or above 1000px screen width*/		  
