@@ -11,13 +11,14 @@ if( $part_count === 2 ){
 			header("Content-type: $mime_type");
 			echo $image->getBytes();
 		}else{
-			//not working browser wants to download 
-			//$stock_thumb = $GLOBALS['index_path']."/style/resources/no-thumbnail.png";
-			//$fp = fopen($stock_thumb, 'rb');
-			//header('Content-Type:img/png');
-			//header('Content-Length: ' . filesize($stock_thumb));
-			//fpassthru($fp);
-		}
+			//if image is not found output a stock thumb "thumb not available"
+			$stock_thumb = $GLOBALS['index_path']."/style/resources/no-thumbnail.png";
+			$im = imagecreatefrompng($stock_thumb);
+            if ($im) {
+              header("Content-type: image/png");
+              imagepng($im);  
+            }
+        }           
 	}catch( MongoGridFSException $e ){
 		echo "XXXX";
 		echo $e->getMessage();
