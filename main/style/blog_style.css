@@ -189,11 +189,7 @@ article.post > embed {
 }
 
 article.post img{
-	display:block;
-	vertical-align: middle;
-	/*max-width:80%;*/
-	/*max-height:500px;*/
-	/*margin:0 auto 0 5%;*/
+	
 }
 
 .main article.post p{
@@ -214,8 +210,7 @@ article.post img{
 	margin-left:0.9em;
 }
 
-.main article.post p, .main article.post img, .iframe-embed, .main article.post h2,
-.main article.post h1, .main article.post ul, .main article.post blockquote, .main article.post embed {
+article.post > * {
 	margin-top:0.5rem;
 	display:block;
 }
@@ -256,12 +251,17 @@ article.post img{
 	background-position:left center;
 	text-indent:0;
 	font-family: "Courier New",Courier,"Lucida Sans Typewriter","Lucida Typewriter",monospace;
+	margin-top:1rem;
+}
+
+.main article.post blockquote + *, .quote-block + *{
+    margin-top:1rem;   
 }
 
 .main article.post img + blockquote {
 	background-image: url('resources/arrow-31-16.png');
 	padding-left:18px;
-	margin-left:10px;
+	margin-left:0px;
 }
 
 blockquote {

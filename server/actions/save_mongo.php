@@ -39,7 +39,7 @@
 	}
 	
 	//only allow letters nums and spaces in title
-	if( $valid_inputs && preg_match( "/[^A-z0-9\s]/", $title ) ){
+	if( $valid_inputs && preg_match( "/[^A-z0-9\s!]/", $title ) ){
 		$valid_inputs = false;
 		$message = "Title can only contain letters, numbers, or spaces";
 	}
