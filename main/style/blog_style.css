@@ -121,18 +121,16 @@ article.preview > ul > li:last-of-type p:first-of-type {
 }
 
 article.preview > ul > li:last-of-type p:nth-child(2) {
-	font-size: 0.8em;
-    color:gray;
-}
-
-article.preview > ul > li:last-of-type p:nth-child(2) > span {
-    color:lightgray;
-    margin-right:5px;
-}
-
-article.preview > ul > li:last-of-type p:nth-child(3) {
 	font-size: 1.4em;
     color:dimgray;
+}
+
+article.preview div.hashtags {
+	font-size:0.9em;
+}
+
+article.preview div.hashtags > span {
+	margin-right:5px;
 }
 
 article.preview a {
@@ -158,20 +156,23 @@ article.preview a {
 	color:inherit;
 }
 
-.main article.post > p:first-of-type {
-	font-size:0.85em;
-	margin-top:0px;
+.main article.post > p.post-time {
 	margin-bottom:1rem;
-	color:lightgray;
 	text-indent:1em;
 }
 
-.main article.post > p:first-of-type > b {
+.main article.post > p.post-time, article.preview p.post-time {
+	font-size:0.85em;
+	margin-top:0px;
+	color:lightgray;
+}
+
+.main article.post > p.post-time > b, article.preview p.post-time > b {
     color: gray;
 }
 
-.main article.post > p:first-of-type > time {
-    
+.main article.post > p.post-time > time, article.preview p.post-time > time {
+    font-size:0.9em;
 }
 
 article.post p{

@@ -22,7 +22,6 @@
 			$extension = pathinfo( $file_path , PATHINFO_EXTENSION );		
 			$server_path = 	$path."/".$item['file'];
 			$resource_path = $GLOBALS['base_url'].$server_path;	
-			
 			if( in_array( $extension, $img_exts ) ){			
 				$data = FileGetter::getResourceInfo( "image", $resource_path, $server_path, $item['file'] );
 				array_push( $return_info, $data );

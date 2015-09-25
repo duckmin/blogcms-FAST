@@ -101,7 +101,7 @@ $t = 'Hello _Parsedown_! whats good my ninja';
 	
 	
 	
-	try{
+	/*try{
 	    $grid = $db->blog->getGridFS();
 	    $path ="/var/www/html/blogcms/main/pics/222/";
 	    $filename="crang.JPG";
@@ -111,5 +111,11 @@ $t = 'Hello _Parsedown_! whats good my ninja';
 	}catch( MongoGridFSException $e ){
 		echo "XXXX";
 		echo $e->getMessage();
-	}	
+	}	*/
+	
+	$stock_thumb = $GLOBALS['index_path']."/style/resources/no-thumbnail.png";
+			//$fp = fopen($stock_thumb, 'rb');
+			header('Content-Type: img/png');
+			$img = imagecreatefrompng($stock_thumb);
+			imagepng($img);
 ?>

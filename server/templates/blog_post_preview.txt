@@ -9,8 +9,9 @@
 	       <p class="title" >
 	           <a class="title" href="{{ base }}/post/{{ page_category }}/{{ year }}/{{ month }}/{{ day }}/{{ safe_title }}">{{ title }}</a>
 	       </p>
-	       <p><span data-ts="{{ time_stamp }}" >{{ created }}</span> <b>By: {{ author }}</b></p>
 	       <p>{{ description }}</p>
+	       <p class="post-time" ><b>by: {{ author }}</b>&nbsp;&nbsp;<time data-ts="{{ time_stamp }}" >{{ created }}</time></p>
+	       <div class="hashtags"><span>tags:</span>{{ hashtag_links }}</div>
 	   </li>
 	</ul>
 </article>

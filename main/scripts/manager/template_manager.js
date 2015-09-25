@@ -365,12 +365,12 @@
 		
 		//take the filename and path of image and create a thumbnail and store in mongo (if it does not exist)
 		var picture_path = encodeURIComponent(vals.picture_path),
-		picture_key = encodeURIComponent(vals.picture_file_name);
-		controller.getText( constants.ajax_url+'?action=16&path='+picture_path+'&thumbname='+picture_key, function(data){
+		thumbnail_key = encodeURIComponent(vals.thumbkey);
+		controller.getText( constants.ajax_url+'?action=16&path='+picture_path+'&thumbname='+thumbnail_key, function(data){
 			var resp = JSON.parse(data),
 			thumbnail_space = gEBI("thumbnail-space"),
     		thumbnail_form_class = new FormClass( thumbnail_space );
-    		thumbnail_form_class.bindValues({thumbnail:vals.picture_file_name});
+    		thumbnail_form_class.bindValues({thumbnail:vals.thumbkey});
     		picture_popup.addClass("hide");
     		window.location.hash = "#template";
     		popup_form_class.clearForm();

@@ -112,6 +112,7 @@
 			$structure["time_stamp"] = $structure["lastModified"]->sec * 1000; //for js accurrate UTC conversion
 			$structure["page_category"] = $cat; //dont get from DB data get from page so we know which cat is currently in view on the page
 			$structure["base"] = $GLOBALS['base_url'];
+			$structure["hashtag_links"] = $this->generateHashtagsLinksForPreview( $row["hashtags"] );
 			return TemplateBinder::bindTemplate( $template, $structure );	
 		}
 		
@@ -130,6 +131,15 @@
 			$structure["base"] = $GLOBALS['base_url'];
 			return TemplateBinder::bindTemplate( $template, $structure );
 		}
+		
+		private function generateHashtagsLinksForPreview( $hashtag_array ){
+			sort( $hashtag_array );
+			$hash_links = "";
+			foreach( $hashtag_array as $hashtag ){ 
+				$hash_links .= "<span><a href=\"/hashtag/$hashtag\">#$hashtag</a></span>";
+			}
+			return $hash_links;
+		}		
 		
 		private function getSelectedOption( $cats ){
 			$options="";

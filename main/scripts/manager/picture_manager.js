@@ -7,7 +7,7 @@ var resources_templates = {
 		"<span>{{ base_name }}</span>"+
 	"</li>",
 	
-	"image":"<li class='file' data-filename='{{ resource_name }}' data-modified='{{ modified }}' >"+
+	"image":"<li class='file' data-thumbkey='{{ thumbname }}' >"+
 		"<img src='/style/resources/image.png' title='Add Picture to Template' data-picturepath='{{ server_path }}' onclick='resources_action.pictureClick(this)' onmouseover='imageOver(this)' onmouseout='imageOut(this)' />"+
 		"<img src='/style/resources/action_delete.png' title='Delete Resource' data-filepath='{{ server_path }}' onclick='resources_action.deleteResource(this)' />"+		
 		"<span>{{ resource_name }}</span>"+
@@ -106,11 +106,10 @@ resources_action.deleteResource = function( elm ){
 		var parent_li = element.nearestParent("li"),
 		file_path = element.getAttribute( 'data-filepath' ),//path from file from /main root	
 		send={ "file_path":file_path };
-		if( parent_li.hasAttribute("data-modified") && parent_li.hasAttribute("data-filename") ){
+		if( parent_li.hasAttribute("data-thumbkey") ){
 			//if this is an image we send the thumbname to the service so the thumbnail can get deleted using the name as a key
-			var modified = parent_li.getAttribute("data-modified"),
-			filename = parent_li.getAttribute("data-filename");
-			send.thumbnail_key = modified+filename;
+			var thumbnail_key = parent_li.getAttribute("data-thumbkey");
+			send.thumbnail_key = thumbnail_key;
 		}
 		controller.postJson( constants.ajax_url+'?action=9', send, function(d){
 			if( d !== "" ){
@@ -131,11 +130,10 @@ resources_action.pictureClick = function( element ){
 	//brings up a popup with the option to either add to template or add as a thumbnail
 	var path = element.getAttribute( 'data-picturepath' ),
 	parent_li = element.nearestParent('li'),
-	file_name = parent_li.getAttribute("data-filename"),
-	modified = parent_li.getAttribute("data-modified"),
+	thumbkey = parent_li.getAttribute("data-thumbkey"),
 	picture_popup = gEBI("picture-popup"),
 	popup_form_class = new FormClass( picture_popup ),
-	vals = { picture_file_name:modified+file_name, picture_path:path };
+	vals = { thumbkey:thumbkey, picture_path:path };
 	popup_form_class.bindValues( vals );
 	picture_popup.removeClass("hide");
 	box_action.centerFixedBox( picture_popup.querySelector("div.fixed-box") );
