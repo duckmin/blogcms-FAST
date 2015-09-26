@@ -519,9 +519,9 @@
     	"<td>"+
     		"<input type='hidden' name='id' value='{{ id }}' />"+
     		"<img src='/style/resources/pencil.png' title='Edit Post' onclick='editPostAction(this)' />"+
+    		"<img src='/style/resources/chart.gif' title='View Analytics' onclick='getAnalyticsGraph(this)' >"+
     		"<img src='/style/resources/clock.png' title='Make most recent post (move to top of the)' onclick='postMoveToTop(this)' />"+
     		"<img src='/style/resources/action_delete.png' title='Delete Post' onclick='deletePostAction(this)' />"+
-    		"<img src='/style/resources/chart.gif' title='View Analytics' onclick='getAnalyticsGraph(this)' >"+
     	"</td>"+
     "</tr>"+
 	"</tbody>"+

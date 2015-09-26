@@ -119,6 +119,10 @@
 	height:205px;
 }
 
+.tmplt-forum-container textarea[name='description']{
+	height:120px;
+}
+
 .tmplt-forum-container input{
 	width:75%;
 }
@@ -354,6 +358,10 @@ section[data-tab='posts'] article.post + div > img {
 /* reduce the margin of .ain first-child (post) */
 div#post-space > article:first-child{
     margin-top:0.5rem;    
+}
+
+div#post-space > article:last-of-type{
+    margin-bottom:0;    
 }
 
 /* reduce margin between next navs */

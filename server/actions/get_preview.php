@@ -1,6 +1,4 @@
-<?php
-	include_once dirname(__FILE__)."/../configs.php";
-	
+<?php	
 	$json = json_decode( $_POST['json'], true );
 	$post_view = new PostViews( new Parsedown );
 	$form_data = $json["post_data"];
@@ -16,6 +14,7 @@
 	$single["author"] = $_SESSION['user'];
 	$single["description"] = $form_data["description"];
 	$single["thumbnail"] = $form_data["thumbnail"];
+	$single["hashtags"] = PostUtils::extractHashtagsFromPostData( $template_data );
 	
 	//post category is just a placeholder the link will not work i the preview it is just a sample
 	echo $post_view->makePostHtmlFromData( $single, $GLOBALS['post_categories'][0], $post_template );

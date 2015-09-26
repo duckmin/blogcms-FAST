@@ -110,9 +110,9 @@ article.preview > ul > li:last-of-type {
 }
 
 article.preview > ul > li:last-of-type .title {
-    font-size: larger;
+    font-size: 1.25em;
     font-weight:600;
-    line-height:1.2em;
+    line-height:1.1em;
 }
 
 article.preview > ul > li:last-of-type p:first-of-type {
@@ -127,10 +127,18 @@ article.preview > ul > li:last-of-type p:nth-child(2) {
 
 article.preview div.hashtags {
 	font-size:0.9em;
+	margin-top:0.3rem;
+	
 }
 
 article.preview div.hashtags > span {
 	margin-right:5px;
+	display: inline-block;
+}
+
+article.preview div.hashtags > span:first-child {
+	font-size:0.7em;
+	color: lightgray;
 }
 
 article.preview a {

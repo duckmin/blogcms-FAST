@@ -134,9 +134,9 @@
 		
 		private function generateHashtagsLinksForPreview( $hashtag_array ){
 			sort( $hashtag_array );
-			$hash_links = "";
+			$hash_links = ( count($hashtag_array) > 0 )? "<span>tags:</span>" : "";
 			foreach( $hashtag_array as $hashtag ){ 
-				$hash_links .= "<span><a href=\"/hashtag/$hashtag\">#$hashtag</a></span>";
+				$hash_links .= " <span><a href=\"/hashtag/$hashtag\">#$hashtag</a></span>";
 			}
 			return $hash_links;
 		}		
