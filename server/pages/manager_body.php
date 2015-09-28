@@ -92,11 +92,6 @@
 		
 		<div class='tmplt-forum-container' id='save-preview-popup' >
 			<h5>Category:</h5>
-			<select name="category" multiple="" ><?php
-				foreach( $GLOBALS['post_categories'] as $key => $post_type ){ 
-					echo "<option value='".$post_type."'>".$post_type."</option>";		
-				}
-			?></select>
 			
 			<div id="thumbnail-space">
     			<h5>Thumbnail:<span></span></h5>
@@ -134,12 +129,9 @@
 	
 	<section data-tab='posts' >
 		<ul class="inline-list form-list" >
-			<li><input type='radio' name='blog_grid_sort' value='' checked="" /><span data-templateaction="select-post-filter" >all</span></li>				
-			<?php
-				foreach( $GLOBALS['post_categories'] as $key => $post_type ){ 
-					echo "<li><input type='radio' name='blog_grid_sort' value='$post_type' /><span data-templateaction='select-post-filter' >$post_type</span></li>";		
-				}
-			?>
+			<li>
+				<input type='radio' name='blog_grid_sort' value='' checked="" />
+				<span data-templateaction="select-post-filter" >all</span></li>				
 			<li>
 			    <input type='radio' name='blog_grid_sort' value='' />
 			    <input type="text" name="search" placeholder="search all posts" data-templateaction="post-search-input" value="" >

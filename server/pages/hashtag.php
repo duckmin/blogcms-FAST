@@ -39,7 +39,7 @@
 		$tmplt_data["scripts"] = "";
 		$tmplt_data["base"] = $base;
 		$tmplt_data["search_value"] = "";		
-		$tmplt_data["header"] = $post_views->getCatHeaderList( "" );
+		$tmplt_data["header"] = "";
 		$tmplt_data["body"] = $mongo_results;
 		
 		$full_page = TemplateBinder::bindTemplate( $template, $tmplt_data );

@@ -17,6 +17,6 @@
 	$single["hashtags"] = PostUtils::extractHashtagsFromPostData( $template_data );
 	
 	//post category is just a placeholder the link will not work i the preview it is just a sample
-	echo $post_view->makePostHtmlFromData( $single, $GLOBALS['post_categories'][0], $post_template );
-	echo $post_view->makePostPreviewHtmlFromData( $single, $GLOBALS['post_categories'][0], $preview_template );	
+	echo $post_view->makePostHtmlFromData( $single, $post_template );
+	echo $post_view->makePostPreviewHtmlFromData( $single, $preview_template );	
 ?>

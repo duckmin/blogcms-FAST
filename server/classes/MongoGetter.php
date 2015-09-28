@@ -105,14 +105,11 @@
 			return $cursor;
 		}
 		
-		public function getBlogManagePosts( $page_num, $cat ){  //for manage get_post_info.php
+		public function getBlogManagePosts( $page_num ){  //for manage get_post_info.php
 		
 			$count = ( $page_num-1 )*$GLOBALS['amount_on_manger_tab'];
 			$skip = $GLOBALS['amount_on_manger_tab']+1;
 			$filter = array();
-			if( strlen( $cat ) > 0 ){
-				$filter["category"] = $cat;	
-			}
 			$collection = $this->db->posts;	
 			$fields = array( "_id"=>true, "post_data"=>true, "category"=>true, "title"=>true, "description"=>true, "lastModified"=>true, "author"=>true, "thumbnail"=>true );				
 			$cursor = $collection->find( $filter, $fields )->limit($skip)->skip($count)->sort( array( 'lastModified' => -1 ) );

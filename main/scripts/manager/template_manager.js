@@ -507,14 +507,14 @@
 	"<table class='manage-table' >"+
 	"<thead>"+
     	"<tr>"+
-    	    "<th>Categories</th>"+
+    	    "<th>Hashtags</th>"+
     		"<th>Created</th>"+
     		"<th>Actions</th>"+
     	"</tr>"+
 	"</thead>"+
 	"<tbody>"+
     "<tr data-postid='{{ id }}' >"+	
-    	"<td class='categories' ><ul>{{ category_lis }}</ul></td>"+
+    	"<td class='categories' ><ul></ul></td>"+
     	"<td class='date' >{{ created }}<br> By: <b>{{ author }}</b></td>"+
     	"<td>"+
     		"<input type='hidden' name='id' value='{{ id }}' />"+
@@ -556,7 +556,7 @@
 		//if search is set append this to the URL and cat will be "",  the get_post_info service knows when search isset to bring back search results
 		//and the cat must be blank to use categories from the post_info and not the URL
 		var search_str = ( cat_form_values.search.length > 0 )? "&search="+cat_form_values.search : "";	
-		controller.getText( constants.ajax_url+'?action=4&p='+POSTS_TABLE_PAGENUM+'&cat='+cat_value+search_str, function(d){
+		controller.getText( constants.ajax_url+'?action=4&p='+POSTS_TABLE_PAGENUM+search_str, function(d){
 			if( d.length > 0 ){
 				var json = JSON.parse( d );
 				cb(json); //run callback (only used for search)
@@ -692,8 +692,9 @@
     				gEBI("template").removeChildren().appendChild(frag);
     				post_data_formclass.bindValues(resp);
     				
+    				
     				//after values are binded see which selects are selected and highlight in multi select replace
-    				var multi_select_replace = post_data_box.querySelector("ul.multi-replace"),
+    				/*var multi_select_replace = post_data_box.querySelector("ul.multi-replace"),
     				multi_select_options = post_data_box.querySelectorAll("select[multiple] > option");
     				multi_select_options.each(function(opt){
     					if( opt.selected === true ){
@@ -702,7 +703,7 @@
     							multi_select_li.addClass("selected-multi");
     						}
     					}
-    				});
+    				});*/
     				
     				window.location.hash = "#template";
     			}else{

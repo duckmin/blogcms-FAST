@@ -3,18 +3,17 @@
 	include_once dirname(__FILE__)."/../configs.php";
 	
 	$page_num = $_GET["p"];
-	$cat = $_GET["cat"];
 	
 	if( true ){
 
 		try{		
 			$db = MongoConnection();
 			$db_getter = new MongoGetter( $db );
-			if( strlen($cat) === 0 && isset( $_GET["search"] ) ){
+			if( isset( $_GET["search"] ) ){
 			    $search = $_GET["search"];
 			    $cursor = $db_getter->getPostsFromDbBySearch( $page_num, $search ); 
 			}else{
-			    $cursor = $db_getter->getBlogManagePosts( $page_num, $cat );
+			    $cursor = $db_getter->getBlogManagePosts( $page_num );
 			}
 			$posts = iterator_to_array( $cursor );
 
@@ -30,12 +29,9 @@
 			$modified_array=array();
 			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );
 			foreach( $posts as $row ){ 			
-                $post_cat = ( strlen($cat) > 0 )? $cat : $row["category"][0];
-                $display_cat = ( strlen($cat) > 0 )? $cat : ""; //when category is empty string generateModifedListingForPostInfo will not highligh categoy li in table 				
-				
-				$modified_row = $post_views->generateModifedListingForPostInfo( $row, $post_cat, $display_cat );	
+				$modified_row = $post_views->generateModifedListingForPostInfo( $row );	
                 $row["show_id"] = true; //show_id on template, so manager page JavaScript can identify them
-                $post_html = $post_views->makePostHtmlFromData( $row, $post_cat, $post_template );				
+                $post_html = $post_views->makePostHtmlFromData( $row, $post_template );				
 				array_push( $modified_array, array("post_data"=>$modified_row, "post_html"=>$post_html) );		
 			}
 			

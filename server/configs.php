@@ -40,16 +40,10 @@ $GLOBALS['amount_on_manger_tab'] = 5;
 //minutes until cache file expires
 $GLOBALS['max_page_cache_mins'] = -5; //turned off for dev turn on for prod to resonable amount of mins
 
-$GLOBALS['max_category_length'] = 500;
 $GLOBALS['max_title_length'] = 500;
 $GLOBALS['max_desc_length'] = 500;
 $GLOBALS['max_tags_length'] = 1000;
 $GLOBALS['max_folder_path_length'] = 1000;
-
-//categories are how posts will be sorted edit with care !!
-//new category names must not contain any spaces or special chars 
-//only A-z 0-9 -_
-$GLOBALS['post_categories'] = json_decode( file_get_contents( $GLOBALS['server_path']."/includes/categories.json" ), true );
 
 function returnMessage( $success, $message, $data ){
 	$holder = Array( 'result'=>$success, 'message'=>$message, 'data'=>$data );
