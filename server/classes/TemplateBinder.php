@@ -55,7 +55,7 @@
 		public static function bindTemplate( $template, $data ){
 			$tmplt =  self::sectionRemove( $template, $data );
 			if( $tmplt ){
-				$binded = preg_replace_callback( "/{{\s*([A-z_]+)\s*}}/", function( $m ) use( $data ){
+				$binded = preg_replace_callback( "/{{\s*([A-z0-9_]+)\s*}}/", function( $m ) use( $data ){
 				$key = strtolower( $m[1] );
 					if( array_key_exists( $key, $data ) ){
 						return $data[$key];

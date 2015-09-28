@@ -33,5 +33,14 @@
 		        <div style="height:250px;background-color:green" ></div>
 		    </li>
 		</ul>
+		
+		<?php
+		    $root_dir = dirname(__FILE__)."/../";
+	        include_once $root_dir."/server/configs.php";
+            $a = array( "doe", "rey", "mi", "so" );
+            $tmplt = "<ul><li>{{ 0 }}</li><li>{{ 1 }}</li><li>{{ 2 }}</li><li>{{ 3 }}</li></ul>";		
+		    $bnd = TemplateBinder::bindTemplate( $tmplt, $a );
+		    echo $bnd;
+		?>
 	</body>
 </html>
