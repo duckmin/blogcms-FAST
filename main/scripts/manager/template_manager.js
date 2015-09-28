@@ -351,9 +351,9 @@
 		var save_form = gEBI("save-preview-popup"),
 		form_class = new FormClass( save_form );
 		form_class.clearForm();
-		save_form.querySelectorAll("ul.multi-replace > li.selected-multi" ).each( function(li){
-			li.removeClass("selected-multi");
-		} );
+		//save_form.querySelectorAll("ul.multi-replace > li.selected-multi" ).each( function(li){
+		//	li.removeClass("selected-multi");
+		//} );
 		gEBI('template').removeChildren();
 	}
 	
