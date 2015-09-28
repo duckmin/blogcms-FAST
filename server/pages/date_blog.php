@@ -16,8 +16,6 @@
 	}	
 
 	//part-count defined in index.php    
-	$_GET['cat'] = ( $url_parts[0] !== "" )? $url_parts[0] : $GLOBALS['post_categories'][0]; //cat is first url part or the default cat	
-	$cat = $_GET['cat'];		
 	$time = ( isset($_GET['after']) )? $_GET['after'] : time();
 	
 	try{
@@ -26,7 +24,7 @@
 		$parsedown = new Parsedown();				
     	$post_views = new PostViews( $parsedown );	
     	$post_controller = new PostController( $db_getter, $post_views );
-		$mongo_results = $post_controller->getHomePagePostsByTime( $time, $cat ); //false if no result set
+		$mongo_results = $post_controller->getHomePagePostsByTime( $time ); //false if no result set
 	}catch( MongoException $e ){
 		//echo $e->getMessage();
 		//Mongo error, go to 404 page		
@@ -36,8 +34,8 @@
 
 	if( $mongo_results ){
     	$template = file_get_contents( $GLOBALS['template_dir']."/base_page.txt" );
-    	$title = $cat." - ".$_SERVER['HTTP_HOST'];		
-    	$desc= $_SERVER['HTTP_HOST']." - browse ".$cat;
+    	$title = "Main page - ".$_SERVER['HTTP_HOST'];		
+    	$desc= $_SERVER['HTTP_HOST']." - browse ";
         $scripts = "";
 		
 		$tmplt_data = array();
@@ -46,10 +44,8 @@
 		$tmplt_data["styles"] = "";
 		$tmplt_data["scripts"] = $scripts;
 		$tmplt_data["base"] = $base;
-		$tmplt_data["category"] = $cat;
-		$tmplt_data["search_placeholder"] = "search $cat";	
 		$tmplt_data["search_value"] = "";		
-		$tmplt_data["header"] = $post_views->getCatHeaderList( $cat );
+		$tmplt_data["header"] = "";
 		$tmplt_data["body"] = $mongo_results;
 		
 		$full_page = TemplateBinder::bindTemplate( $template, $tmplt_data );	

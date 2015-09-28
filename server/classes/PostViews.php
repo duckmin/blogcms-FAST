@@ -12,8 +12,7 @@
 		
 		public function paginator( $last_timestamp, $url_add, $paginator_template ){
 			$data = array(
-                "base_url"=>$GLOBALS['base_url'],
-                "add_to_base"=>$url_add,
+                "base_url"=>$GLOBALS['base_url'].$url_add,
                 "after_ts"=>$last_timestamp
 			);
 			return TemplateBinder::bindTemplate( $paginator_template, $data );
@@ -98,28 +97,27 @@
 		}		
 		
 		
-		public function makePostHtmlFromData( $row, $cat, $template ){		
+		public function makePostHtmlFromData( $row, $template ){		
 			$structure = $this->convertRowValues( $row );
 			$structure["time_stamp"] = $structure["lastModified"]->sec * 1000; //for js accurrate UTC conversion
 			$structure["inner"] = $this->formatSinglePost( $row["post_data"] );
-			$structure["page_category"] = $cat; //dont get from DB data get from page so we know which cat is currently in view on the page
+			//$structure["page_category"] = $cat; //dont get from DB data get from page so we know which cat is currently in view on the page
 			$structure["base"] = $GLOBALS['base_url'];
 			return TemplateBinder::bindTemplate( $template, $structure );	
 		}
 		
-		public function makePostPreviewHtmlFromData( $row, $cat, $template ){		
+		public function makePostPreviewHtmlFromData( $row, $template ){		
 			$structure = $this->convertRowValues( $row );
 			$structure["time_stamp"] = $structure["lastModified"]->sec * 1000; //for js accurrate UTC conversion
-			$structure["page_category"] = $cat; //dont get from DB data get from page so we know which cat is currently in view on the page
+			//$structure["page_category"] = $cat; //dont get from DB data get from page so we know which cat is currently in view on the page
 			$structure["base"] = $GLOBALS['base_url'];
 			$structure["hashtag_links"] = $this->generateHashtagsLinksForPreview( $row["hashtags"] );
 			return TemplateBinder::bindTemplate( $template, $structure );	
 		}
 		
 		//when search returns no results show this HTML
-		public function emptySearchHtml( $cat, $search, $template ){		
+		public function emptySearchHtml( $search, $template ){		
 			$structure = array();
-			$structure["category"] = $cat;
 			$structure["search_term"] = htmlspecialchars($search, ENT_QUOTES);
 			return TemplateBinder::bindTemplate( $template, $structure );	
 		}

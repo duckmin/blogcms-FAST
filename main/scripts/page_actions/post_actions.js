@@ -2,10 +2,8 @@
 
 addEvent(window, "load", function(e){
 	var ts = document.querySelector("section.main > article > p:first-of-type > time[data-ts]").getAttribute("data-ts");
-	var category = document.querySelector("input[name='cat']").value;
-	console.log( category );
 	Ajaxer({
-		url:constants.ajax_url+'?action=14&ts='+ts+'&cat='+category,
+		url:constants.ajax_url+'?action=14&ts='+ts,
 		method:"GET",
 		send:null,
 		async:true,

@@ -21,10 +21,9 @@
 <body>
 	<main class='wrapper' >
 		<header>
-			<h1>Duckmins BlogCMS</h1>
-			<form method="GET" action="{{ base }}/submit-search/" >
-				<input type="hidden" name="cat" value="{{ category }}" />						
-				<input type="text" name="search" placeholder="{{ search_placeholder }}" value="{{ search_value }}" />
+			<h1><a href="{{ base }}">Duckmins BlogCMS</a></h1>
+			<form method="GET" action="{{ base }}/submit-search/" >						
+				<input type="text" name="search" placeholder="search" value="{{ search_value }}" />
 				<input type="submit" value="" />
 			</form>
 			<ul>

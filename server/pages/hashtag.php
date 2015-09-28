@@ -9,8 +9,6 @@
 		exit;
 	}
 	
-	$_GET['cat'] = $GLOBALS['post_categories'][0]; //hashtag has no cat, use default cat	
-	$cat = $_GET['cat'];
 	$_GET['hashtag'] = $url_parts[1];
 	$hashtag = $_GET['hashtag'];	
 	$time = ( isset($_GET['after']) )? $_GET['after'] : time();
@@ -40,10 +38,8 @@
 		$tmplt_data["styles"] = "";
 		$tmplt_data["scripts"] = "";
 		$tmplt_data["base"] = $base;
-		$tmplt_data["category"] = $cat;
-		$tmplt_data["search_placeholder"] = "search $cat";	
 		$tmplt_data["search_value"] = "";		
-		$tmplt_data["header"] = $post_views->getCatHeaderList( $cat );
+		$tmplt_data["header"] = $post_views->getCatHeaderList( "" );
 		$tmplt_data["body"] = $mongo_results;
 		
 		$full_page = TemplateBinder::bindTemplate( $template, $tmplt_data );

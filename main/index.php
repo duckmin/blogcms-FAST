@@ -4,7 +4,7 @@
 	$url_parts = $GLOBALS['url_parts'];	
 	$part_count = count( $url_parts );
 	
-	if( in_array( $url_parts[0], $GLOBALS['post_categories'] ) || $url_parts[0] === "" ){
+	if( $url_parts[0] === "" ){
 		//if the first sction of url is a category bring to blog.php where the paginated code is
 		$file = '/server/pages/date_blog.php';
 	}else{	

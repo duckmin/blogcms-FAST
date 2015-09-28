@@ -43,12 +43,12 @@
 			return $cursor;
 		}
 		
-		public function getHomePagePreviewsFromDbByCategoryAfterDate( $after, $cat ){ //only select info for previews
+		public function getHomePagePreviewsFromDbAfterDate( $after ){ //only select info for previews
 			$start_d = new MongoDate( $after );
 			$count = $GLOBALS['amount_on_main_page']+1; //get one extra so we can tell if there is a next page
 			$collection = $this->db->posts;	
 		    $fields = $this->preview_fields;				
-			$cursor = $collection->find( array( "category"=>$cat, "lastModified"=>array( '$lt'=>$start_d ) ), $fields )
+			$cursor = $collection->find( array( "lastModified"=>array( '$lt'=>$start_d ) ), $fields )
 			->limit($count)
 			->sort( array( 'lastModified' => -1 ) );
 			return $cursor;
@@ -76,12 +76,12 @@
 			return $cursor;
 		}
 		
-		public function getHomePagePostsFromDbByCategoryAndSearchAfterDate( $after, $cat, $search ){		
+		public function getHomePagePostsFromDbSearchAfterDate( $after, $search ){		
 			$start_d = new MongoDate( $after );
 			$count = $GLOBALS['amount_on_main_page']+1; //get one extra so we can tell if there is a next page
 			$collection = $this->db->posts;	
 			$fields = $this->preview_fields;
-			$q = array( "category"=>$cat, '$text'=>array( '$search'=>$search ), "lastModified"=>array( '$lt'=>$start_d ) );
+			$q = array( '$text'=>array( '$search'=>$search ), "lastModified"=>array( '$lt'=>$start_d ) );
 			$cursor = $collection->find( $q, $fields )
 			->limit($count)
 			->sort( array( 'lastModified' => -1 ) );
@@ -161,11 +161,11 @@
 		}
 		
 		//query used on post page to get the next post by timestamp and create a link to it at the bottom
-		public function getPreviousPostsFromTimestamp( $cat, $time_stamp ){
+		public function getPreviousPostsFromTimestamp( $time_stamp ){
 			$mongo_date = new MongoDate( $time_stamp );
 			$collection = $this->db->posts;
 			$fields = $this->preview_fields;
-			$cursor = $collection->find( array( "category"=>$cat, "lastModified"=>array( '$lt'=>$mongo_date ) ), $fields )
+			$cursor = $collection->find( array( "lastModified"=>array( '$lt'=>$mongo_date ) ), $fields )
 			->limit($GLOBALS['amount_of_next_posts'])
 			->sort( array( 'lastModified' => -1 ) );
 			return $cursor;

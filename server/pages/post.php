@@ -3,17 +3,17 @@
 		Page takes the date from the url finds the beginning and end time for that date
 		then searches mongo for a post between start and end dates with the same title
 	*/
-	if( count( $GLOBALS['url_parts'] ) !== 6 ){	
+	if( count( $GLOBALS['url_parts'] ) !== 5 ){	
 		goTo404();
 		exit;
 	}
 		
 	$base = $GLOBALS['base_url'];
-	$cat = $GLOBALS['url_parts'][1];
-	$year = $GLOBALS['url_parts'][2];
-	$month = $GLOBALS['url_parts'][3];
-	$date = $GLOBALS['url_parts'][4];
-	$title = $GLOBALS['url_parts'][5];
+	$cat = "";//$GLOBALS['url_parts'][1];
+	$year = $GLOBALS['url_parts'][1];
+	$month = $GLOBALS['url_parts'][2];
+	$date = $GLOBALS['url_parts'][3];
+	$title = $GLOBALS['url_parts'][4];
 	$initial_date = "$year-$month-$date";		
 	$start = strtotime( $initial_date );
 	$end = strtotime( "$initial_date+23 hours 59 minutes 59 seconds" );
@@ -44,11 +44,9 @@
 		$tmplt_data["styles"] = "";
 		$tmplt_data["scripts"] = $scripts;
 		$tmplt_data["base"] = $base;
-		$tmplt_data["header"] = $post_views->getCatHeaderList( $cat );
-		$tmplt_data["category"] = $cat;
-		$tmplt_data["search_placeholder"] = "search $cat";	
+		$tmplt_data["header"] = "";
 		$tmplt_data["search_value"] = "";
-		$tmplt_data["body"] = $post_views->makePostHtmlFromData( $single_post_data, $cat, $post_template );
+		$tmplt_data["body"] = $post_views->makePostHtmlFromData( $single_post_data, $post_template );
 	
 		$full_page = TemplateBinder::bindTemplate( $page_template, $tmplt_data );
 		echo $full_page;
