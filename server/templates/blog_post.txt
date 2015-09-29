@@ -1,7 +1,7 @@
 <article ##show_id id="{{ id }}" show_id## class="post">
-	<h2><b>
-		<a href="{{ base }}/post/{{ year }}/{{ month }}/{{ day }}/{{ safe_title }}">{{ title }}</a>
-	</b></h2>
+	<h1><b>
+		<a href="{{ post_url }}">{{ title }}</a>
+	</b></h1>
 	<p class="post-time" ><b>by: {{ author }}</b>&nbsp;&nbsp;<time data-ts="{{ time_stamp }}" >{{ created }}</time></p>
 	{{ inner }}
 </article>

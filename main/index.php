@@ -3,17 +3,17 @@
 	include_once $root_dir."/server/configs.php";
 	$url_parts = $GLOBALS['url_parts'];	
 	$part_count = count( $url_parts );
+	$first_url_part = $url_parts[0];
 	
-	if( $url_parts[0] === "" ){
+	if( $first_url_part === "" ){
         //if base url show all posts ?after date
 		$file = '/server/pages/html/date_blog.php';
+	}elseif( preg_match("/^(2|3)[0-9]{3}$/", $first_url_part ) ){
+		//first is a YYYY date bring to post page
+		$file = '/server/pages/html/post.php';
 	}else{	
-		switch ( $GLOBALS['url_parts'][0] ) {
+		switch ( $first_url_part ) {
 			
-			case "post":
-				$file = '/server/pages/html/post.php';
-				break;
-				
 			case "search":
 				$file = '/server/pages/html/search_page.php';
 				break;

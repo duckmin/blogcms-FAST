@@ -1,13 +1,13 @@
 <article class="preview">
 	<ul>
 	   <li>
-	       <a href="{{ base }}/post/{{ year }}/{{ month }}/{{ day }}/{{ safe_title }}">
+	       <a href="{{ post_url }}/{{ safe_title }}">
 	           <img src="/thumb/{{ thumbnail }}" alt="thumbnail image for {{ title }}" >
 	       </a>
 	   </li>
 	   <li>
 	       <p class="title" >
-	           <a class="title" href="{{ base }}/post/{{ year }}/{{ month }}/{{ day }}/{{ safe_title }}">{{ title }}</a>
+	           <a class="title" href="{{ post_url }}">{{ title }}</a>
 	       </p>
 	       <p>{{ description }}</p>
 	       <p class="post-time" ><b>by: {{ author }}</b>&nbsp;&nbsp;<time data-ts="{{ time_stamp }}" >{{ created }}</time></p>

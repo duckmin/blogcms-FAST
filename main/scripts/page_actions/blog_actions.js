@@ -8,9 +8,10 @@ function timeFormatter( h, m ){
 }
 
 function convertTimeStamps( element ){
+	
 	var months=['January','Febuary','March','April','May','June','July','August','September','October','November','December'],
 	days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];	
-	element.querySelectorAll("[data-ts]").each(function(li){
+	element.querySelectorAll("time[data-ts]").each(function(li){
 		var ts = li.getAttribute("data-ts"),
 		d = new Date();
 		d.setTime( parseInt(ts) );
@@ -47,10 +48,10 @@ var sort_control = {
 }
 
 addEvent( window, "load", function(){
-	attributeActions( document.body, "data-blogaction", {
+	//attributeActions( document.body, "data-blogaction", {
 		
-	});
+	//});
 	
 	//take the data-ts (UTC) attribute of every artical and convert to local time
-	convertTimeStamps( document );
+	convertTimeStamps( document.querySelector(".main") );
 })

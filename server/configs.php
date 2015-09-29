@@ -29,7 +29,7 @@ $GLOBALS['mongo_db_name'] = "blog";
 $GLOBALS['manager_keyword'] = "manager";
 
 //# of posts that show up per page
-$GLOBALS['amount_on_main_page'] = 4;
+$GLOBALS['amount_on_main_page'] = 8;
 
 //# of post previews that show up underneath post when viewing post url 
 $GLOBALS['amount_of_next_posts'] = 1;

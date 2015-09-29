@@ -1,21 +1,22 @@
 <?php
 	/* 
-		Page takes the date from the url finds the beginning and end time for that date
+		Page takes the date from the url finds the beginning and end time for that date and month
 		then searches mongo for a post between start and end dates with the same title
 	*/
-	if( count( $GLOBALS['url_parts'] ) !== 5 ){	
+	if( count( $GLOBALS['url_parts'] ) !== 3 ){	
 		goTo404();
 		exit;
 	}
 		
 	$base = $GLOBALS['base_url'];
-	$year = $GLOBALS['url_parts'][1];
-	$month = $GLOBALS['url_parts'][2];
-	$date = $GLOBALS['url_parts'][3];
-	$title = $GLOBALS['url_parts'][4];
-	$initial_date = "$year-$month-$date";		
-	$start = strtotime( $initial_date );
-	$end = strtotime( "$initial_date+23 hours 59 minutes 59 seconds" );
+	$year = $GLOBALS['url_parts'][0];
+	$month = $GLOBALS['url_parts'][1];
+	//$date = $GLOBALS['url_parts'][3];
+	$title = $GLOBALS['url_parts'][2];
+	$initial_date = "$year-$month-1";  		
+	$start = strtotime( $initial_date ); //first day of month seconds
+	$end_date = date( "Y-m-t", $start );
+	$end = strtotime( $end_date ); //last day of month seconds
 	
 	try{
 		$db = MongoConnection();

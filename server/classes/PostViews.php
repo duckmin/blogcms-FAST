@@ -93,6 +93,8 @@
 			$row["day"] = $date_of_post["day"];
 			$row["year"] = $date_of_post["year"];	
 			$row["safe_title"] = $this->convertPostTitleSpacesToHyphens( $row["title"] );
+			//post_url logic in pages/html/post.php
+			$row["post_url"] = "/".$row["year"]."/".$row["month"]."/".$row["safe_title"];
 			return $row;
 		}		
 		
