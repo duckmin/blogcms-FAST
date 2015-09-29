@@ -4,4 +4,11 @@
 	</b></h1>
 	<p class="post-time" ><b>by: {{ author }}</b>&nbsp;&nbsp;<time data-ts="{{ time_stamp }}" >{{ created }}</time></p>
 	{{ inner }}
+	<form>
+		<input type="text" readonly="" name="id" value="{{ id }}">
+		<input type="text" readonly="" name="created" value="{{ time_stamp }}">
+		<select multiple="" disabled="" name="hashtags" >
+			{{ hashtag_options }}
+		</select>
+	</form>
 </article>

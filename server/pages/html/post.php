@@ -47,6 +47,7 @@
 		$tmplt_data["header"] = "";
 		$tmplt_data["search_value"] = "";
 		$tmplt_data["body"] = $post_views->makePostHtmlFromData( $single_post_data, $post_template );
+		$tmplt_data["extra_posts"] = true; //include ul where we append recent posts and related hashtags 
 	
 		$full_page = TemplateBinder::bindTemplate( $page_template, $tmplt_data );
 		echo $full_page;

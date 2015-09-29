@@ -103,6 +103,7 @@
 			$structure = $this->convertRowValues( $row );
 			$structure["time_stamp"] = $structure["lastModified"]->sec * 1000; //for js accurrate UTC conversion
 			$structure["inner"] = $this->formatSinglePost( $row["post_data"] );
+			$structure["hashtag_options"] = $this->generateHashtagsOptionsForPostForm( $row["hashtags"] );
 			$structure["base"] = $GLOBALS['base_url'];
 			return TemplateBinder::bindTemplate( $template, $structure );	
 		}
@@ -129,6 +130,14 @@
 				$hash_links .= " <span><a href=\"/hashtag/$hashtag\">#$hashtag</a></span>";
 			}
 			return $hash_links;
+		}	
+		
+		private function generateHashtagsOptionsForPostForm( $hashtag_array ){
+			$hash_options = "";
+			foreach( $hashtag_array as $hashtag ){ 
+				$hash_options .= "<option selected=\"\" value=\"$hashtag\" >$hashtag</option>";
+			}
+			return $hash_options;
 		}		
 		
 	}

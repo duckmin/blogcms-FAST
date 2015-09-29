@@ -1,4 +1,4 @@
-section.main, aside{
+/*section.main, aside{
 	display:inline-block;
 	vertical-align:top;
 }
@@ -15,4 +15,21 @@ aside {
 	border-left: 1px dotted black;
     border-top: 1px dotted black;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+}*/
+
+div.extra-posts-block {
+	margin-top:2rem;
+}
+
+div.extra-posts-block > h3 {
+	color:navy;
+	margin-bottom:0.25em;
+}
+
+div.extra-posts-block > article {
+
+}
+
+div.extra-posts-block > article:first-of-type {
+	margin-top:0;
 }

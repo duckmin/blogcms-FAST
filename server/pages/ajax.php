@@ -55,6 +55,9 @@ if( isset( $_GET['action'] ) ){
 		case 16:
 	        $file = '/make_thumbnail.php';
 			break;
+		case 17:
+	        $file = '/get_related_hashtag_previews.php';
+			break;
 	}
 
 	include $GLOBALS['server_path']."/actions".$file;

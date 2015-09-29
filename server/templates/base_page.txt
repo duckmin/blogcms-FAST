@@ -10,6 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel='stylesheet' type='text/css' href='{{ base }}/style/global_style.css'>
 	<link rel='stylesheet' type='text/css' href='{{ base }}/style/blog_style.css'>
+	<link rel='stylesheet' type='text/css' href='{{ base }}/style/blog_extra.css'>
 	{{ styles }}
 	<script src='{{ base }}/scripts/element_extender.js' ></script>
 	<script src='{{ base }}/scripts/forms.js' ></script>
@@ -22,6 +23,7 @@
 	<main class='wrapper' >
 		<header>
 			<h1><a href="{{ base }}">Duckmins BlogCMS</a></h1>
+			##hashtag<h2>#{{ hashtag_text }}</h2>hashtag##
 			<form method="GET" action="{{ base }}/submit-search/" >						
 				<input type="text" name="search" placeholder="search" value="{{ search_value }}" />
 				<input type="submit" value="" />
@@ -33,6 +35,14 @@
 		</header>
 		<section class='main'>		
 			{{ body }}
+			##extra_posts
+			<div class="extra-posts-block" id="next-posts">
+				<h3>Next Posts:</h3>
+			</div>
+			<div class="extra-posts-block" id="related-hashtags">
+				<h3>Related Hashtags:</h3>
+			</div>
+			extra_posts##
 		</section>
 	</main>
 </body>

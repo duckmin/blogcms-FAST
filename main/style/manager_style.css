@@ -198,7 +198,7 @@ section[data-tab='preview'], section[data-tab='posts']{
 }
 
 section[data-tab='preview'] ul.button-list {
-	margin:10px 0;
+	margin:1rem 0;
 }
 
 section[data-tab='preview'], section[data-tab='posts'], section[data-tab='analytics']{
@@ -362,11 +362,6 @@ div#post-space > article:first-child{
 
 div#post-space > article:last-of-type{
     margin-bottom:0;    
-}
-
-/* reduce margin between next navs */
-.main > nav + nav {
-    margin-top:-1rem;
 }
 
 .main > nav.current{

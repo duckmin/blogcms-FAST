@@ -64,8 +64,7 @@
 			$skip = $GLOBALS['amount_on_manger_tab']+1;
 			$filter = array();
 			$collection = $this->db->posts;	
-			$fields = array( "_id"=>true, "post_data"=>true, "title"=>true, "description"=>true, "lastModified"=>true, "author"=>true, "thumbnail"=>true );				
-			$cursor = $collection->find( $filter, $fields )->limit($skip)->skip($count)->sort( array( 'lastModified' => -1 ) );
+			$cursor = $collection->find( $filter )->limit($skip)->skip($count)->sort( array( 'lastModified' => -1 ) );
 			return $cursor;
 		}
 		
@@ -118,7 +117,19 @@
 			$collection = $this->db->posts;
 			$fields = $this->preview_fields;
 			$cursor = $collection->find( array( "lastModified"=>array( '$lt'=>$mongo_date ) ), $fields )
-			->limit($GLOBALS['amount_of_next_posts'])
+			->limit( $GLOBALS['amount_of_next_posts'] )
+			->sort( array( 'lastModified' => -1 ) );
+			return $cursor;
+		}
+		
+		//query used on post page to get posts with hashtags in common with post in view 
+		public function getRecentRelatedHashTags( $id, $hashtags ){
+			$mongo_id = new MongoId( $id );
+			$collection = $this->db->posts;
+			$fields = $this->preview_fields;
+			$find = array( '_id'=>array( '$ne'=>$mongo_id ), 'hashtags'=>array( '$in'=>$hashtags ) );
+			$cursor = $collection->find( $find, $fields )
+			->limit( $GLOBALS['amount_of_next_posts'] )
 			->sort( array( 'lastModified' => -1 ) );
 			return $cursor;
 		}

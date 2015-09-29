@@ -32,7 +32,7 @@ $GLOBALS['manager_keyword'] = "manager";
 $GLOBALS['amount_on_main_page'] = 8;
 
 //# of post previews that show up underneath post when viewing post url 
-$GLOBALS['amount_of_next_posts'] = 1;
+$GLOBALS['amount_of_next_posts'] = 4;
 
 //# of posts that show up on the "posts" tab in the manager
 $GLOBALS['amount_on_manger_tab'] = 5;

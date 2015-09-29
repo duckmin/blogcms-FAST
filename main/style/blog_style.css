@@ -13,6 +13,12 @@ header h1 {
 	color:navy;
 }
 
+/* hash tag marker */
+header > h2 {
+	color: rgb(143, 223, 255);
+	font-size:2em;
+}
+
 header > ul {
 	margin-top:0px;
 	font-size:1.2em;
@@ -120,7 +126,7 @@ article.preview > ul > li:last-of-type p:first-of-type {
     font-weight:600;*/
 }
 
-article.preview > ul > li:last-of-type p:nth-child(2) {
+article.preview > ul > li:last-of-type p:nth-child(2):not(.post-time) {
 	font-size: 1.4em;
     color:dimgray;
 }
@@ -156,6 +162,10 @@ article.preview a {
 
 .main > article:last-of-type{
 	margin-bottom:0rem;
+}
+
+.main article.post > form {
+	display:none;
 }
 
 .main article.post > h1:first-of-type {
@@ -294,7 +304,7 @@ blockquote {
 	background-color:azure;
 }
 
-.main > *:last-child {
+.wrapper > *:last-child {
 	margin-bottom:2rem !important;
 }
 
