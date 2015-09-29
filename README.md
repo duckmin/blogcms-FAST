@@ -43,6 +43,7 @@ BlogCms is an appication that revolves around an authenticated UI interface that
 ##Things to note
 - make sure permissions on the /blogcms/main/pics/ folder and sub folders give full permissions to the user server is running as
 - if you "edit" a post form the "Posts" tab on the manager page, and wish to cancel an edit.  You must click cancel from the "Template" tab, this will exit edit mode, and allow you to start creating new posts again ( editing a post and then saving the edit will also make you exit edit mode ).  
-- If you wish to change the look and feel of the blog /blogcms/main/style/blog.css is where most the styles for the main page are located and can be changed **carefully** ( some js uses query selectors so changing of css could afftect javascript )
+- If you wish to change the look and feel of the blog /blogcms/main/style/blog.css is where most the styles for the main page are located and can be changed **carefully** 
 - most HTML used to construct pages is located in /blogcms/server/templates/ these can be edited with care to add classes or extra content
+- **some javascript running on BlogCMS uses query selectors so changing of HTML structure could affect javascript**, make minor changes then check for errors
 - On manager console, just click around on every icon and read the messages to find out what they do!
