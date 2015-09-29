@@ -12,7 +12,7 @@
 		}
 		  
 		public static function authenticate(){
-			include $GLOBALS['server_path']."/pages/manager_login.php";
+			include $GLOBALS['server_path']."/pages/html/manager_login.php";
 		}
 		  
 		public static function loginSuccess( $user, $pw ){
