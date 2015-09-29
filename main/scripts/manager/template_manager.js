@@ -617,8 +617,8 @@
 			form_values=form_obj.getValues();
 			return form_values;
 		},
-		getPostHtml:function( id, cat, callback ){
-		    controller.getText( constants.ajax_url+'?action=15&id='+id+'&cat='+cat, function(post_html){
+		getPostHtml:function( id, callback ){
+		    controller.getText( constants.ajax_url+'?action=15&id='+id, function(post_html){
 	            callback( post_html );
 		    });
 		}
@@ -627,7 +627,7 @@
 	window.getAnalyticsGraph = function( element ){
 		var form_values=table_actions.getTrValues( element ),
 		send = { url:form_values.id },
-		table_div = element.nearestParent("div"), //send id to get all view for posting, which category does not matter 
+		table_div = element.nearestParent("div"), //send id to get all view for posting
 		chart_div = 
 		controller.postJson( constants.ajax_url+'?action=12', send, function(d){
 			var resp = JSON.parse( d);
@@ -666,12 +666,12 @@
 		    //this post is currently being edited switch to manager
 		    window.location.hash = "#template";
 		}else{
-    		var send={ "id":form_values.id };
-    		controller.postJson( constants.ajax_url+'?action=6', send, function(d){
+    		var qs = "?action=6&id="+form_values.id;
+    		controller.getText( constants.ajax_url+qs, function(d){
     			//var resp = JSON.parse( d);
     			if( d !== "" ){
     				if( edit_mode.active() ){
-    					//if we were previously in edit mode clear old data 
+    					//previously in edit mode clear old data 
     					edit_mode.disable();
     				}
     				templateaction.clearTemplateForm();
@@ -691,20 +691,6 @@
     				
     				gEBI("template").removeChildren().appendChild(frag);
     				post_data_formclass.bindValues(resp);
-    				
-    				
-    				//after values are binded see which selects are selected and highlight in multi select replace
-    				/*var multi_select_replace = post_data_box.querySelector("ul.multi-replace"),
-    				multi_select_options = post_data_box.querySelectorAll("select[multiple] > option");
-    				multi_select_options.each(function(opt){
-    					if( opt.selected === true ){
-    						var multi_select_li = multi_select_replace.querySelector("li[data-val='"+opt.value+"']")
-    						if( multi_select_li !== null ){
-    							multi_select_li.addClass("selected-multi");
-    						}
-    					}
-    				});*/
-    				
     				window.location.hash = "#template";
     			}else{
     				showAlertMessage( "No Data For Post", false );
@@ -748,8 +734,7 @@
 					var post_on_post_tab_being_edited = gEBI(edit_mode.id_in_edit);
 
 					if( post_on_post_tab_being_edited !== null ){
-					   var post_category = post_on_post_tab_being_edited.getAttribute("data-postcategory");
-					   table_actions.getPostHtml( edit_mode.id_in_edit, post_category, function(post_html){
+					   table_actions.getPostHtml( edit_mode.id_in_edit, function(post_html){
     					   if( post_html.length > 0 ){
         					   var edited_post = createElement("div", {
         					      innerHTML:post_html 

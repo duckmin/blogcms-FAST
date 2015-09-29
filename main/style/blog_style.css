@@ -143,6 +143,11 @@ article.preview div.hashtags > span:first-child {
 
 article.preview a {
 	text-decoration:none;
+	
+}
+
+.hashtags > span > a {
+    color:rgb(143, 223, 255);
 }
 
 .main > article:first-of-type{

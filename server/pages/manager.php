@@ -16,7 +16,7 @@
 			
 			if( ManagerActions::loginSuccess( $sent_user, $sent_pw )  ){	//if true will set 2 session variables and log to file
 				//give access to page if user is a key in array and the value matches the PW			
-				include $server."/pages/manager_body.php";
+				include $server."/pages/html/manager_body.php";
 	
 			}else{
 				//wrong guess make sleep to prevent brute force
@@ -25,7 +25,7 @@
 			}
 			
 		}else{
-			include $server."/pages/manager_body.php";
+			include $server."/pages/html/manager_body.php";
 		}
 	}//end else
 ?>

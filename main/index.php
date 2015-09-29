@@ -5,21 +5,21 @@
 	$part_count = count( $url_parts );
 	
 	if( $url_parts[0] === "" ){
-		//if the first sction of url is a category bring to blog.php where the paginated code is
-		$file = '/server/pages/date_blog.php';
+        //if base url show all posts ?after date
+		$file = '/server/pages/html/date_blog.php';
 	}else{	
 		switch ( $GLOBALS['url_parts'][0] ) {
 			
 			case "post":
-				$file = '/server/pages/post.php';
+				$file = '/server/pages/html/post.php';
 				break;
 				
 			case "search":
-				$file = '/server/pages/search_page.php';
+				$file = '/server/pages/html/search_page.php';
 				break;
 				
 			case "hashtag":
-				$file = '/server/pages/hashtag.php';
+				$file = '/server/pages/html/hashtag.php';
 				break;
 				
 			case "ajax":

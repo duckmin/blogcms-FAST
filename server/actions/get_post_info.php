@@ -1,11 +1,9 @@
 <?php
-
-	include_once dirname(__FILE__)."/../configs.php";
 	
-	$page_num = $_GET["p"];
-	
-	if( true ){
-
+	$logged_in = ManagerActions::isLoggedIn();
+	if( $logged_in && isset($_GET["p"]) ){
+        
+        $page_num = $_GET["p"];
 		try{		
 			$db = MongoConnection();
 			$db_getter = new MongoGetter( $db );
@@ -29,7 +27,7 @@
 			$modified_array=array();
 			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );
 			foreach( $posts as $row ){ 			
-				$modified_row = $post_views->generateModifedListingForPostInfo( $row );	
+				$modified_row = $post_views->convertRowValues( $row );	
                 $row["show_id"] = true; //show_id on template, so manager page JavaScript can identify them
                 $post_html = $post_views->makePostHtmlFromData( $row, $post_template );				
 				array_push( $modified_array, array("post_data"=>$modified_row, "post_html"=>$post_html) );		

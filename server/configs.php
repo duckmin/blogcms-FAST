@@ -61,7 +61,7 @@ function myAutoloader( $className )
 }
 
 function goTo404(){
-	$error_box = $GLOBALS['server_path']."/pages/404.php";
+	$error_box = $GLOBALS['server_path']."/pages/html/404.php";
 	header( $_SERVER["SERVER_PROTOCOL"]." 404 Not Found" );	
 	include $error_box;	
 }

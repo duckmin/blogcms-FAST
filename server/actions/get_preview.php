@@ -16,7 +16,6 @@
 	$single["thumbnail"] = $form_data["thumbnail"];
 	$single["hashtags"] = PostUtils::extractHashtagsFromPostData( $template_data );
 	
-	//post category is just a placeholder the link will not work i the preview it is just a sample
 	echo $post_view->makePostHtmlFromData( $single, $post_template );
 	echo $post_view->makePostPreviewHtmlFromData( $single, $preview_template );	
 ?>

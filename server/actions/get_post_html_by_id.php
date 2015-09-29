@@ -1,7 +1,7 @@
 <?php
 	include_once dirname(__FILE__)."/../configs.php";
 	
-	if( isset( $_GET["id"] ) && isset( $_GET["cat"] ) ){
+	if( isset( $_GET["id"] ) ){
 		
 		$id = $_GET["id"];
 		

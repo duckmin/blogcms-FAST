@@ -57,7 +57,7 @@
 			}
 			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post_preview.txt" );		
 			foreach( $post_array as $single ){		
-				$post_html = $this->post_views->makePostPreviewHtmlFromData( $single, $post_template ); //use default cat since hashtag posts have no category				$str .= $post_html;
+				$post_html = $this->post_views->makePostPreviewHtmlFromData( $single, $post_template ); 				$str .= $post_html;
 			}
 			return $str.$paginator;
 		}
@@ -65,7 +65,7 @@
 		public function getSearchPagePostsAfterTime( $time, $search ){
 			$str="";
 			$search = trim( $search );
-			$posts_from_db = $this->mongo_getter->getHomePagePostsFromDbSearchAfterDate( (int)$time, $search );
+			$posts_from_db = $this->mongo_getter->getHomePagePostsFromSearchAfterDate( (int)$time, $search );
 			$L = $posts_from_db->count(true);
 			if( $L === 0 ){
 				$empty_search_template = file_get_contents( $GLOBALS['template_dir']."/empty_search.txt" );				

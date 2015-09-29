@@ -81,7 +81,7 @@
 		}					
 		
 		//takes a blog post row from mongo and returns a modifed row with converted values used for URLs
-		private function convertRowValues( $row ){
+		public function convertRowValues( $row ){
 			$id = new MongoId( $row["_id"] );  
 			$time_stamp = $row["lastModified"]->sec;//$id->getTimestamp();
 			$dt = new DateTime("@$time_stamp");	   	  	    	   	  	    
@@ -101,7 +101,6 @@
 			$structure = $this->convertRowValues( $row );
 			$structure["time_stamp"] = $structure["lastModified"]->sec * 1000; //for js accurrate UTC conversion
 			$structure["inner"] = $this->formatSinglePost( $row["post_data"] );
-			//$structure["page_category"] = $cat; //dont get from DB data get from page so we know which cat is currently in view on the page
 			$structure["base"] = $GLOBALS['base_url'];
 			return TemplateBinder::bindTemplate( $template, $structure );	
 		}
@@ -109,7 +108,6 @@
 		public function makePostPreviewHtmlFromData( $row, $template ){		
 			$structure = $this->convertRowValues( $row );
 			$structure["time_stamp"] = $structure["lastModified"]->sec * 1000; //for js accurrate UTC conversion
-			//$structure["page_category"] = $cat; //dont get from DB data get from page so we know which cat is currently in view on the page
 			$structure["base"] = $GLOBALS['base_url'];
 			$structure["hashtag_links"] = $this->generateHashtagsLinksForPreview( $row["hashtags"] );
 			return TemplateBinder::bindTemplate( $template, $structure );	
@@ -122,14 +120,6 @@
 			return TemplateBinder::bindTemplate( $template, $structure );	
 		}
 		
-		// called in actons/get_previous_post_html_from_timestamp
-		public function getNextPostButton(  $row, $cat, $template ){
-			$structure = $this->convertRowValues( $row );
-			$structure["page_category"] = $cat;
-			$structure["base"] = $GLOBALS['base_url'];
-			return TemplateBinder::bindTemplate( $template, $structure );
-		}
-		
 		private function generateHashtagsLinksForPreview( $hashtag_array ){
 			sort( $hashtag_array );
 			$hash_links = ( count($hashtag_array) > 0 )? "<span>tags:</span>" : "";
@@ -138,49 +128,6 @@
 			}
 			return $hash_links;
 		}		
-		
-		private function getSelectedOption( $cats ){
-			$options="";
-			foreach( $GLOBALS['post_categories'] as $post_cat ){ 
-				$pre_opt = "<option value='".$post_cat."'";
-				( in_array( $post_cat, $cats ) )? $pre_opt.=" selected=''" : false;
-				$options .= $pre_opt." >".$post_cat."</option>";		
-			}
-			return $options;
-		}
-		
-		private function getPostCategoriesAsLis( $post_categoies, $page_category ){
-			$lis="";
-			foreach( $post_categoies as $post_cat ){ 
-				$pre_li = "<li";
-				( $page_category !== "" && $post_cat === $page_category )? $pre_li .= " class='current-cat' " : false;
-				$lis .= $pre_li.">".$post_cat."</li>";		
-			}
-			return $lis;
-		}				
-		
-		//for actions/get_post_info.php we must modify the posting to put in the form
-		public function generateModifedListingForPostInfo( $row ){
-			$row = $this->convertRowValues( $row );
-			return $row;
-		}
-		
-		public function getCatHeaderList( $cat = "" ){
-			$categories = $GLOBALS['post_categories'];
-			$count = count($categories);
-			$str = "";			
-			$li_tmplt = '<li class="{{ added_class }}" ><a href="/{{ current_cat }}/" >{{ uc_cat }}</a></li>';
-			for( $i = 0; $i < $count; $i++ ) {
-				$current_cat = $categories[ $i ];
-				$data = array(
-				    "current_cat"=>$current_cat,			
-                    "uc_cat"=>ucwords( $current_cat ),				
-				    "added_class"=>( $cat === $current_cat )? "current-cat" : ""
-				);
-				$str .= TemplateBinder::bindTemplate( $li_tmplt, $data );
-			}
-			return $str; //just the lis of the list
-		}
 		
 	}
 	

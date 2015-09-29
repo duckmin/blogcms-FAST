@@ -6,41 +6,12 @@
 		private $mongo_conn;
 		
 		//these are the mongo fields needed to generate a thumbnail preview div 
-		private $preview_fields = array( "_id"=>true, "category"=>true, "title"=>true, "description"=>true, "lastModified"=>true, "author"=>true, "hashtags"=>true, "thumbnail"=>true );				
+		private $preview_fields = array( "_id"=>true, "title"=>true, "description"=>true, "lastModified"=>true, "author"=>true, "hashtags"=>true, "thumbnail"=>true );				
 		
 		public function __construct( $mongo_conn )
 		{
 			$this->mongo_conn = $mongo_conn;
 			$this->db = $this->mongo_conn->$GLOBALS['mongo_db_name'];
-		}
-		
-		/* NOT USED kept for reference
-		public function getHomePagePostsFromDb( $page_num ){
-			$count = ( $page_num-1 )*$GLOBALS['amount_on_main_page'];
-			$skip = $GLOBALS['amount_on_main_page']+1;
-			$collection = $this->db->posts;			
-			$cursor = $collection->find()->limit($skip)->skip($count)->sort( array( '_id' => -1 ) );
-			return $cursor;
-		}*/
-		
-		/* NOT used ATM kept for reference
-		public function getShortendHomePagePostsFromDbByCategory( $page_num, $cat ){
-			$count = ( $page_num-1 )*$GLOBALS['amount_on_main_page'];
-			$skip = $GLOBALS['amount_on_main_page']+1;
-			$collection = $this->db->posts;			
-			$cursor = $collection->find( array( "category"=>$cat ), array( "post_data"=>array('$slice'=>array(0,1)) ) )->limit($skip)->skip($count)->sort( array( 'lastModified' => -1 ) );		
-			return $cursor;
-		}*/
-		
-		public function getHomePagePostsFromDbByCategory( $page_num, $cat ){
-			$count = ( $page_num-1 )*$GLOBALS['amount_on_main_page'];
-			$skip = $GLOBALS['amount_on_main_page']+1;
-			$collection = $this->db->posts;			
-			$cursor = $collection->find( array( "category"=>$cat ) )
-			->limit($skip)
-			->skip($count)
-			->sort( array( 'lastModified' => -1 ) );		
-			return $cursor;
 		}
 		
 		public function getHomePagePreviewsFromDbAfterDate( $after ){ //only select info for previews
@@ -65,18 +36,7 @@
 			return $cursor;
 		}
 		
-		//not used??
-		public function getHomePagePostsFromDbByCategoryAfterDate( $after, $cat ){		
-			$start_d = new MongoDate( $after );
-			$count = $GLOBALS['amount_on_main_page']+1; //get one extra so we can tell if there is a next page
-			$collection = $this->db->posts;	
-			$cursor = $collection->find( array( "category"=>$cat, "lastModified"=>array( '$lt'=>$start_d ) ) )
-			->limit($count)
-			->sort( array( 'lastModified' => -1 ) );
-			return $cursor;
-		}
-		
-		public function getHomePagePostsFromDbSearchAfterDate( $after, $search ){		
+		public function getHomePagePostsFromSearchAfterDate( $after, $search ){		
 			$start_d = new MongoDate( $after );
 			$count = $GLOBALS['amount_on_main_page']+1; //get one extra so we can tell if there is a next page
 			$collection = $this->db->posts;	
@@ -88,15 +48,7 @@
 			return $cursor;
 		}
 		
-		/*public function getHomePagePostsFromDbByCategoryAndSearch( $page_num, $cat, $search, $reverse_sort ){
-			$count = ( $page_num-1 )*$GLOBALS['amount_on_main_page'];
-			$skip = $GLOBALS['amount_on_main_page']+1;
-			$sort = ($reverse_sort)? 1 : -1;
-			$collection = $this->db->posts;			
-			$cursor = $collection->find( array( "category"=>$cat, '$text'=>array( '$search'=>$search ) ) )->limit($skip)->skip($count)->sort( array( 'lastModified' => $sort ) );
-			return $cursor;
-		}*/
-		
+		//used for manager tab search query - get_post_info.php
 		public function getPostsFromDbBySearch( $page_num, $search ){
 			$count = ( $page_num-1 )*$GLOBALS['amount_on_manger_tab'];
 			$skip = $GLOBALS['amount_on_manger_tab']+1;
@@ -105,17 +57,19 @@
 			return $cursor;
 		}
 		
-		public function getBlogManagePosts( $page_num ){  //for manage get_post_info.php
+		//for manager posts page - get_post_info.php
+		public function getBlogManagePosts( $page_num ){  
 		
 			$count = ( $page_num-1 )*$GLOBALS['amount_on_manger_tab'];
 			$skip = $GLOBALS['amount_on_manger_tab']+1;
 			$filter = array();
 			$collection = $this->db->posts;	
-			$fields = array( "_id"=>true, "post_data"=>true, "category"=>true, "title"=>true, "description"=>true, "lastModified"=>true, "author"=>true, "thumbnail"=>true );				
+			$fields = array( "_id"=>true, "post_data"=>true, "title"=>true, "description"=>true, "lastModified"=>true, "author"=>true, "thumbnail"=>true );				
 			$cursor = $collection->find( $filter, $fields )->limit($skip)->skip($count)->sort( array( 'lastModified' => -1 ) );
 			return $cursor;
 		}
 		
+		//not used currently
 		public function getSinglePostDataById( $id ){ 
 			$mongo_id = new MongoId( $id );
 			$collection = $this->db->posts;	
@@ -124,6 +78,7 @@
 			return $cursor;
 		}
 		
+		//not used currently
 		public function updateSinglePostDataById( $id, $post_data ){ 
 			$mongo_id = new MongoId( $id );
 			$collection = $this->db->posts;				

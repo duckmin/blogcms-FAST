@@ -55,9 +55,7 @@ addEvent( window, "load", function(){
 	tabset.init();
 })
 
-addEvent( window, "load", function(){
-	setMultiSelects( document.querySelector('#save-preview-popup') );
-	
+addEvent( window, "load", function(){	
 	attributeActions( document.body, "data-loadaction", {	
 		"logout":function(elm){
 			elm.addEvent( "click", managerExtraActions.logout )
