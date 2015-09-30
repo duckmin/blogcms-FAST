@@ -5,7 +5,7 @@
 
 class Parsedown {
 	
-	private function normalize( $str ){
+	public function normalize( $str ){
 		//get rid of any html
 		$str = strip_tags( $str );
 		//we will remove \r's, trim \n's, and make no more than 2 \n's in a row
@@ -13,7 +13,7 @@ class Parsedown {
 		$str = str_replace(array("\r"), array(''), $str);
 		$str = trim($str, "\n");
 		//if more than three \n chars in a row put two in its place 
-   	$str = preg_replace( "/(\\n){3,}/", "\n\n", $str );
+   		$str = preg_replace( "/(\\n){3,}/", "\n\n", $str );
 		return $str;
 	}
 	
@@ -78,8 +78,12 @@ class Parsedown {
 		return "<ul>$block</ul>";
 	}
 	
+	public function splitBlocks( $str ){
+		return $split = preg_split ( "/(\\n){2}/", $str );
+	}
+	
 	private function makeBlocks( $str ){
-		$split = preg_split ( "/(\\n){2}/", $str );
+		$split = $this->splitBlocks($str);//preg_split ( "/(\\n){2}/", $str );
 		$converted_str = "";
 		//echo var_dump($split);
 		foreach( $split as $block ){

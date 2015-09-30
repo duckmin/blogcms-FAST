@@ -6,33 +6,45 @@
 	$id = new MongoId( "56056409ce95181c26aa05db" );  //long post with plenty of text
 	$collection = $db->blog->posts;					
 	$item = $collection->findOne(array('_id'=>$id));
-	//echo var_dump( $item );
+	echo var_dump( $item );
 	$post_data = $item["post_data"];
 	//echo var_dump( $post_data )."<br><br>";
 	
+	$blogdown = new Parsedown();
 	
-	function getPreviewTextFromMarkdown( $post_data_array ){
+	
+	
+	function getPreviewTextFromMarkdown( $post_data_array, Parsedown $blogdown ){
+		$MAX_PREVIEW_STR_LENGTH = 150;
 		$preview = "";
 		foreach( $post_data_array as $post_item ){
 			
 			$post_type = $post_item["data-posttype"];
 			if( $post_type === "markdown" ){
-				 //echo var_dump( $post_item )."<br><br>";
-				 $word_matches = array();
-				 //"/\b[\w\d\']+\b(\,|\.|\'|!|\?|)/"
-				 preg_match_all( "/^\s*[^>!].+$/m", trim( $post_item["text"] ), $word_matches );
-				 echo var_dump( $word_matches[0] )."<br><br>";
-				 //$tmp_str = implode(" ", $word_matches[0]);
-				 //echo $tmp_str."<br><br>";
-				 //if( isset($hash_matches[1]) ){ 
-				 //	 $hashes = array_merge ( $hashes, array_map("strtolower", $hash_matches[1]) );  //lower case all hashes
-				 //}
+				 $text = $post_item["text"];
+				 $text = $blogdown->normalize($text);
+				 $split = $blogdown->splitBlocks( $text );
+				 
+				 foreach( $split as $block ){
+				 	if( !preg_match( "/^(!{1,6}|>|-)/", $block ) ){ //only get block that do not begin with special symbol (paragraphs)
+				 		$word_matches = array();
+				 		preg_match_all( "/\b[\w\d\']+\b(\,|\.|\'|!|\?|)/", $block, $word_matches );
+				 		foreach( $word_matches[0] as $single_word ){
+				 			$preview .= " $single_word";
+				 			echo var_dump( $preview )."<br><br>";
+				 			if( strlen( $preview ) >= $MAX_PREVIEW_STR_LENGTH ){
+				 				break 3;
+				 			}
+				 			
+				 		}
+				 	}
+				 }
 			}
 		}
-		//return $preview;
+		return substr( $preview, 1)."..."; //trim off extra space
 	}
 	
-	getPreviewTextFromMarkdown( $post_data );	
+	echo getPreviewTextFromMarkdown( $post_data, $blogdown );	
 	
 	
 	//TEST TO GET TIMESTAMP OF ONE POST AND GET THE NEXT POST BACK IN TIME
