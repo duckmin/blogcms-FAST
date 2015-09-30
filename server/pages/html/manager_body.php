@@ -148,16 +148,25 @@
 		<form id="img-upload-form" action="/upload_img.php" method="post" enctype="multipart/form-data" target="upload_target" onsubmit="return imageUploadValidator();" >
     		<ul class="inline-list form-list" >
     			<li>
-    			     <span>Folder:</span>
-                    <input id='upload-path' name="folder_path" readonly  type="text" />
-    			   
+    			    <span>Folder:</span>
+                    <input id='upload-path' name="folder_path" readonly  type="text" >   			    
     			</li>
-    			<li><span>File:</span><input type="file" name="new_img" /></li>
+    			<li>
+                    <span>File:</span>
+    			    <img data-templateaction="add-upload-file" title="Add File To Upload" style="margin:0 10px 0 5px;vertical-align: middle;" src="/style/resources/folder-add.png">
+    			</li>
+    			<li>
+        			<ul id="uploads-list" class="folders">
+        			    <li class="add-folder-li">
+                            <input type="file" name="resources[]" >
+                        </li>
+                    </ul>
+    			</li>
     			<li><input type="submit" name="submitBtn" style="padding:0 5px" value="Upload" /></li>				
     		</ul>
     		<iframe style="display:none" id="upload_target" name="upload_target" src="#" ></iframe>
 		</form>
-		<div></div><div id="pic-files" ></div>
+		<div id="resource-folders" ></div><div id="pic-files" ></div>
 	</section>
 	
 	<!--section class="clearfix" data-tab='analytics' >

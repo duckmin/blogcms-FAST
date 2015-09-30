@@ -36,7 +36,7 @@ addEvent( window, "load", function(){
 			    file_path:constants.resources_directory
 			};
 			ul.innerHTML = bindMustacheString( resources_templates[item.type], item );
-			panel.querySelector("div:nth-of-type(1)").appendChild(ul);
+			panel.querySelector("#resource-folders").appendChild(ul);
 			delete this.pictures;
 		},	
 		"posts":function( tab, panel ){

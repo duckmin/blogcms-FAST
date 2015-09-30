@@ -17,7 +17,7 @@ $GLOBALS["upload_vars"] = array(
 	"allowed_image_extensions"=>array("gif", "jpeg", "jpg", "png", "JPG"),
 	"allowed_audio_extensions"=>array("mp3"),
 	"allowed_mimetypes"=>array("image/jpeg", "image/gif", "image/jpg", "image/png", "audio/mpeg"),
-	"max_kb_img_upload"=>500,
+	"max_kb_img_upload"=>200,
 	"max_mb_audio_upload"=>40
 );
 $GLOBALS["upload_vars"]["allowed_extensions"] = array_merge ( $GLOBALS["upload_vars"]["allowed_image_extensions"], $GLOBALS["upload_vars"]["allowed_audio_extensions"] );

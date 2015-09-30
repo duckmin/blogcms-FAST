@@ -218,11 +218,13 @@ function uploadResponseAction( obj ){
 	if( obj.result === true ){
 		//obj param has a data attribute and when the upload is successful there is an object in the data attribute with its own data attribute 
 		//to avoid confusion obj.data.data is what is used to bind template
-		var d = obj.data;
-		if( d.hasOwnProperty("type") && resources_templates.hasOwnProperty(d.type) ){
-			var file_li = bindMustacheString( resources_templates[d.type], d.data );
-			gEBI("pic-files").querySelector("ul.folders").innerHTML += file_li;
-		}
+		console.log(obj.data);
+		obj.data.forEach(function(d){
+    		if( d.hasOwnProperty("type") && resources_templates.hasOwnProperty(d.type) ){
+    			var file_li = bindMustacheString( resources_templates[d.type], d.data );
+    			gEBI("pic-files").querySelector("ul.folders").innerHTML += file_li;
+    		}
+	    })
 
 		//clear form 
 		document.querySelector("input[type='file']").value = "";
@@ -283,4 +285,36 @@ function imageOut( element ){
 	img.each( function( pic ){ pic.remove() });
 	removeInlineStyle( parent_li, 'position' );
 }
+
+//set up multi upload on page
+resources_action.addUploadFile = function(){
+    var file_list = document.getElementById("uploads-list"),
+    file_li = createElement( "li", {
+		"class":"add-folder-li",
+		"child":multiFragment({
+			"input":createElement( "input",{
+				"type":"file",
+				"name":"resources[]"
+			}),
+			"remove":createElement( "img",{
+				"src":constants.base_url+"/style/resources/action_delete.png",
+				"title":"Remove File",
+				"events":{
+					"click":function(){
+						this.nearestParent("li").remove();			
+					}
+				}
+			})				
+		})
+	});
+	file_list.appendChild( file_li );
+}
+addEvent( window, "load", function(){
+    attributeActions( document.body, "data-templateaction", {
+		
+		"add-upload-file":function(elm){
+			elm.addEvent( "click", resources_action.addUploadFile);
+		}
+	})
+})
 

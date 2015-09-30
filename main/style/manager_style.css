@@ -2,13 +2,24 @@
 	margin-bottom:20px;
 }
 
-.folders {
+ul.folders {
 	padding-left:10px;
 }
 
-.folders > li {
-	vertical-align: middle;
+form ul.folders {
+	padding-left:0;
+}
+
+ul.folders > li {
 	margin-top:4px;	
+}
+
+form ul.folders > li {
+    margin-top:0;
+} 
+
+.folders > li input[type='file'] {
+	max-width:185px;
 }
 
 .folders > li.dir > img:nth-of-type(2).open{
@@ -256,7 +267,7 @@ section[data-tab='analytics'] > div{
 }
 
 ul.form-list > li {
-	
+	vertical-align: top;
 }
 
 section[data-tab='posts'] ul.form-list > li > span {
@@ -494,7 +505,7 @@ li.add-folder-li {
 	padding-bottom:4px;
 }
 
-li.add-folder-li *{
+li.add-folder-li > *{
 	vertical-align: middle;
 }
 

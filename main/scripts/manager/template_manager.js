@@ -403,20 +403,6 @@
 					} )			
 				})
 			},
-			/*	Not needed, dont save from preview page anymore		
-			"save-preview":function(elm){
-				
-				elm.addEvent( "click", function(e){
-					if( !edit_mode.active() ){
-						var pop_up = gEBI( 'save-preview-popup' );
-						pop_up.removeClass('hide');
-						box_action.centerFixedBox( pop_up.querySelector('div.fixed-box') );
-					}else{
-						saveEditedPostAction();
-					}
-				})
-				
-			},*/
 			"add-pictue-to-template":function(elm){
 				elm.addEvent( "click", function(e){
 					picture_popup = gEBI("picture-popup"),
