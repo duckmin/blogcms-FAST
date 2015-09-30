@@ -5,13 +5,13 @@ BlogCms is an appication that revolves around an authenticated UI interface that
 - upload jpg,png,gif images
 - upload mp3 audio files
 - dynamically add uploaded resoures to a post template
-- create a blog post using Markdown, making for unlimted possibilities of content and css styles
+- create a blog post using Markdown, making for unlimited possibilities of content and css styles
 - edit/delete/change hashtags of created posts
 - view analytic data graphs of your sites traffic
 
 ##Getting Started
-- Install apache, php, mongo db
-- php must have "Mongo" module
+- Install apache, php, mongo db, GD image library
+- php must have "Mongo" module,  and "GD" module ( for thumbnail creation )
 - Clone project into folder
 - change your apache conf documentroot to be the "<path_to_blogcms>/main" ( same directory of index.php ) folder of the project 
 - this application routes all urls through "index.php" file using apaches mod rewrite rules. Your vhost container should **atleast** have the following rules. 
