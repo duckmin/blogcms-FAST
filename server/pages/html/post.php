@@ -11,19 +11,17 @@
 	$base = $GLOBALS['base_url'];
 	$year = $GLOBALS['url_parts'][0];
 	$month = $GLOBALS['url_parts'][1];
-	//$date = $GLOBALS['url_parts'][3];
 	$title = $GLOBALS['url_parts'][2];
 	$initial_date = "$year-$month-1";  		
 	$start = strtotime( $initial_date ); //first day of month seconds
 	$end_date = date( "Y-m-t", $start );
-	$end = strtotime( $end_date ); //last day of month seconds
-	
+	$end = strtotime( $end_date." +23 hours 59 minutes 59 seconds" ); //last day last second of month
 	try{
 		$db = MongoConnection();
 		$db_getter = new MongoGetter( $db );
 		$post_views = new PostViews( new Parsedown() );
 		$non_hyphenated_title = $post_views->convertPostTitleHyphensToSpaces( $title );
-		$single_post_data = $db_getter->getSingleRowFromDate( $non_hyphenated_title, $start, $end ); //NULL if not found\	
+		$single_post_data = $db_getter->getSingleRowFromDate( $non_hyphenated_title, $start, $end ); //NULL if not found
 	}catch( MongoException $e ){
 		//echo $e->getMessage();
 		//Mongo error, go to 404 page		

@@ -6,7 +6,16 @@
 		private $mongo_conn;
 		
 		//these are the mongo fields needed to generate a thumbnail preview div 
-		private $preview_fields = array( "_id"=>true, "title"=>true, "description"=>true, "lastModified"=>true, "author"=>true, "hashtags"=>true, "thumbnail"=>true );				
+		private $preview_fields = array( 
+		"_id"=>true, 
+		"title"=>true, 
+		"description"=>true, 
+		"lastModified"=>true, 
+		"author"=>true, 
+		"hashtags"=>true, 
+		"thumbnail"=>true, 
+		"preview_text"=>true
+		);				
 		
 		public function __construct( $mongo_conn )
 		{

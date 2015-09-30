@@ -60,13 +60,18 @@
 	
 	if( $valid_inputs ){
 		
+		$blogdown = new Parsedown();
+		$post_views = new PostViews( $blogdown );
+		$hashtags = $post_views->extractHashtagsFromPostData( $post_data );  //any #hash in markdown block will get saved so it can be searched on
+		$preview_text = $post_views->getPreviewTextFromMarkdown( $post_data ); //takes all paragraphs from markdown blocks of post_data and returns a 150 word string for use in preview
+		
 		try {
 			
 			$m = MongoConnection();
 			$db = $m->$GLOBALS['mongo_db_name'];
 			$collection = $db->posts;
 			$author = $_SESSION['user'];
-			$hashtags = PostUtils::extractHashtagsFromPostData( $post_data );  //any #hash in markdown block will get saved so it can be searched on 
+
 			
 			//procedure 1 create new listing with post_data
 			if( $procedure === 1 ){
@@ -79,7 +84,8 @@
 			   		'lastModified'=>new MongoDate(),
 			   		'thumbnail'=>$thumbnail_path,
 			   		'author'=>$author,
-			   		'hashtags'=>$hashtags
+			   		'hashtags'=>$hashtags,
+			   		'preview_text'=>$preview_text
 				);
 				$write_result = $collection->insert($document);				
 				$written = ( $write_result['ok'] >= 1 )? true : false;			
@@ -96,7 +102,8 @@
 						"description"=>$desc, 
 						"post_data"=>$post_data, 
 						"thumbnail"=>$thumbnail_path,
-						"hashtags"=>$hashtags
+						"hashtags"=>$hashtags,
+						'preview_text'=>$preview_text
 					) 
 				);	
 				$write_result = $collection->update( array( "_id"=>$mongo_id ), $update_array );

@@ -9,7 +9,7 @@
 	       <p class="title" >
 	           <a class="title" href="{{ post_url }}">{{ title }}</a>
 	       </p>
-	       <p>{{ description }}</p>
+	       <p>{{ preview_text }}</p>
 	       <p class="post-time" ><b>by: {{ author }}</b>&nbsp;&nbsp;<time data-ts="{{ time_stamp }}" >{{ created }}</time></p>
 	       <div class="hashtags">{{ hashtag_links }}</div>
 	   </li>

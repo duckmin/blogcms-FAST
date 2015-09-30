@@ -5,6 +5,8 @@
 	{
         public $lazy_load_imgs = false;
         
+        public $MAX_PREVIEW_STR_LENGTH = 150;
+        
 		function __construct( Parsedown $parsedown )
 		{
 			$this->parsedown = $parsedown;
@@ -16,6 +18,50 @@
                 "after_ts"=>$last_timestamp
 			);
 			return TemplateBinder::bindTemplate( $paginator_template, $data );
+		}
+		
+		//used in save_mongo.php and get_preview.php 
+		public function getPreviewTextFromMarkdown( $post_data_array ){
+			$preview = "";
+			foreach( $post_data_array as $post_item ){
+				
+				$post_type = $post_item["data-posttype"];
+				if( $post_type === "markdown" ){
+					 $text = $post_item["text"];
+					 $text = $this->parsedown->normalize($text);
+					 $split = $this->parsedown->splitBlocks( $text );
+					 
+					 foreach( $split as $block ){
+					 	if( !preg_match( "/^(!{1,6}|>|-)/", $block ) ){ //only get block that do not begin with special symbol (paragraphs)
+					 		$word_matches = array();
+					 		preg_match_all( "/\b[\w\d\']+\b(\,|\.|\'|!|\?|)/", $block, $word_matches );
+					 		foreach( $word_matches[0] as $single_word ){
+					 			$preview .= " $single_word";
+					 			if( strlen( $preview ) >= $this->MAX_PREVIEW_STR_LENGTH ){
+					 				break 3;
+					 			}
+					 			
+					 		}
+					 	}
+					 }
+				}
+			}
+			return substr( $preview, 1)."..."; //trim off extra space
+		}
+		
+		//used in save_mongo.php and get_preview.php 
+		public static function extractHashtagsFromPostData( $post_data_array ){
+			$hashes = array();
+			foreach( $post_data_array as $post_item ){
+				$post_type = $post_item["data-posttype"];
+				if( $post_type === "markdown" ){
+					 preg_match_all( "/#{1}([A-z0-9]+)/", $post_item["text"], $hash_matches );
+					 if( isset($hash_matches[1]) ){ 
+					 	 $hashes = array_merge ( $hashes, array_map("strtolower", $hash_matches[1]) );  //lower case all hashes
+					 }
+				}
+			}
+			return $hashes;
 		}
 		
 		private function makeItem( $post_data_array ){

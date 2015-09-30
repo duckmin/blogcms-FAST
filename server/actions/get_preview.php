@@ -14,7 +14,8 @@
 	$single["author"] = $_SESSION['user'];
 	$single["description"] = $form_data["description"];
 	$single["thumbnail"] = $form_data["thumbnail"];
-	$single["hashtags"] = PostUtils::extractHashtagsFromPostData( $template_data );
+	$single["hashtags"] = $post_view->extractHashtagsFromPostData( $template_data );
+	$single["preview_text"] = $post_view->getPreviewTextFromMarkdown( $template_data );
 	
 	echo $post_view->makePostHtmlFromData( $single, $post_template );
 	echo $post_view->makePostPreviewHtmlFromData( $single, $preview_template );	
