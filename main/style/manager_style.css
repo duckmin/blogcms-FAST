@@ -500,9 +500,24 @@ ul.multi-replace > li:hover{
 	cursor:pointer;
 }
 
-/*resources manager*/
+/*resources manager file uploads when multiple files*/
 li.add-folder-li {
 	padding-bottom:4px;
+}
+
+#uploads-list > li:first-child {
+   padding-bottom:0; 
+}
+
+#uploads-list > li:first-child ~ li {
+   padding-bottom:0; 
+   margin-top:7px;
+}
+
+/* add upload button */
+#img-upload-form ul.inline-list > li:nth-child(2) > img {
+    margin:0 10px 0 15px;
+    vertical-align: middle;;   
 }
 
 li.add-folder-li > *{

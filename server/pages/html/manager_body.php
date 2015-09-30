@@ -152,8 +152,7 @@
                     <input id='upload-path' name="folder_path" readonly  type="text" >   			    
     			</li>
     			<li>
-                    <span>File:</span>
-    			    <img data-templateaction="add-upload-file" title="Add File To Upload" style="margin:0 10px 0 5px;vertical-align: middle;" src="/style/resources/folder-add.png">
+    			    <img data-templateaction="add-upload-file" title="Add File To Upload" src="/style/resources/add-file.png">
     			</li>
     			<li>
         			<ul id="uploads-list" class="folders">

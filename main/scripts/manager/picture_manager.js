@@ -227,7 +227,11 @@ function uploadResponseAction( obj ){
 	    })
 
 		//clear form 
-		document.querySelector("input[type='file']").value = "";
+		document.querySelector("input[type='file']").value = ""; //set default browse input
+		document.querySelectorAll("#uploads-list > li:first-child ~ li").each(function(li){
+		    //remove all underneath default input
+		    li.remove();
+		});
 	}else{
 		showAlertMessage( obj.message, obj.result );
 	}
