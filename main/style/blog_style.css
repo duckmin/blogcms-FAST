@@ -116,9 +116,9 @@ article.preview > ul > li:last-of-type {
 }
 
 article.preview > ul > li:last-of-type .title {
-    font-size: 1.25em;
-    font-weight:600;
-    line-height:1.1em;
+    font-size: 1.1em;
+    font-weight: 100;
+    line-height: 1.1em;
 }
 
 article.preview > ul > li:last-of-type p:first-of-type {
@@ -126,8 +126,8 @@ article.preview > ul > li:last-of-type p:first-of-type {
     font-weight:600;*/
 }
 
-article.preview > ul > li:last-of-type p:nth-child(2):not(.post-time) {
-	font-size: 1.4em;
+article.preview > ul > li:last-of-type p:nth-child(2) {
+	font-size: 1em;
     color:dimgray;
 }
 
@@ -142,18 +142,13 @@ article.preview div.hashtags > span {
 	display: inline-block;
 }
 
-article.preview div.hashtags > span:first-child {
-	font-size:0.7em;
-	color: lightgray;
-}
-
 article.preview a {
 	text-decoration:none;
 	
 }
 
 .hashtags > span > a {
-    color:rgb(143, 223, 255);
+    color:indigo;
 }
 
 .main > article:first-of-type{
@@ -186,9 +181,12 @@ article.preview a {
 }
 
 .main article.post > p.post-time, article.preview p.post-time {
-	font-size:0.85em;
+	font-size:0.72em;
 	margin-top:0px;
 	color:lightgray;
+}
+
+article.preview p.post-time {
 }
 
 .main article.post > p.post-time > b, article.preview p.post-time > b {

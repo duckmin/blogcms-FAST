@@ -30,6 +30,7 @@ div.extra-posts-block > article {
 
 }
 
-div.extra-posts-block > article:first-of-type {
+div.extra-posts-block > article.preview {
 	margin-top:0;
+	padding:1.5rem 1rem;
 }
