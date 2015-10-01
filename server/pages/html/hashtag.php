@@ -39,10 +39,8 @@
 		$tmplt_data["scripts"] = "";
 		$tmplt_data["base"] = $base;
 		$tmplt_data["search_value"] = "";		
-		$tmplt_data["header"] = "";
+		$tmplt_data["header"] = "<li class=\"current-cat\" ><a href=\"/hashtag/$hashtag\">#$hashtag</a></li>";
 		$tmplt_data["body"] = $mongo_results;
-		$tmplt_data["hashtag"] = true; //show hashtag next to title 
-		$tmplt_data["hashtag_text"] = $hashtag;
 		
 		$full_page = TemplateBinder::bindTemplate( $template, $tmplt_data );
 		echo $full_page;

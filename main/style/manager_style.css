@@ -219,7 +219,8 @@ section[data-tab='preview'], section[data-tab='posts'], section[data-tab='analyt
 }
 
 section[data-tab='preview'] section.main > article:first-of-type {
-    margin-top: 2rem;
+    border-top: 2px solid tomato;
+    margin: 2rem 0;
 }
 
 section[data-tab='analytics']{

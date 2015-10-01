@@ -23,14 +23,13 @@
 	<main class='wrapper' >
 		<header>
 			<h1><a href="{{ base }}">Duckmins BlogCMS</a></h1>
-			##hashtag<h2>#{{ hashtag_text }}</h2>hashtag##
 			<form method="GET" action="{{ base }}/submit-search/" >						
 				<input type="text" name="search" placeholder="search" value="{{ search_value }}" />
 				<input type="submit" value="" />
 			</form>
 			<ul>
-				{{ header }}
-				<!-- add hard coded <li> here -->
+				<!-- add hard coded <li> inline here -->
+				{{ header }}<li><a href="#">Link 1</a></li><li><a href="#">Link 2</a></li>
 			</ul>
 		</header>
 		<section class='main'>		

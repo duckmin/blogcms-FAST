@@ -3,7 +3,7 @@ body, header > form > input[name="search"], header > form > input[type="submit"]
 }
 
 header{
-	margin-bottom:1rem;
+	
 }
 
 header h1 {
@@ -23,6 +23,7 @@ header > ul {
 	margin-top:0px;
 	font-size:1.2em;
 	list-style-type:none;
+	border-bottom: 2px solid tomato;
 }
 
 header > form > input[type="submit"] {
@@ -44,13 +45,13 @@ header > form > input[name="search"] {
 	color:tomato;
 	text-align:right;
 	padding-right:5px;
+	max-width:9em;
 }
 
 header > ul > li{
 	color:tomato;
 	padding:0 0.5rem;
 	position:relative;
-	border-bottom: 2px solid tomato;
 	font-size:1.3em;
 	display:inline-block;
 }
@@ -64,12 +65,7 @@ header > ul > li > a {
 }
 
 header > ul > li.current-cat, header > ul > li:hover {
-	border-bottom-color:navy;
 	color:navy;
-}
-
-header > ul > li:first-child.current-cat{
-	border-left-color:navy;
 }
 
 header > ul > li > form input.gray-text{
@@ -81,23 +77,28 @@ header a{
 }
 
 
-.main {
-	
+main.wrapper > * { /* only blog pages have main.wrapper manager user div.wrapper */
+	margin-left:1rem;
+	margin-right:1rem;
 }
 
 article.post, article.preview{
 	margin-top:2rem;
-	padding:1rem 1rem 1rem 1rem;
-	border-left:1px dotted black;
+	
+	
 	border-top:1px dotted black;
-	box-shadow:5px 5px 5px rgba(0, 0, 0, 0.5);
 	background-color:white;
 	overflow:hidden;
 }
 
+article.post {
+	padding:1rem 0;
+	border-bottom: 2px solid tomato;
+}
+
 article.preview{
-	
-	padding-top:1rem;
+	padding:1.5rem 0;
+	margin-top:0;
 	overflow:hidden;
 }
 
@@ -153,10 +154,23 @@ article.preview a {
 
 .main > article:first-of-type{
 	margin-top:0;
+	border-top:none;
+}
+
+.main > article.post:first-of-type{
+	padding:1.5rem;
+}
+
+.main > article.post:last-of-type{
+	border-bottom: 2px solid tomato;
 }
 
 .main > article:last-of-type{
 	margin-bottom:0rem;
+}
+
+* > article.preview:last-of-type {
+	border-bottom: 1px dotted black;
 }
 
 .main article.post > form {
@@ -296,7 +310,7 @@ blockquote {
 .main > nav {
 	width:100%;
 	border:1px dotted black;
-	margin-top:2rem;
+	/*margin-top:2rem;*/
 	padding:0.25rem 0;
 	text-align:center;
 	background-color:azure;
@@ -351,19 +365,14 @@ blockquote {
 	}
 	
 	.main article.post img{
-		margin-left:-0.5rem;
-		max-width:calc( 100% + 1rem );
+		
 	}
 	
 	.main article.post, .main article.preview{
 		
-		box-shadow: 0 5px 2.5px -2.5px rgba(0, 0, 0, 0.5);
+		/*box-shadow: 0 5px 2.5px -2.5px rgba(0, 0, 0, 0.5);
 		padding-left:0.5rem;
-		padding-right:0.5rem;
-	}
-	
-	.main article.preview, .main > nav{
-		margin-top: 1rem;
+		padding-right:0.5rem;*/
 	}
 	
 }   
