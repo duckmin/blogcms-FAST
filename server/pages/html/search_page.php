@@ -40,7 +40,7 @@
 		$tmplt_data["scripts"] = "";
 		$tmplt_data["base"] = $base;
 		$tmplt_data["search_value"] = $safe_search;		
-		$tmplt_data["header"] = "";
+		$tmplt_data["header"] = "<li class=\"current-cat\" ><a href=\"/search/$safe_search/\">&quot;$safe_search&quot;</a></li>";
 		$tmplt_data["body"] = $mongo_results;
 		
 		$full_page = TemplateBinder::bindTemplate( $template, $tmplt_data );

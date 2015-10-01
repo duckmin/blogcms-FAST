@@ -13,12 +13,6 @@ header h1 {
 	color:navy;
 }
 
-/* hash tag marker */
-header > h2 {
-	color: rgb(143, 223, 255);
-	font-size:2em;
-}
-
 header > ul {
 	margin-top:0px;
 	font-size:1.2em;
@@ -92,7 +86,7 @@ article.post, article.preview{
 }
 
 article.post {
-	padding:1rem 0;
+	padding:1.5rem 0;
 	border-bottom: 2px solid tomato;
 }
 
@@ -310,6 +304,7 @@ blockquote {
 .main > nav {
 	width:100%;
 	border:1px dotted black;
+	border-top:none;
 	/*margin-top:2rem;*/
 	padding:0.25rem 0;
 	text-align:center;
@@ -351,34 +346,25 @@ blockquote {
 		max-width:100%;
 	}
 	
-	.main article.post, .main article.preview{
-		border-left:none;
-		border-right:none;
-	}
-	
 } 
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 750px) {
 	body {
 		margin:0;
 		padding:0;
 	}
 	
-	.main article.post img{
+	.main article.post, .main article.preview{
 		
 	}
 	
-	.main article.post, .main article.preview{
-		
-		/*box-shadow: 0 5px 2.5px -2.5px rgba(0, 0, 0, 0.5);
-		padding-left:0.5rem;
-		padding-right:0.5rem;*/
+	main.wrapper > * { 
+		margin-left:0.5rem;
+		margin-right:0.5rem;
 	}
 	
 }   
 
 @media only screen and (max-width: 600px) {
-	article.post > embed {
-		width:250px;	
-	}
+	
 }  

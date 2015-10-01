@@ -175,7 +175,7 @@ body,ul,div,section,a,aside,article,h1,h2,h3,h4,h5,h6,p,pre,span,li,label,input,
 .clearfix { display: block; }
 /* close commented backslash hac
 
-/*at or above 800px screen width*/		  
+/*at or above 1000px screen width*/		  
 @media only screen and (min-width: 1000px) {
        
 	.wrapper {
@@ -185,7 +185,7 @@ body,ul,div,section,a,aside,article,h1,h2,h3,h4,h5,h6,p,pre,span,li,label,input,
 } 
 
 
-/*800px width and below*/		  
+/*1000px width and below*/		  
 @media only screen and (max-width: 1000px) {
 	body{
 		font-size:80%;
@@ -196,12 +196,16 @@ body,ul,div,section,a,aside,article,h1,h2,h3,h4,h5,h6,p,pre,span,li,label,input,
 	}
 }  
 
-@media only screen and (max-width: 800px) {
+/* 750px and below */
+@media only screen and (max-width: 750px) {
 	body{
 		font-size:60%;
 	}
-	
-	header > ul{
-		
+}  
+
+/* 400px and below */
+@media only screen and (max-width: 400px) {
+	body{
+		font-size:45%;
 	}
 }  

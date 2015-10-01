@@ -353,8 +353,9 @@ section[data-tab='template'] .save-preview-popup{
 /*no shadow on posts tab so table can align underneath*/
 section[data-tab='posts'] article.post {
     box-shadow:none;   
-    border-right:1px dotted black;
-    border-bottom:1px solid black;
+    border:2px solid tomato;
+    border-left:none;
+    border-right:none;
     margin-top:4rem;
 }
 
@@ -378,6 +379,11 @@ div#post-space > article:last-of-type{
 
 .main > nav.current{
     background-color:salmon;   
+}
+
+.main > nav {
+	margin-top:2rem;
+	border-top:1px dotted black !important;
 }
 
 .manage-table, .popup-table {
