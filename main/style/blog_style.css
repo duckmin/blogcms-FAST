@@ -151,10 +151,6 @@ article.preview a {
 	border-top:none;
 }
 
-.main > article.post:first-of-type{
-	padding:1.5rem;
-}
-
 .main > article.post:last-of-type{
 	border-bottom: 2px solid tomato;
 }
@@ -226,9 +222,9 @@ article.post img{
 .main article.post p{
 	/*max-width:90%;
 	margin:0 auto 10px auto;*/
-	font-size:1.5em;
+	font-size:1.3em;
 	font-weight:100;
-	line-height:1.4em;
+	line-height:1.5em;
 }
 
 .main article.post b{	
