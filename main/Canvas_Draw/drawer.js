@@ -7,6 +7,8 @@
 		this.colorDivsContainer = canvas_box.querySelector("li.colors");
 		this.controlsContainer = canvas_box.querySelector("li.controls");
 		this.brush_marker = canvas_box.querySelector("div.brush-marker");
+		this.brushIndicator = this.controlsContainer.querySelector("div.color");
+		this.toggleCheckbox = this.controlsContainer.querySelector("input[name='brush-toggle']");
 		this.ctx = this.canvas.getContext("2d");
 		var default_color = this.colorDivsContainer.firstElementChild.style.backgroundColor;
 		this.fillStyle = default_color;
@@ -26,7 +28,7 @@
 		this.currX = e.clientX - this.canvas.offsetLeft;
 		this.currY = e.clientY - this.canvas.offsetTop;	
 		//bind mouse move listener
-		if( this.brush_mode === "brush" ){ this.drawCoords(); }
+		if( this.brush_mode === "brush" || this.brush_mode === "eraser" ){ this.drawCoords(); }
 		this.canvas.addEventListener("mousemove", this.canvasMouseMoveName, false );
 	}
 	
@@ -53,7 +55,6 @@
 	
 	Drawer.prototype.mouseOverEvent = function(e){
 		if( this.brush_mode === "brush" || this.brush_mode === "eraser" ){
-			if( this.brush_mode === "eraser" ){ this.brush_marker.style.borderRadius = "0" }//turn to rectangle 
 			this.brush_marker.style.display = "block";
 		}
 	}
@@ -71,6 +72,33 @@
 		current_selection.className = current_selection.className.replace("selected", "");
 		target.className+=" selected";
 		this.brush_mode = target.getAttribute("data-brushmode");
+		
+		switch( this.brush_mode ){
+		    case "pencil":
+				this.toggleCheckbox.checked = false;
+			    break;
+	    	
+	    	case "brush":
+			    var selected_color = this.colorDivsContainer.querySelector("div.selected").style.backgroundColor;
+			    this.toggleCheckbox.checked = true;
+			    var brush_size_value = this.brushIndicator.previousElementSibling.value+"px";
+			    this.brush_marker.style.borderRadius = brush_size_value;
+			    this.brushIndicator.style.borderRadius = brush_size_value;
+			    this.brushIndicator.style.backgroundColor = selected_color;
+			    this.brush_marker.style.backgroundColor = selected_color;
+			    this.brushIndicator.style.border = "none";
+		  	    this.brush_marker.style.border = "none";
+		  		break;
+		  	case "eraser":
+		  	    this.toggleCheckbox.checked = true;
+		  	    this.brush_marker.style.borderRadius = "0";
+		  	    this.brushIndicator.style.borderRadius = "0";
+		  	    this.brushIndicator.style.backgroundColor = "white";
+		  	    this.brush_marker.style.backgroundColor = "white";
+		  	    this.brushIndicator.style.border = "2px solid black";
+		  	    this.brush_marker.style.border = "2px solid black";
+			    break;
+		}
 	}
 	
 	Drawer.prototype.drawCoords = function(){
@@ -115,11 +143,14 @@
 		var target = e.currentTarget,
 		selected = this.colorDivsContainer.querySelector("div.selected"),
 		selected_color = target.style.backgroundColor;
-		selected.className = "";
+		selected.className = "";  //revmoce class of currently selected
 		target.className = "selected";
 		this.fillStyle = selected_color;
-		this.controlsContainer.querySelector("div.color").style.backgroundColor = selected_color;
-		this.brush_marker.style.backgroundColor = selected_color;
+		
+		if( this.brush_mode === "brush" ){
+            this.brushIndicator.style.backgroundColor = selected_color;
+		    this.brush_marker.style.backgroundColor = selected_color;
+	    }
 	}
 	
 	Drawer.prototype.rangeSelectSize = function(e){
@@ -130,12 +161,15 @@
 		this.strokeWidth = range_value;  //change size of drawing pencil 
 		color_div_style.width = ( range_value )+"px";
 		color_div_style.height = ( range_value )+"px";
-		color_div_style.borderRadius = ( range_value )+"px";
 		
 		//add styles to brush marker
 		this.brush_marker.style.width = ( range_value )+"px";
 		this.brush_marker.style.height = ( range_value )+"px";
-		this.brush_marker.style.borderRadius = ( range_value )+"px";
+		
+		if( this.brush_mode === "brush"){  //only style radius if brush mode
+            this.brush_marker.style.borderRadius = ( range_value )+"px";
+            color_div_style.borderRadius = ( range_value )+"px";
+	    }
 	}
 	
 	Drawer.prototype.init = function(){
@@ -145,7 +179,8 @@
 		this.canvas.setAttribute("height", canvas_height );
 		this.canvas.setAttribute("width", canvas_width );
 		this.selectionContainer.style.height = canvas_height+"px";
-		this.controlsContainer.querySelector("div.color").style.backgroundColor = this.fillStyle;
+		this.brushIndicator.style.backgroundColor = this.fillStyle; //brush indicaor to default color
+		this.toggleCheckbox.checked = false; //pencil is the default hide brush indicator 
 		
 		//brush follower
 		this.canvas.addEventListener("mousemove", this.mouseFollowerEvent.bind(this), false );
