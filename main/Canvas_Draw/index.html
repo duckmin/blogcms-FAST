@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Canvas Drawer</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta content="General" name="rating"/>
+	<meta content="English" name="language"/>
+	<meta name="description" content="" >
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		* {
+			padding:0;
+			margin:0;
+			box-sizing: border-box;
+		}
+		
+		body{
+			background-color:lightgray;
+		}
+		
+		main {
+			width:1000px;
+			margin:auto;
+			margin-top:20px;
+			background-color:white;
+		}
+	
+		.canvas-box {
+			border:1px solid black;
+		}
+		
+		.canvas-box > * {
+			display:inline-block;
+			
+		}
+		
+		.canvas-box > ul {
+			list-style-type:none;
+			width:50px;
+			vertical-align:top;
+			border-right:1px solid black;
+			height:100%;
+			background-color:lightgray;
+		}
+		
+		.canvas-box > ul > li{
+			
+		}
+		
+		.canvas-box > canvas {
+			width:calc( 100% - 50px );
+			min-height:500px;
+			
+		}
+		
+		li.colors {
+			padding-bottom:20px;
+			text-align:center;
+			padding-top:15px;
+		}
+		
+		li.colors > div {
+			width:25px;
+			height:25px;
+			border-radius:30px;
+			margin:auto;
+			margin-top:5px;	
+		}
+		
+		li.colors > div.selected {
+			border:2px solid white;
+		}
+		
+		li.controls > div.color {
+			margin:auto;
+		}
+		
+		input[type='range']{
+			margin-top:10px;
+			margin-bottom:5px;
+			width:100%;
+		}
+		
+		li.controls > i {
+			height:40px;
+			width:40px;
+			display:block;
+    		background-position: center center;
+    		background-repeat: no-repeat;	
+    		border-radius:10px;
+    		margin:auto;
+		}
+		
+		li.controls > i.selected {
+			border:2px solid black;
+		}
+		
+		li.controls > i.pencil {
+			background-image: url("pencil-icon.png");
+		}
+		
+		li.controls > i.brush {
+			background-image: url("brush-icon.png");
+		}
+		
+		li.controls > i.eraser {
+			background-image: url("eraser-icon.png");
+		}
+		
+		li.controls > i.brush ~ * {
+			display:none;
+		}
+		
+		li.controls > i.brush.selected ~ * {
+			display:block;
+		}
+	</style>
+	<script src='drawer.js' ></script>
+	<script>
+		window.onload = function(){
+			var canvas_box = document.getElementById("canvas-box");
+			var drawer = new Drawer( canvas_box );
+			drawer.init();
+		}	
+	</script>
+</head>
+<body>
+	<main>
+		<div id="canvas-box" class="canvas-box" >
+			<ul class="selections" >
+				<li class="colors">
+					<div class="selected" style="background-color:red" ></div>
+					<div style="background-color:blue" ></div>
+					<div style="background-color:yellow" ></div>
+					<div style="background-color:green" ></div>
+					<div style="background-color:black" ></div>
+					<div style="background-color:white" ></div>
+					<div style="background-color:orange" ></div>
+					<div style="background-color:purple" ></div>
+				</li>
+				<li class="controls" >
+					<i class="eraser" data-brushmode="eraser" ></i>
+					<i class="pencil selected" data-brushmode="pencil" ></i>
+					<i class="brush" data-brushmode="brush" ></i>
+					<input title="brush size" type="range" min="10" max="50" value="5" >
+					<div class="color" style="height:10px;width:10px;border-radius:10px;" ></div>
+				</li>			
+			</ul><!--
+			--><canvas></canvas>
+			<div class="brush-marker" style="display:none;
+			position:absolute;
+			height:5px;
+			width:5px;
+			top:0;
+			bottom:0;
+			border-radius:5px;"></div>
+	 	</div>
+	</main>
+</body>
+</html>
