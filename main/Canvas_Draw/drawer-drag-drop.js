@@ -20,6 +20,9 @@
 		this.prevX = 0;
 		this.prevY = 0;
 		this.brush_mode = "pencil";  //pencil, brush, eraser, spray 
+		
+		//drop drop addons 
+		this.dragDropBox = this.controlsContainer.querySelector("div.drop-area");
 	}
 	
 	Drawer.prototype.mouseDownEvent = function(e){
@@ -191,6 +194,36 @@
 	    }
 	}
 	
+	Drawer.prototype.handleDragDrop = function(e){
+		e.stopPropagation();
+		e.preventDefault();
+		
+		var allowed_types = ["image/gif","image/png","image/jpg"],
+		dt = e.dataTransfer,
+		file = dt.files[0],
+		type = file.type;
+		console.log(file);
+		if( allowed_types.indexOf( type ) >= 0 ){
+			var reader = new FileReader();
+			reader.file = file;
+			reader.addEventListener("loadend", this.handleImgLoad.bind(this), false);
+			reader.readAsDataURL(file);
+		}
+		console.log( type );
+	}
+	
+	Drawer.prototype.handleImgLoad = function(e){
+		console.log(e);
+		var data = e.target.result;
+		var img = new Image();
+		img.src = data;
+		img.onload = function(){
+			this.canvas.width = img.width;
+			this.canvas.height = img.height;
+			this.ctx.drawImage(img,0,0,img.width,img.height);
+		}.bind(this);
+	}
+	
 	Drawer.prototype.init = function(){
 		//set height and width dynamically
 		var canvas_height = this.canvas.clientHeight;
@@ -221,5 +254,13 @@
 		}
 		
 		this.brushSizeRange.addEventListener("input", this.rangeSelectSize.bind(this), false );
+		
+		
+		
+		//drag drop funcs 
+		this.dragDropBox.addEventListener("dragenter", function(e){console.log("enter");e.stopPropagation();e.preventDefault();}, false);
+		this.dragDropBox.addEventListener("dragover", function(e){console.log("over");e.stopPropagation();e.preventDefault();}, false);
+		this.dragDropBox.addEventListener("drop", this.handleDragDrop.bind(this), false);
 	}
+	
 })(window);
