@@ -30,7 +30,7 @@
 			
 		}
 		
-		.canvas-box > ul, .canvas-box > canvas {
+		.canvas-box > ul.selections, .canvas-box > canvas {
 			display:inline-block;
 			vertical-align:top;	
 			border-color:black;
@@ -38,7 +38,7 @@
     		border-width:1px;
 		}
 		
-		.canvas-box > ul {
+		.canvas-box > ul.selections {
 			list-style-type:none;
 			width:60px;
 			padding:10px 5px;
@@ -154,12 +154,16 @@
 				</li>			
 			</ul><!--
 			--><canvas></canvas>
+			
 			<div class="brush-marker" style="display:none;
 			height:5px;
 			width:5px;
 			top:0;
 			bottom:0;
 			border-radius:5px;"></div>
+			<ul class="bottom-bar" >
+			    <li>Hello</li>
+			</ul>
 	 	</div>
 	</main>
 </body>

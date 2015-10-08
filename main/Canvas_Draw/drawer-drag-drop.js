@@ -76,6 +76,20 @@
 		this.canvas.removeEventListener("mousemove", this.canvasMouseMoveName, false );
 	}
 	
+	Drawer.prototype.changeBrushSize = function(size){
+		this.brushIndicator.style.width = ( size )+"px";
+		this.brushIndicator.style.height = ( size )+"px";
+		
+		//add styles to brush marker
+		this.brush_marker.style.width = ( size )+"px";
+		this.brush_marker.style.height = ( size )+"px";
+		
+		if( this.brush_mode !== "eraser" ){
+            this.brush_marker.style.borderRadius = ( size )+"px";
+            this.brushIndicator.style.borderRadius = ( size )+"px";
+        }
+	}
+	
 	Drawer.prototype.modeSelector = function(e){
 		var target = e.currentTarget,
 		current_selection = this.controlsContainer.querySelector("i.selected");
@@ -89,8 +103,9 @@
 	    	case "brush":
 			    var selected_color = this.color_input.value;
 			    var brush_size_value = this.brushIndicator.previousElementSibling.value+"px";
-			    this.brush_marker.style.borderRadius = brush_size_value;
-			    this.brushIndicator.style.borderRadius = brush_size_value;
+			    //this.brush_marker.style.borderRadius = brush_size_value;
+			    //this.brushIndicator.style.borderRadius = brush_size_value;
+			    this.changeBrushSize (brush_size_value);
 			    this.brushIndicator.style.backgroundColor = selected_color;
 			    this.brush_marker.style.backgroundColor = selected_color;
 			    this.brushIndicator.style.border = "none";
@@ -194,8 +209,11 @@
 	
 	Drawer.prototype.rangeSelectSize = function(e){
 		var target = e.currentTarget,
-		range_value = target.value,
-		color_div = target.nextElementSibling,
+		range_value = target.value;
+		this.strokeWidth = range_value;
+		this.changeBrushSize (range_value);
+		
+		/*color_div = target.nextElementSibling,
 		color_div_style = color_div.style;
 		this.strokeWidth = range_value;  //change size of drawing pencil 
 		color_div_style.width = ( range_value )+"px";
@@ -208,7 +226,7 @@
 		if( this.brush_mode !== "eraser" ){  //only style radius if not eraser 
             this.brush_marker.style.borderRadius = ( range_value )+"px";
             color_div_style.borderRadius = ( range_value )+"px";
-	    }
+	    }*/
 	}
 	
 	Drawer.prototype.handleDragDrop = function(e){
