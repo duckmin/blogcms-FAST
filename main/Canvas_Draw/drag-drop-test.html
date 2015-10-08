@@ -20,24 +20,28 @@
 		}
 		
 		main {
-			width:1000px;
+			width:800px;
 			margin:auto;
 			margin-top:20px;
 			background-color:white;
 		}
 	
 		.canvas-box {
-			border:1px solid black;
+			
 		}
 		
-		.canvas-box > * {
-			display:inline-block;	
+		.canvas-box > ul, .canvas-box > canvas {
+			display:inline-block;
+			vertical-align:top;	
+			border-color:black;
+    		border-style:solid;
+    		border-width:1px;
 		}
 		
 		.canvas-box > ul {
 			list-style-type:none;
 			width:60px;
-			padding:0 5px;
+			padding:10px 5px;
 			vertical-align:top;
 			border-right:1px solid black;
 			height:100%;
@@ -48,9 +52,9 @@
 			
 		}
 		
-		.canvas-box > canvas {
-			width:calc( 100% - 60px );
-			min-height:500px;
+		.canvas-box > canvas {	
+    		background-image: url("checkerboard.png");
+    		border-left:none;
 		}
 		
 		.canvas-box > canvas:hover {
@@ -60,7 +64,7 @@
 		li.colors {
 			padding-bottom:10px;
 			text-align:center;
-			padding-top:10px;
+			height:115px;
 		}
 		
 		li.colors > div.color {
@@ -109,6 +113,12 @@
 			margin-top:5px;
 		}
 		
+		div.drop-area::after {
+		    content: "Drag Img Here";
+            text-align: center;
+            font-size:0.8em;
+		}
+		
 		.canvas-box > div.brush-marker {
 			position:absolute;
 			box-shadow:0px 0px 2px;
@@ -132,7 +142,7 @@
 			<ul class="selections" >
 				<li class="colors">
 					<input style="width:100%" type="color" name="background_color" >
-					<input title="brush size" type="range" min="10" max="50" value="10" >
+					<input title="brush size" type="range" min="5" max="50" value="5" >
 					<div class="color" style="height:10px;width:10px;border-radius:10px;" ></div>
 				</li>
 				<li class="controls" >
@@ -145,11 +155,11 @@
 			</ul><!--
 			--><canvas></canvas>
 			<div class="brush-marker" style="display:none;
-			height:10px;
-			width:10px;
+			height:5px;
+			width:5px;
 			top:0;
 			bottom:0;
-			border-radius:10px;"></div>
+			border-radius:5px;"></div>
 	 	</div>
 	</main>
 </body>
