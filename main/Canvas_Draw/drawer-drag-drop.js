@@ -182,7 +182,6 @@
 		  		break;
 		  			
 		  	case "eraser":
-		  		console.log('eraser block');
 		  	   this.strokeWidth = brush_size_value;
 		  	   this.brushSizeRange.disabled = false;
 		  	   this.changeBrushSize (brush_size_value);
@@ -337,20 +336,26 @@
 	Drawer.prototype.handleDragDrop = function(e){
 		e.stopPropagation();
 		e.preventDefault();
+		console.log(e.dataTransfer);
 		var allowed_types = ["image/gif","image/png","image/jpeg"],
-		dt = e.dataTransfer,
-		file = dt.files[0],
-		type = file.type;
-		if( allowed_types.indexOf( type ) >= 0 ){
-			var KB_size = file.size/1024;
-			if( KB_size <= this.max_KB_img_upload ){
-    			var reader = new FileReader();
-    			reader.file = file;
-    			reader.addEventListener("loadend", this.handleImgLoad.bind(this), false);
-    			reader.readAsDataURL(file);
-		    }else{
-		        alert("Image Can Not Exceed "+this.max_KB_img_upload+" KB in Size")    
-		    }
+		dt = e.dataTransfer;
+		
+		if( dt.files.length >= 1 ){
+			var file = dt.files[0],
+			type = file.type;
+			if( allowed_types.indexOf( type ) >= 0 ){
+				var KB_size = file.size/1024;
+				if( KB_size <= this.max_KB_img_upload ){
+	    			var reader = new FileReader();
+	    			reader.file = file;
+	    			reader.addEventListener("loadend", this.handleImgLoad.bind(this), false);
+	    			reader.readAsDataURL(file);
+			   }else{
+					alert("Image Can Not Exceed "+this.max_KB_img_upload+" KB in Size")    
+			   }
+			}
+		}else{
+			alert("Data Transfer Unsucessful");
 		}
 	}
 	
@@ -361,13 +366,21 @@
 		img.src = data;
 		img.onload = function(){
            
-            if(img.width > this.max_canvas_width){  //resize image to canvas size using ratio forumla
-                var ratio = img.width/img.height,
-                resized_height = this.max_canvas_width/ratio;		
+			if(img.width > this.max_canvas_width){  //resize image to canvas size using ratio forumla
+            var ratio = img.width/img.height,
+            resized_height = this.max_canvas_width/ratio;		
     			resized_height = Math.ceil(resized_height * 10) / 10;
     			img.width = this.max_canvas_width;
     			img.height = resized_height;
-		    }
+		   }
+		   
+		   if(img.height > this.max_canvas_height){ //resize height if to tall 
+		   	var ratio = img.height/img.width,
+            resized_width = this.max_canvas_height/ratio;		
+    			resized_width = Math.ceil(resized_width * 10) / 10;
+    			img.width = resized_width;
+    			img.height = this.max_canvas_height;
+		   }
 
 			this.canvas.width = img.width;
 			this.canvas.height = img.height;
@@ -376,16 +389,26 @@
 		}.bind(this);
 	}
 	
+	Drawer.prototype.imgToPage = function(e){  //just a test will remove
+		var dataURL = this.canvas.toDataURL("image/jpeg", 0.5);
+		var img = new Image();
+		img.src = dataURL;
+		document.body.appendChild(img);
+	}
+	
 	Drawer.prototype.init = function(){
 		//set height and width dynamically
 		var container_width = this.container.clientWidth;
 		var toolbar = this.container.querySelector("ul");
 		var toolbar_width = toolbar.clientWidth;
 		var toolbar_height = toolbar.clientHeight;
-        var calculated_width = (container_width - toolbar_width); 
-        var canvas_width = ( calculated_width <=  this.max_canvas_width )? calculated_width : this.max_canvas_width;
+		this.max_canvas_height = toolbar_height;  //make it so canvasnever stretches higher than toolbar 
+      var calculated_width = (container_width - toolbar_width); 
+      var canvas_width = ( calculated_width <=  this.max_canvas_width )? calculated_width : this.max_canvas_width;
+		canvas_width = canvas_width - 3; //3 px extra width from borders
 		this.canvas.setAttribute("height", toolbar_height );
-		this.canvas.setAttribute("width", canvas_width - 3 );  //3 px extra width from borders  
+		this.canvas.setAttribute("width", canvas_width - 3 );  
+		this.max_canvas_width = canvas_width - 3;  //reset this value to the actual canvas size 
 		this.bottomBar.style.width = ( canvas_width + toolbar_width )+"px";  //-1 to align borders 
 		
 		this.modeSelector(this.brush_mode);

@@ -52,7 +52,6 @@
 		.canvas-box > ul.selections {
 			width:60px;
 			padding:10px 5px 0 5px;
-			vertical-align:top;
 			border-right:1px solid black;
 			height:100%;
 			min-height:300px;
@@ -185,7 +184,7 @@
 	<script>
 		window.onload = function(){
 			var canvas_box = document.getElementById("canvas-box");
-			var drawer = new Drawer( canvas_box );
+			window.drawer = new Drawer( canvas_box );
 			drawer.init();
 		}	
 	</script>
