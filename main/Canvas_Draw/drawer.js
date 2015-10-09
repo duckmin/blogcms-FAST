@@ -1,8 +1,5 @@
-(function(window){
-	
-	
 	window.Drawer = function( canvas_box ){
-		this.max_KB_img_upload = 150;
+		this.max_KB_img_upload = 200;
 		this.max_canvas_width = 600;
 		this.container = canvas_box;
 		this.canvas = canvas_box.querySelector("canvas");
@@ -31,12 +28,21 @@
 		this.dragDropBox = this.bottomBar.querySelector("li > div.drop-area");
 	}
 	
+	Drawer.prototype.getRealCanvasCoords = function(e){  //x y coords of mouse on canvas
+		var coordinates = {};
+		coordinates.x = (window.pageXOffset + e.clientX) - ( this.container.offsetLeft + this.canvas.offsetLeft);
+		coordinates.y = (window.pageYOffset + e.clientY) - (this.container.offsetTop + this.canvas.offsetTop);
+		return coordinates;
+	} 	
+	
 	Drawer.prototype.mouseDownEvent = function(e){
 		e.currentTarget.setCapture();
+		var coords = this.getRealCanvasCoords(e);
 		this.prevX = this.currX;
 		this.prevY = this.currY;
-		this.currX = e.clientX - this.canvas.offsetLeft;
-		this.currY = e.clientY - this.canvas.offsetTop;	
+		this.currX = coords.x;
+		this.currY = coords.y;	
+		
 		//bind mouse move listener
 		if( this.brush_mode !== "text" ){
 			var draw_modes = ["eraser","spray"];
@@ -55,21 +61,24 @@
 	}
 	
 	Drawer.prototype.mouseMoveEvent = function(e){
+		var coords = this.getRealCanvasCoords(e);
 		this.prevX = this.currX;
 		this.prevY = this.currY;
-		this.currX = e.clientX - this.canvas.offsetLeft;
-		this.currY = e.clientY - this.canvas.offsetTop;
+		this.currX = coords.x;
+		this.currY = coords.y;	
 		this.drawCoords();
 	}
 	
 	Drawer.prototype.mouseFollowerEvent = function(e){
-		var x = e.clientX,
-		y = e.clientY,
-		half_stroke = this.strokeWidth/2;
-		this.brush_marker.style.top = (y - half_stroke)+"px";
-		this.brush_marker.style.left = (x - half_stroke)+"px";
-		this.text_marker.style.top = (y - (this.textFontSize/2))+"px";
-		this.text_marker.style.left = (x)+"px";
+		var coords = this.getRealCanvasCoords(e),
+		half_stroke = this.strokeWidth/2,
+		half_font = this.textFontSize/2,
+		x = ( coords.x - half_stroke ) + this.canvas.offsetLeft,
+		y = ( coords.y - half_stroke ) + this.canvas.offsetTop;
+		this.brush_marker.style.top = y+"px";
+		this.brush_marker.style.left = x+"px";
+		this.text_marker.style.top = ((coords.y + this.canvas.offsetTop) - half_font )+"px";
+		this.text_marker.style.left = (coords.x + this.canvas.offsetLeft)+"px";		
 	}
 	
 	Drawer.prototype.mouseOverEvent = function(e){
@@ -121,17 +130,24 @@
 	}
 	
 	Drawer.prototype.setCtxColor = function(){ //call after setting this.fillStyle,  binds to ctx fill or stroke Style	
-		var context = this.ctx;
-		if( this.brush_mode === "pencil" || this.brush_mode === "brush" ){  //add or remove show blur 
-			context.shadowBlur = 2;
-  			context.shadowColor = this.fillStyle;
-  			context.strokeStyle = this.fillStyle;
+		var context = this.ctx,
+		is_line = ( this.brush_mode === "pencil" || this.brush_mode === "brush" )? true : false,
+		has_shadow = ( this.brush_mode === "brush" || this.brush_mode === "spray" )? true : false;
+		if( is_line ){
+		    context.strokeStyle = this.fillStyle;
   			context.lineJoin = "round";
 			context.lineCap = "round";
-		}else{ //set to default if not pencil 
-			context.shadowBlur = 0;
+		}else{
+		   context.fillStyle= this.fillStyle; 
+		}
+		
+		if( !has_shadow ){
+		    context.shadowBlur = 0;
   			context.shadowColor = "rgba(0,0,0,0)";
-  			context.fillStyle= this.fillStyle;
+		}else{
+		    var shadow_val = (this.brush_mode === "spray")? 5 : 2;
+		    context.shadowBlur = shadow_val;
+  			context.shadowColor = this.fillStyle;   
 		}
 	}
 	
@@ -167,9 +183,9 @@
 		  			
 		  	case "eraser":
 		  		console.log('eraser block');
-		  		this.strokeWidth = brush_size_value;
-		  		this.brushSizeRange.disabled = false;
-		  		this.changeBrushSize (brush_size_value);
+		  	   this.strokeWidth = brush_size_value;
+		  	   this.brushSizeRange.disabled = false;
+		  	   this.changeBrushSize (brush_size_value);
 		  	   this.brush_marker.style.borderRadius = "0";
 		  	   this.brushIndicator.style.borderRadius = "0";
 		  	   this.changeBrushUIColor( "white" );
@@ -307,7 +323,7 @@
 	}
 	
 	Drawer.prototype.changeUITextFontSize = function(size){
-		this.textSizeIndicator.style.fontSize = size+"px";
+		this.textSizeIndicator.innerHTML = size+"px";
 		this.text_marker.style.fontSize = size+"px";
 	}
 	
@@ -344,13 +360,19 @@
 		var img = new Image();
 		img.src = data;
 		img.onload = function(){
-			if( img.width <= this.max_canvas_width ){
-    			this.canvas.width = img.width;
-    			this.canvas.height = img.height;
-    			this.ctx.drawImage(img,0,0,img.width,img.height);
-		    }else{
-		        alert("Image Exceeds Canvas Width of "+this.max_canvas_width+" px");    
+           
+            if(img.width > this.max_canvas_width){  //resize image to canvas size using ratio forumla
+                var ratio = img.width/img.height,
+                resized_height = this.max_canvas_width/ratio;		
+    			resized_height = Math.ceil(resized_height * 10) / 10;
+    			img.width = this.max_canvas_width;
+    			img.height = resized_height;
 		    }
+
+			this.canvas.width = img.width;
+			this.canvas.height = img.height;
+			this.ctx.drawImage(img,0,0,img.width,img.height);
+			this.modeSelector(this.brush_mode); //reset mode after drawing image, or else color is black 		   
 		}.bind(this);
 	}
 	
@@ -360,21 +382,16 @@
 		var toolbar = this.container.querySelector("ul");
 		var toolbar_width = toolbar.clientWidth;
 		var toolbar_height = toolbar.clientHeight;
-      var calculated_width = (container_width - toolbar_width); 
-      var canvas_width = ( calculated_width <=  this.max_canvas_width )? calculated_width : this.max_canvas_width;
+        var calculated_width = (container_width - toolbar_width); 
+        var canvas_width = ( calculated_width <=  this.max_canvas_width )? calculated_width : this.max_canvas_width;
 		this.canvas.setAttribute("height", toolbar_height );
 		this.canvas.setAttribute("width", canvas_width - 3 );  //3 px extra width from borders  
-		this.bottomBar.style.width = ( canvas_width - 1 )+"px";  //-1 to align borders 
-		this.bottomBar.style.marginLeft = ( toolbar_width + 1 )+"px";
+		this.bottomBar.style.width = ( canvas_width + toolbar_width )+"px";  //-1 to align borders 
 		
-		//this.selectionContainer.style.height = canvas_height+"px";
-		//this.brushIndicator.style.backgroundColor = this.fillStyle; //brush indicaor to default color
-		//--this.changeBrushSize (this.strokeWidth);
-		//--this.changeBrushUIColor( this.fillStyle );
 		this.modeSelector(this.brush_mode);
 		this.addColorToHistory(this.fillStyle);
 		this.brushSizeRange.value = this.strokeWidth; //sets to min value of range onload
-		
+		this.textSizeRange.value = this.textFontSize;
 		this.changeUITextFontSize(this.textFontSize); //sets to min value of range onload
 		
 		//brush follower
@@ -406,6 +423,6 @@
 		this.dragDropBox.addEventListener("dragenter", function(e){console.log("enter");e.stopPropagation();e.preventDefault();}, false);
 		this.dragDropBox.addEventListener("dragover", function(e){console.log("over");e.stopPropagation();e.preventDefault();}, false);
 		this.dragDropBox.addEventListener("drop", this.handleDragDrop.bind(this), false);
+		console.log("top="+this.canvas.offsetTop+" left="+this.canvas.offsetLeft);
 	}
 	
-})(window);

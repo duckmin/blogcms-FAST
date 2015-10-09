@@ -1,8 +1,5 @@
-(function(window){
-	
-	
 	window.Drawer = function( canvas_box ){
-		this.max_KB_img_upload = 150;
+		this.max_KB_img_upload = 200;
 		this.max_canvas_width = 600;
 		this.container = canvas_box;
 		this.canvas = canvas_box.querySelector("canvas");
@@ -31,10 +28,10 @@
 		this.dragDropBox = this.bottomBar.querySelector("li > div.drop-area");
 	}
 	
-	Drawer.prototype.getRealCanvasCoords = function(e){
+	Drawer.prototype.getRealCanvasCoords = function(e){  //x y coords of mouse on canvas
 		var coordinates = {};
-		coordinates.x = e.clientX - ( this.container.offsetLeft + this.canvas.offsetLeft);
-		coordinates.y = e.clientY - ( this.container.offsetTop + this.canvas.offsetTop );	
+		coordinates.x = (window.pageXOffset + e.clientX) - ( this.container.offsetLeft + this.canvas.offsetLeft);
+		coordinates.y = (window.pageYOffset + e.clientY) - (this.container.offsetTop + this.canvas.offsetTop);
 		return coordinates;
 	} 	
 	
@@ -77,7 +74,7 @@
 		half_stroke = this.strokeWidth/2,
 		half_font = this.textFontSize/2,
 		x = ( coords.x - half_stroke ) + this.canvas.offsetLeft,
-		y = coords.y - half_stroke;
+		y = ( coords.y - half_stroke ) + this.canvas.offsetTop;
 		this.brush_marker.style.top = y+"px";
 		this.brush_marker.style.left = x+"px";
 		this.text_marker.style.top = ((coords.y + this.canvas.offsetTop) - half_font )+"px";
@@ -133,17 +130,24 @@
 	}
 	
 	Drawer.prototype.setCtxColor = function(){ //call after setting this.fillStyle,  binds to ctx fill or stroke Style	
-		var context = this.ctx;
-		if( this.brush_mode === "pencil" || this.brush_mode === "brush" ){  //add or remove show blur 
-			context.shadowBlur = 2;
-  			context.shadowColor = this.fillStyle;
-  			context.strokeStyle = this.fillStyle;
+		var context = this.ctx,
+		is_line = ( this.brush_mode === "pencil" || this.brush_mode === "brush" )? true : false,
+		has_shadow = ( this.brush_mode === "brush" || this.brush_mode === "spray" )? true : false;
+		if( is_line ){
+		    context.strokeStyle = this.fillStyle;
   			context.lineJoin = "round";
 			context.lineCap = "round";
-		}else{ //set to default if not pencil 
-			context.shadowBlur = 0;
+		}else{
+		   context.fillStyle= this.fillStyle; 
+		}
+		
+		if( !has_shadow ){
+		    context.shadowBlur = 0;
   			context.shadowColor = "rgba(0,0,0,0)";
-  			context.fillStyle= this.fillStyle;
+		}else{
+		    var shadow_val = (this.brush_mode === "spray")? 5 : 2;
+		    context.shadowBlur = shadow_val;
+  			context.shadowColor = this.fillStyle;   
 		}
 	}
 	
@@ -179,9 +183,9 @@
 		  			
 		  	case "eraser":
 		  		console.log('eraser block');
-		  		this.strokeWidth = brush_size_value;
-		  		this.brushSizeRange.disabled = false;
-		  		this.changeBrushSize (brush_size_value);
+		  	   this.strokeWidth = brush_size_value;
+		  	   this.brushSizeRange.disabled = false;
+		  	   this.changeBrushSize (brush_size_value);
 		  	   this.brush_marker.style.borderRadius = "0";
 		  	   this.brushIndicator.style.borderRadius = "0";
 		  	   this.changeBrushUIColor( "white" );
@@ -356,13 +360,19 @@
 		var img = new Image();
 		img.src = data;
 		img.onload = function(){
-			if( img.width <= this.max_canvas_width ){
-    			this.canvas.width = img.width;
-    			this.canvas.height = img.height;
-    			this.ctx.drawImage(img,0,0,img.width,img.height);
-		    }else{
-		        alert("Image Exceeds Canvas Width of "+this.max_canvas_width+" px");    
+           
+            if(img.width > this.max_canvas_width){  //resize image to canvas size using ratio forumla
+                var ratio = img.width/img.height,
+                resized_height = this.max_canvas_width/ratio;		
+    			resized_height = Math.ceil(resized_height * 10) / 10;
+    			img.width = this.max_canvas_width;
+    			img.height = resized_height;
 		    }
+
+			this.canvas.width = img.width;
+			this.canvas.height = img.height;
+			this.ctx.drawImage(img,0,0,img.width,img.height);
+			this.modeSelector(this.brush_mode); //reset mode after drawing image, or else color is black 		   
 		}.bind(this);
 	}
 	
@@ -372,8 +382,8 @@
 		var toolbar = this.container.querySelector("ul");
 		var toolbar_width = toolbar.clientWidth;
 		var toolbar_height = toolbar.clientHeight;
-      var calculated_width = (container_width - toolbar_width); 
-      var canvas_width = ( calculated_width <=  this.max_canvas_width )? calculated_width : this.max_canvas_width;
+        var calculated_width = (container_width - toolbar_width); 
+        var canvas_width = ( calculated_width <=  this.max_canvas_width )? calculated_width : this.max_canvas_width;
 		this.canvas.setAttribute("height", toolbar_height );
 		this.canvas.setAttribute("width", canvas_width - 3 );  //3 px extra width from borders  
 		this.bottomBar.style.width = ( canvas_width + toolbar_width )+"px";  //-1 to align borders 
@@ -416,4 +426,3 @@
 		console.log("top="+this.canvas.offsetTop+" left="+this.canvas.offsetLeft);
 	}
 	
-})(window);

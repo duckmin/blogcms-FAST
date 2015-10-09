@@ -20,7 +20,7 @@
 		}
 		
 		main {
-			width:800px;
+			width:100%;
 			margin:auto;
 			margin-top:20px;
 			background-color:white;
@@ -28,11 +28,12 @@
 	
 		.canvas-box {
 			overflow:hidden;
+			position:relative;
 		}
 		
 		.canvas-box > ul.selections, .canvas-box > canvas {
 			display:inline-block;
-			vertical-align:top;	
+			vertical-align:bottom;	
 			
 		}
 		
@@ -50,11 +51,12 @@
 		
 		.canvas-box > ul.selections {
 			width:60px;
-			padding:10px 5px;
+			padding:10px 5px 0 5px;
 			vertical-align:top;
 			border-right:1px solid black;
 			height:100%;
-			min-height:400px;
+			min-height:300px;
+			border-bottom-color:lightgray;
 		}
 		
 		.canvas-box > ul.bottom-bar {
@@ -64,6 +66,7 @@
 		
 		.canvas-box > ul.bottom-bar > li {
 			display:inline-block;
+			vertical-align:middle;
 		}
 		
 		.canvas-box > canvas {	
@@ -72,7 +75,7 @@
 		}
 		
 		.canvas-box > canvas:hover {
-			/*cursor:none;*/
+			cursor:none;
 		}		
 		
 		li.colors {
@@ -137,7 +140,6 @@
 			border:2px solid black;
 			display:inline-block;
 			margin-right:3px;
-			vertical-align:middle;
 		}
 		
 		div.drop-area::after {
