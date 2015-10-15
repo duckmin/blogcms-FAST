@@ -3,8 +3,8 @@
 	$post_view = new PostViews( new Parsedown );
 	$form_data = $json["post_data"];
 	$template_data = $json["template_data"];
-	$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );
-	$preview_template = file_get_contents( $GLOBALS['template_dir']."/blog_post_preview.txt" );
+	$post_template = file_get_contents( TEMPLATE_DIR."/blog_post.txt" );
+	$preview_template = file_get_contents( TEMPLATE_DIR."/blog_post_preview.txt" );
 	
 	$single = array();
 	$single["_id"] ="5428784f7f8b9afe1a779e93";  //just a dummy ID means nothing 

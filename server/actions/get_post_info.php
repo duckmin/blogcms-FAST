@@ -15,7 +15,7 @@
 			}
 			$posts = iterator_to_array( $cursor );
 
-			if( count( $posts ) > $GLOBALS['amount_on_manger_tab'] ){
+			if( count( $posts ) > AMOUNT_ON_MANAGER_TAB ){
 				array_pop( $posts );
 				$next=true;
 			}else{
@@ -25,7 +25,7 @@
 			$parsedown = new Parsedown();				
 			$post_views = new PostViews( $parsedown );	
 			$modified_array=array();
-			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );
+			$post_template = file_get_contents( TEMPLATE_DIR."/blog_post.txt" );
 			foreach( $posts as $row ){ 			
 				$modified_row = $post_views->convertRowValues( $row );	
                 $row["show_id"] = true; //show_id on template, so manager page JavaScript can identify them

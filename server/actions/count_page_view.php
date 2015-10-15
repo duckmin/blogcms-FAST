@@ -15,7 +15,8 @@
 			
 			$ts = new MongoDate( strtotime( $dt." 00:00:00" ) ); //time of 00:00:00 because we only want 1 record per page per day	
 				
-			$write_result = $db->$GLOBALS['mongo_db_name']->analytics->update( array("url"=>$visited_url,'date'=>$ts ), array( '$inc'=>array('views'=>1), '$addToSet'=>array( 'ips'=>$ip ) ), array('upsert'=>true) );
+			$db_name = MONGO_DB_NAME;
+			$write_result = $db->$db_name->analytics->update( array("url"=>$visited_url,'date'=>$ts ), array( '$inc'=>array('views'=>1), '$addToSet'=>array( 'ips'=>$ip ) ), array('upsert'=>true) );
 			$success = ( $write_result['n'] === 1 )? true : false;	
 		}	
 	}

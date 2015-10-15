@@ -14,7 +14,7 @@
 		
 		if( !$illegal_chars && strlen( $folder_name ) > 0 ){
 			$f_path = $folder_path."/".$folder_name;
-			$folder_pwd = $GLOBALS['index_path']."/".$f_path;
+			$folder_pwd = INDEX_PATH."/".$f_path;
 			if( !is_dir( $folder_pwd ) ){
 				if( mkdir( $folder_pwd, 0774 ) ){
 					$message = "Folder Added";

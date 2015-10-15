@@ -14,7 +14,7 @@
 		
 		public function paginator( $last_timestamp, $url_add, $paginator_template ){
 			$data = array(
-                "base_url"=>$GLOBALS['base_url'].$url_add,
+                "base_url"=>BASE_URL.$url_add,
                 "after_ts"=>$last_timestamp
 			);
 			return TemplateBinder::bindTemplate( $paginator_template, $data );
@@ -152,14 +152,14 @@
 			$structure["time_stamp"] = $structure["lastModified"]->sec * 1000; //for js accurrate UTC conversion
 			$structure["inner"] = $this->formatSinglePost( $row["post_data"] );
 			$structure["hashtag_options"] = $this->generateHashtagsOptionsForPostForm( $row["hashtags"] );
-			$structure["base"] = $GLOBALS['base_url'];
+			$structure["base"] = BASE_URL;
 			return TemplateBinder::bindTemplate( $template, $structure );	
 		}
 		
 		public function makePostPreviewHtmlFromData( $row, $template ){		
 			$structure = $this->convertRowValues( $row );
 			$structure["time_stamp"] = $structure["lastModified"]->sec * 1000; //for js accurrate UTC conversion
-			$structure["base"] = $GLOBALS['base_url'];
+			$structure["base"] = BASE_URL;
 			$structure["hashtag_links"] = $this->generateHashtagsLinksForPreview( $row["hashtags"] );
 			return TemplateBinder::bindTemplate( $template, $structure );	
 		}

@@ -27,7 +27,7 @@ include_once $server."/configs.php";
 	
 	
 	//FOR USE WITH THE GD PHP LIB
-	/*$src = $GLOBALS['index_path']."/pics/amazon/dove.jpg";
+	/*$src = INDEX_PATH."/pics/amazon/dove.jpg";
 	$img_info = getimagesize($src);
 	echo var_dump($img_info);
 	$width = $img_info[0];
@@ -38,17 +38,27 @@ include_once $server."/configs.php";
 	$img_p = imagecreatetruecolor( $aspect_width, $aspect_height ); //frame for img to be copied into
 	$img = imagecreatefromjpeg( $src );
 	imagecopyresampled($img_p, $img, 0, 0, 0, 0, $aspect_width, $aspect_height, $width, $height);
-	imagejpeg($img_p, $GLOBALS['index_path']."/pics/amazon/dove-thumb.jpg", 100); //save resized img canvas to new src
+	imagejpeg($img_p, INDEX_PATH."/pics/amazon/dove-thumb.jpg", 100); //save resized img canvas to new src
 	*/
 	
-	$initial_date = "2015-4-02";
+	/*$initial_date = "2015-4-02";
 	$s1 = strtotime($initial_date);
 	$md = new MongoDate( $s1 );
 	echo var_dump($md);
 	echo "<br>";
 	$it2 = 1425346156;
 	$md2 = new MongoDate( $it2 );
-	echo var_dump($md2);
+	echo var_dump($md2);*/
 	
-	//tsst		
+	//tsst
+	
+	class Constants {
+		const URL = "HTTP";
+		//public static $url = dirname(__FILE__);
+	}		
+
+	define( "SERVER_PATHo", dirname(__FILE__) );
+define( "INDEX_PATHo", SERVER_PATHo."/../main" );
+	
+	echo INDEX_PATHo;
 ?>

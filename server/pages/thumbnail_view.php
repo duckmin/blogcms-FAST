@@ -12,7 +12,7 @@ if( $part_count === 2 ){
 			echo $image->getBytes();
 		}else{
 			//if image is not found output a stock thumb "thumb not available"
-			$stock_thumb = $GLOBALS['index_path']."/style/resources/no-thumbnail.png";
+			$stock_thumb = INDEX_PATH."/style/resources/no-thumbnail.png";
 			$im = imagecreatefrompng($stock_thumb);
             if ($im) {
               header("Content-type: image/png");
@@ -20,7 +20,6 @@ if( $part_count === 2 ){
             }
         }           
 	}catch( MongoGridFSException $e ){
-		echo "XXXX";
 		echo $e->getMessage();
 	}	
 }

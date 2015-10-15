@@ -12,11 +12,11 @@
 		}
 		  
 		public static function authenticate(){
-			include $GLOBALS['server_path']."/pages/html/manager_login.php";
+			include SERVER_PATH."/pages/html/manager_login.php";
 		}
 		  
 		public static function loginSuccess( $user, $pw ){
-			$users = json_decode( file_get_contents( $GLOBALS['server_path']."/includes/logins.json" ), true );  
+			$users = json_decode( file_get_contents( SERVER_PATH."/includes/logins.json" ), true );  
 		 
 			if( array_key_exists( $user, $users ) && $users[$user]["pw"] === $pw ){	
 				$_SESSION['user'] = $user;

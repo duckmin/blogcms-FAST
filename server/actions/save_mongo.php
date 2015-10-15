@@ -32,9 +32,9 @@
 		$message = "Please Select a thumbnail from the 'Resources' tab";
 	}
 	
-	if( $valid_inputs && $title_length > $GLOBALS['max_title_length'] ){
+	if( $valid_inputs && $title_length > MAX_TITLE_LENGTH ){
 		$valid_inputs = false;
-		$message = "Title longer than ".$GLOBALS['max_title_length']." characters";
+		$message = "Title longer than ".MAX_TITLE_LENGTH." characters";
 	}
 	
 	//only allow letters nums and spaces in title
@@ -43,9 +43,9 @@
 		$message = "Title can only contain letters, numbers, or spaces";
 	}
 	
-	if( $valid_inputs && $desc_length > $GLOBALS['max_desc_length'] ){
+	if( $valid_inputs && $desc_length > MAX_DESC_LENGTH ){
 		$valid_inputs = false;
-		$message = "Description longer than ".$GLOBALS['max_desc_length']." characters";
+		$message = "Description longer than ".MAX_DESC_LENGTH." characters";
 	}
 	
 	if( isset( $procedure ) ){
@@ -68,7 +68,8 @@
 		try {
 			
 			$m = MongoConnection();
-			$db = $m->$GLOBALS['mongo_db_name'];
+			$db_name = MONGO_DB_NAME;
+			$db = $m->$db_name;
 			$collection = $db->posts;
 			$author = $_SESSION['user'];
 
