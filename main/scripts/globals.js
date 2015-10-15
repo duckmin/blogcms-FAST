@@ -46,7 +46,32 @@ window.controller={
 				}
 			})
 		}
-	}
+	},
+	
+	"callApi":function( service, values_obj, callback ){
+		var self=this;
+		if( !constants.ajax_in_progress ){
+			constants.ajax_in_progress=true;
+			var post_obj = {
+				service:service,
+				values:values_obj
+			};
+			Ajaxer({
+				method:'POST',
+				url:"/api",
+				content_type:"text/html",
+				send: JSON.stringify( post_obj ),
+				success:function( d ){
+					constants.ajax_in_progress=false;
+					callback(d);
+				},
+				error:function( e_code, e_message ){
+					constants.ajax_in_progress=false;
+					alert(  e_code+" "+e_message );
+				}
+			})
+		}
+	},
 }
 
 window.box_action = {

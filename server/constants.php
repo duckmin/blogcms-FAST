@@ -5,8 +5,6 @@
 /*DO NOT CHANGE*/
 define("SERVER_PATH", dirname(__FILE__));
 define("INDEX_PATH", SERVER_PATH."/../main");
-//!!can chage to https if needed!!
-define("BASE_URL", "http://".$_SERVER['HTTP_HOST']);
 /* END DO NOT CHANGE */
 
 //these values can be changed according to your environment, and to affect some page behaviors 
@@ -17,7 +15,7 @@ define("MONGO_DB_NAME", "blog");
 //string used to connect to mongo instance, example: "mongodb:///tmp/mongodb-27017.sock"
 define("MONGO_CONNECTION_STRING", "");
 
-//keyword used to access manager page (no spaces!)
+//keyword used to access manager page (no spaces!),  this should be changed to something random to make your manager page hard to find 
 define("MANAGER_KEYWORD", "manager");
 
 //where page cache saves txt files 
@@ -44,13 +42,13 @@ $GLOBALS["upload_vars"]["allowed_extensions"] = array_merge ( $GLOBALS["upload_v
 define("AMOUNT_ON_MAIN_PAGE", 8);
 
 //# of post previews that show up underneath post when viewing post url 
-define("AMOUNT_OF_NEXT_POSTS", 8);
+define("AMOUNT_OF_NEXT_POSTS", 4);
 
 //# of posts that show up on the "posts" tab in the manager
 define("AMOUNT_ON_MANAGER_TAB", 5);
 
 //minutes until cache file expires
-define("MAX_PAGE_CACHE_MINS", -5);//turned off for dev turn on for prod to resonable amount of mins
+define("MAX_PAGE_CACHE_MINS", -5);//turned off for dev turn on for prod to reasonable amount of mins
 //max # of characters in post title 
 define("MAX_TITLE_LENGTH", 500);
 

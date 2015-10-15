@@ -1,9 +1,12 @@
 #!/usr/bin/php
 
 <?php
-	/* this script is a cron job that should be ran monthly to remove old anytic data
-	the timing can be adjusted if you wish to keep more than 1 months analytic data at a time */
+	/* this script is used to add a user into the mongo users collection to login to the manager page with */
+	include dirname(__FILE__)."/server/constants.php";
 	
+	$mongo_con = new MongoClient(MONGO_CONNECTION_STRING);
+	$db_name = MONGO_DB_NAME;
+	$collection = $mongo_con->$db_name->users;
 	/*date_default_timezone_set('America/New_York');
 	$mongo_con = new MongoClient();
 	$today = date( "Y-m-d" );
@@ -13,6 +16,4 @@
 	$collection = $mongo_con->blog->analytics;	
 	$cursor = $collection->remove( array( "date"=>array( '$lt'=>$mongo_date ) ) );
 	$amount_removed = $cursor["n"];*/
-	
-	//you can log amount removed and current date however you wish
 ?>
