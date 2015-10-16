@@ -529,8 +529,11 @@
 		cat_value = cat_form_values.blog_grid_sort;	
 		//if search is set append this to the URL and cat will be "",  the get_post_info service knows when search isset to bring back search results
 		//and the cat must be blank to use categories from the post_info and not the URL
-		var search_str = ( cat_form_values.search.length > 0 )? "&search="+cat_form_values.search : "";	
-		controller.getText( constants.ajax_url+'?action=4&p='+POSTS_TABLE_PAGENUM+search_str, function(d){
+		//var search_str = ( cat_form_values.search.length > 0 )? "&search="+cat_form_values.search : "";	
+		var send = {p:POSTS_TABLE_PAGENUM};
+		if(cat_form_values.search.length > 0){ send.search = cat_form_values.search }
+		
+		controller.callApi( 'ManagerPostsGet_posts_page_info', send, function(d){
 			if( d.length > 0 ){
 				var json = JSON.parse( d );
 				cb(json); //run callback (only used for search)

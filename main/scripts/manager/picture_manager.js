@@ -22,7 +22,7 @@ var resources_templates = {
 
 var resources_action = {
     getDirListing:function(path, callback){
-        controller.getText( constants.ajax_url+'?action=0&dir_path='+path, function(listing){
+        controller.callApi( 'ManagerResourcesGet_directory_contents', {dir_path:path}, function(listing){
             callback( JSON.parse(listing) );
         });
     },
@@ -111,7 +111,8 @@ resources_action.deleteResource = function( elm ){
 			var thumbnail_key = parent_li.getAttribute("data-thumbkey");
 			send.thumbnail_key = thumbnail_key;
 		}
-		controller.postJson( constants.ajax_url+'?action=9', send, function(d){
+		//controller.callApi( 'ManagerResourcesDelete_resource', {dir_path:path},
+		controller.callApi( 'ManagerResourcesDelete_resource', send, function(d){
 			if( d !== "" ){
 				var resp = JSON.parse( d );
 				if( resp.result ){

@@ -1,14 +1,14 @@
 <?php
 	
 	$logged_in = ManagerActions::isLoggedIn();
-	if( $logged_in && isset($_GET["p"]) ){
+	if( $logged_in && isset($_APIVALS["p"]) ){
         
-        $page_num = $_GET["p"];
+        $page_num = $_APIVALS["p"];
 		try{		
 			$db = MongoConnection();
 			$db_getter = new MongoGetter( $db );
-			if( isset( $_GET["search"] ) ){
-			    $search = $_GET["search"];
+			if( isset( $_APIVALS["search"] ) ){
+			    $search = $_APIVALS["search"];
 			    $cursor = $db_getter->getPostsFromDbBySearch( $page_num, $search ); 
 			}else{
 			    $cursor = $db_getter->getBlogManagePosts( $page_num );

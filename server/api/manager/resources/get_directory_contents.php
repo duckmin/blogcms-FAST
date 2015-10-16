@@ -1,6 +1,6 @@
 <?php
 
-	$path = $_GET['dir_path'];
+	$path = $_APIVALS['dir_path'];
 	
 	$files = FileGetter::listFolderContents( $path );
 	$list = "";

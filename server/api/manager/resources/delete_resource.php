@@ -5,7 +5,7 @@
 	
 	if( $logged_in ){ //logged in
 		$img_extensions = $GLOBALS["upload_vars"]["allowed_image_extensions"];
-		$json = json_decode( $_POST['json'], true );
+		$json = $_APIVALS;
 		$file_path = $json["file_path"];
 		$server_path = INDEX_PATH.$file_path;
 		$path_info = pathinfo( $server_path );
