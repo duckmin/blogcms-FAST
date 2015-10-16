@@ -40,7 +40,8 @@
 					 		foreach( $word_matches[0] as $single_word ){
 					 			$preview .= " $single_word";
 					 			if( strlen( $preview ) >= $this->MAX_PREVIEW_STR_LENGTH ){
-					 				break 3;
+					 				$preview .= "...";
+					 				break 3;  //reached max length break out of all loops and go to return
 					 			}
 					 			
 					 		}
@@ -48,7 +49,7 @@
 					 }
 				}
 			}
-			return substr( $preview, 1)."..."; //trim off extra space
+			return substr( $preview, 1); //trim off extra space
 		}
 		
 		//used in save_mongo.php and get_preview.php 
