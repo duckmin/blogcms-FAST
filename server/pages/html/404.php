@@ -1,13 +1,13 @@
 <?php
 	//included in index.php which has configs.php included already
-	$base = $GLOBALS['base_url'];
+	$base = BASE_URL;
 	$url = $_SERVER["REQUEST_URI"];				
 	$parsedown = new Parsedown();				
 	$post_views = new PostViews( $parsedown );		
-	$template = file_get_contents( $GLOBALS['template_dir']."/base_page.txt" );
+	$template = file_get_contents( TEMPLATE_DIR."/base_page.txt" );
 	$title = "Page Not Found - ".$_SERVER['HTTP_HOST'];		
 	$desc	= 	"";
-	$entry_template_404 = file_get_contents( $GLOBALS['template_dir']."/404_entry.txt" );
+	$entry_template_404 = file_get_contents( TEMPLATE_DIR."/404_entry.txt" );
 	$entry_data_404 = array(
 		"bad_url" => "$base$url"	
 	);

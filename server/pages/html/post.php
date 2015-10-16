@@ -8,7 +8,7 @@
 		exit;
 	}
 		
-	$base = $GLOBALS['base_url'];
+	$base = BASE_URL;
 	$year = $GLOBALS['url_parts'][0];
 	$month = $GLOBALS['url_parts'][1];
 	$title = $GLOBALS['url_parts'][2];
@@ -31,8 +31,8 @@
 		
 	if( $single_post_data !== NULL ){
 		$single_post_data["show_id"] = true; //show id on post so analytics can track views by ID
-		$page_template = file_get_contents( $GLOBALS['template_dir']."/base_page.txt" );
-		$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );
+		$page_template = file_get_contents( TEMPLATE_DIR."/base_page.txt" );
+		$post_template = file_get_contents( TEMPLATE_DIR."/blog_post.txt" );
 		$tmplt_data = array();
 		$scripts = "<script src='/scripts/page_actions/main_analytics.js'></script>";
 		$scripts .= "<script src='/scripts/page_actions/post_actions.js' ></script>";

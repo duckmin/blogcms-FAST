@@ -10,7 +10,7 @@
   			//FOR USE WITH THE GD PHP LIB
 			$path_info = pathinfo( $image_path );
 			$thumb_file_name = $path_info["filename"].".".$path_info["extension"];
-			$thumb_path = $GLOBALS['tmp_file_directory']."/".$thumb_file_name;
+			$thumb_path = TMP_FILE_DIRECTORY."/".$thumb_file_name;
 
 			$img_info = getimagesize($image_path);
 			$mime_type = $img_info["mime"];

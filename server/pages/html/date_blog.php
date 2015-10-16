@@ -1,10 +1,10 @@
 <?php
 	//included in index.php which has configs.php included already
-	$base = $GLOBALS['base_url'];
+	$base = BASE_URL;
 	$url = $_SERVER["REQUEST_URI"];
-	$cache = new CacheController( $GLOBALS['cache_dir'], $url );
+	$cache = new CacheController( CACHE_DIR, $url );
 	
-	if( $cache->urlInCache() && !$cache->cacheMinutesOverLimit( $GLOBALS['max_page_cache_mins'] ) ){   
+	if( $cache->urlInCache() && !$cache->cacheMinutesOverLimit( MAX_PAGE_CACHE_MINS ) ){   
 	    echo $cache->pullUrlContentFromCache();
 	    //echo "cached";
         exit;	
@@ -33,7 +33,7 @@
 	}			
 
 	if( $mongo_results ){
-    	$template = file_get_contents( $GLOBALS['template_dir']."/base_page.txt" );
+    	$template = file_get_contents( TEMPLATE_DIR."/base_page.txt" );
     	$title = "Main page - ".$_SERVER['HTTP_HOST'];		
     	$desc= $_SERVER['HTTP_HOST']." - browse ";
         $scripts = "";

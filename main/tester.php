@@ -39,7 +39,7 @@
 		echo $e->getMessage();
 	}	
 	
-	$stock_thumb = $GLOBALS['index_path']."/style/resources/no-thumbnail.png";
+	$stock_thumb = INDEX_PATH."/style/resources/no-thumbnail.png";
 			//$fp = fopen($stock_thumb, 'rb');
 			header('Content-Type: img/png');
 			$img = imagecreatefrompng($stock_thumb);

@@ -18,10 +18,10 @@
 		}
 		
 		if( isset( $item['file'] ) ){
-			$file_path = $GLOBALS['index_path'].$path."/".$item['file'];
+			$file_path = INDEX_PATH.$path."/".$item['file'];
 			$extension = pathinfo( $file_path , PATHINFO_EXTENSION );		
 			$server_path = 	$path."/".$item['file'];
-			$resource_path = $GLOBALS['base_url'].$server_path;	
+			$resource_path = BASE_URL.$server_path;	
 			if( in_array( $extension, $img_exts ) ){			
 				$data = FileGetter::getResourceInfo( "image", $resource_path, $server_path, $item['file'] );
 				array_push( $return_info, $data );

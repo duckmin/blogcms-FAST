@@ -13,7 +13,7 @@
     			$post_data["show_id"] = true; //make id visable
     			$parse_down  = new Parsedown();
     			$post_views = new PostViews( $parse_down );
-    			$post_template = file_get_contents( $GLOBALS['template_dir']."/blog_post.txt" );
+    			$post_template = file_get_contents( TEMPLATE_DIR."/blog_post.txt" );
 
     			echo $post_views->makePostHtmlFromData( $post_data, $post_template );
 		    }

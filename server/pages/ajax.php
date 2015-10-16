@@ -60,7 +60,7 @@ if( isset( $_GET['action'] ) ){
 			break;
 	}
 
-	include $GLOBALS['server_path']."/actions".$file;
+	include SERVER_PATH."/actions".$file;
 }else{
 	goTo404();
 }

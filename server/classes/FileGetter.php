@@ -6,7 +6,7 @@
 		
 		public static function listFolderContents( $path ){
 			$holder = array();
-			$folder_path = $GLOBALS['index_path'].$path;
+			$folder_path = INDEX_PATH.$path;
 			if( is_dir( $folder_path ) ){
 				$contents_of_folder = scandir( $folder_path );	
 				foreach( $contents_of_folder as $folder_item ){
@@ -36,7 +36,7 @@
 		}
 		
 		public static function getImageThumbNameByPath( $relative_path ){  //use file name and time modifed to created a unique key for the file to be used as the key for in mongo thumbnail storage
-			$file_path = $GLOBALS['index_path'].$relative_path;
+			$file_path = INDEX_PATH.$relative_path;
 			$file_info = new SplFileInfo( $file_path );
             $last_modified = $file_info->getMTime (); //this will not change unless file is overwritten
 			$path_info = pathinfo($relative_path);

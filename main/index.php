@@ -26,11 +26,15 @@
 				$file = '/server/pages/ajax.php';
 				break;
 				
+			case "api":
+				$file = '/server/API/api_router.php';
+				break;
+				
 			case "submit-search":
 				$file = '/server/pages/search.php';
 				break;
 				
-			case $GLOBALS['manager_keyword']:
+			case MANAGER_KEYWORD:
 				$file = '/server/pages/manager.php';
 				break;
 				

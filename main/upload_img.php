@@ -53,7 +53,7 @@
         $extension = strtolower( $path_info["extension"] );
         $mime_type = $upload["type"];
         //add destination path to array so it is possible to check if file exists or not
-        $file_arry[$key]["destination_path"] = $destination_path = $GLOBALS['index_path'].$folder_path."/".$upload["name"];
+        $file_arry[$key]["destination_path"] = $destination_path = INDEX_PATH.$folder_path."/".$upload["name"];
         
         //check for upload error
         $error = $upload["error"];  
@@ -104,7 +104,7 @@
     foreach( $file_arry as $upload ){
         move_uploaded_file( $upload["tmp_name"], $upload["destination_path"] );
         $server_path = 	$folder_path."/".$upload["name"];
-        $url_path =  $GLOBALS['base_url'].$server_path;	
+        $url_path =  BASE_URL.$server_path;	
 		$page_json = FileGetter::getResourceInfo( $upload["file_getter_type"], $url_path, $server_path, $upload["name"] );
 		array_push( $data, $page_json );
     }

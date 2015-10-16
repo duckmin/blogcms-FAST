@@ -1,6 +1,6 @@
 <?php
 	//included in index.php which has configs.php included already
-	$base = $GLOBALS['base_url'];
+	$base = BASE_URL;
 	$url = $_SERVER["REQUEST_URI"];
 	
 	if( $part_count !== 2 ){
@@ -29,7 +29,7 @@
 			
 	if( $mongo_results ){
 		$safe_search = htmlspecialchars($search, ENT_QUOTES);
-		$template = file_get_contents( $GLOBALS['template_dir']."/base_page.txt" );
+		$template = file_get_contents( TEMPLATE_DIR."/base_page.txt" );
 		$title = "search '".$safe_search." - ".$_SERVER['HTTP_HOST'];		
 		$desc	= 	$_SERVER['HTTP_HOST']." - browse search '".$safe_search;
 		//need to special chars anything using $search param that gets inserted into HTML

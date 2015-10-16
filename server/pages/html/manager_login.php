@@ -8,7 +8,7 @@
 	<meta content="General" name="rating"/>
 	<meta content="English" name="language"/>
 	<meta name="viewport" content="width=device-width; initial-scale=1.0;">
-	<link rel='stylesheet' type='text/css' href='style/pretty_forms.css'>
+	<link rel='stylesheet' type='text/css' href='/style/pretty_forms.css'>
 	<style>
 		form{ 
 			width:20vw;
@@ -21,7 +21,7 @@
 </head>
 
 <body>
-	<form method="POST" action="/<?php echo $GLOBALS['manager_keyword']; ?>" >
+	<form method="POST" action="/<?php echo MANAGER_KEYWORD; ?>" >
 		<fieldset>
 			<legend>Manager</legend>		
 			<div>

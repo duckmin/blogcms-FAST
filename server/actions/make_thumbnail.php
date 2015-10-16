@@ -6,7 +6,7 @@
 	
 	if( $logged_in && isset($_GET["path"]) && isset($_GET["thumbname"]) ){
 		
-		$image_path = $GLOBALS['index_path'].$_GET["path"];
+		$image_path = INDEX_PATH.$_GET["path"];
 		//this is the filename of the image prepended with the last modified date
 		//this will be the key we save to mongo with (has a unique key index for "filename")
 		$thumbname = $_GET["thumbname"]; 

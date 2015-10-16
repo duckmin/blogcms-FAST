@@ -1,6 +1,6 @@
 <?php
 	//included in index.php which has configs.php included already
-	$base = $GLOBALS['base_url'];
+	$base = BASE_URL;
 	$url = $_SERVER["REQUEST_URI"];
 	
 	if( $part_count !== 2  ){
@@ -28,7 +28,7 @@
 	}		
 			
 	if( $mongo_results ){
-		$template = file_get_contents( $GLOBALS['template_dir']."/base_page.txt" );
+		$template = file_get_contents( TEMPLATE_DIR."/base_page.txt" );
 		$title = "#$hashtag posts - ".$_SERVER['HTTP_HOST'];		
 		$desc	= 	"browse #$hashtag";
 

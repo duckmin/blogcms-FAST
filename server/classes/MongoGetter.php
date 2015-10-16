@@ -19,13 +19,14 @@
 		
 		public function __construct( $mongo_conn )
 		{
+			$db_name = MONGO_DB_NAME;
 			$this->mongo_conn = $mongo_conn;
-			$this->db = $this->mongo_conn->$GLOBALS['mongo_db_name'];
+			$this->db = $this->mongo_conn->$db_name;
 		}
 		
 		public function getHomePagePreviewsFromDbAfterDate( $after ){ //only select info for previews
 			$start_d = new MongoDate( $after );
-			$count = $GLOBALS['amount_on_main_page']+1; //get one extra so we can tell if there is a next page
+			$count = AMOUNT_ON_MAIN_PAGE+1; //get one extra so we can tell if there is a next page
 			$collection = $this->db->posts;	
 		    $fields = $this->preview_fields;				
 			$cursor = $collection->find( array( "lastModified"=>array( '$lt'=>$start_d ) ), $fields )
@@ -36,7 +37,7 @@
 		
 		public function getHashtagPreviewsAfterDate( $after, $hashtag ){ //only select info for previews
 			$start_d = new MongoDate( $after );
-			$count = $GLOBALS['amount_on_main_page']+1; //get one extra so we can tell if there is a next page
+			$count = AMOUNT_ON_MAIN_PAGE+1; //get one extra so we can tell if there is a next page
 			$collection = $this->db->posts;	
 		    $fields = $this->preview_fields;				
 			$cursor = $collection->find( array( "hashtags"=>$hashtag, "lastModified"=>array( '$lt'=>$start_d ) ), $fields )
@@ -47,7 +48,7 @@
 		
 		public function getHomePagePostsFromSearchAfterDate( $after, $search ){		
 			$start_d = new MongoDate( $after );
-			$count = $GLOBALS['amount_on_main_page']+1; //get one extra so we can tell if there is a next page
+			$count = AMOUNT_ON_MAIN_PAGE+1; //get one extra so we can tell if there is a next page
 			$collection = $this->db->posts;	
 			$fields = $this->preview_fields;
 			$q = array( '$text'=>array( '$search'=>$search ), "lastModified"=>array( '$lt'=>$start_d ) );
@@ -59,8 +60,8 @@
 		
 		//used for manager tab search query - get_post_info.php
 		public function getPostsFromDbBySearch( $page_num, $search ){
-			$count = ( $page_num-1 )*$GLOBALS['amount_on_manger_tab'];
-			$skip = $GLOBALS['amount_on_manger_tab']+1;
+			$count = ( $page_num-1 )*AMOUNT_ON_MANAGER_TAB;
+			$skip = AMOUNT_ON_MANAGER_TAB+1;
 			$collection = $this->db->posts;			
 			$cursor = $collection->find( array( '$text'=>array( '$search'=>$search ) ) )->limit($skip)->skip($count)->sort( array( 'lastModified' => -1 ) );
 			return $cursor;
@@ -69,8 +70,8 @@
 		//for manager posts page - get_post_info.php
 		public function getBlogManagePosts( $page_num ){  
 		
-			$count = ( $page_num-1 )*$GLOBALS['amount_on_manger_tab'];
-			$skip = $GLOBALS['amount_on_manger_tab']+1;
+			$count = ( $page_num-1 )*AMOUNT_ON_MANAGER_TAB;
+			$skip = AMOUNT_ON_MANAGER_TAB+1;
 			$filter = array();
 			$collection = $this->db->posts;	
 			$cursor = $collection->find( $filter )->limit($skip)->skip($count)->sort( array( 'lastModified' => -1 ) );
@@ -126,7 +127,7 @@
 			$collection = $this->db->posts;
 			$fields = $this->preview_fields;
 			$cursor = $collection->find( array( "lastModified"=>array( '$lt'=>$mongo_date ) ), $fields )
-			->limit( $GLOBALS['amount_of_next_posts'] )
+			->limit( AMOUNT_OF_NEXT_POSTS )
 			->sort( array( 'lastModified' => -1 ) );
 			return $cursor;
 		}
@@ -138,7 +139,7 @@
 			$fields = $this->preview_fields;
 			$find = array( '_id'=>array( '$ne'=>$mongo_id ), 'hashtags'=>array( '$in'=>$hashtags ) );
 			$cursor = $collection->find( $find, $fields )
-			->limit( $GLOBALS['amount_of_next_posts'] )
+			->limit( AMOUNT_OF_NEXT_POSTS )
 			->sort( array( 'lastModified' => -1 ) );
 			return $cursor;
 		}

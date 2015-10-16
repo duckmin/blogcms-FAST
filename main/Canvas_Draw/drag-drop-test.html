@@ -56,10 +56,11 @@
 			height:100%;
 			min-height:300px;
 			border-bottom-color:lightgray;
+			position:relative;
+			top:1px;
 		}
 		
 		.canvas-box > ul.bottom-bar {
-			border-top:none;
 			padding:5px 10px;
 		}
 		
@@ -71,6 +72,7 @@
 		.canvas-box > canvas {	
     		background-image: url("checkerboard.png");
     		border-left:none;
+    		border-bottom:none;
 		}
 		
 		.canvas-box > canvas:hover {
@@ -185,7 +187,7 @@
 	<script>
 		window.onload = function(){
 			var canvas_box = document.getElementById("canvas-box");
-			window.drawer = new Drawer( canvas_box );
+			window.drawer = new Drawer( canvas_box, "image/jpeg" );
 			drawer.init();
 		}	
 	</script>
@@ -220,6 +222,7 @@
 			    </li>
 			</ul>
 	 	</div>
+	 	<img src="http://mrcoolcaptain.com/pics/coolcap2 (800x600).jpg" >
 	</main>
 </body>
 </html>

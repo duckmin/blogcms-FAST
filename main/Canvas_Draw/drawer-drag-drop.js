@@ -1,4 +1,6 @@
-	window.Drawer = function( canvas_box ){
+	window.Drawer = function( canvas_box, img_mode ){
+		var img_mode = img_mode || "image/png";  //"image/jpeg" is only other valid option 
+		this.img_mode = img_mode;  //selects whether we add a default white BG to images to reduce size;
 		this.max_KB_img_upload = 200;
 		this.max_canvas_width = 400;
 		this.max_canvas_height = 325;
@@ -135,7 +137,7 @@
 		is_line = ( this.brush_mode === "pencil" || this.brush_mode === "brush" )? true : false,
 		has_shadow = ( this.brush_mode === "brush" || this.brush_mode === "spray" )? true : false;
 		if( is_line ){
-		    context.strokeStyle = this.fillStyle;
+		   context.strokeStyle = this.fillStyle;
   			context.lineJoin = "round";
 			context.lineCap = "round";
 		}else{
@@ -148,7 +150,7 @@
 		}else{
 		    var shadow_val = (this.brush_mode === "spray")? 5 : 2;
 		    context.shadowBlur = shadow_val;
-  			context.shadowColor = this.fillStyle;   
+  			 context.shadowColor = this.fillStyle;   
 		}
 	}
 	
@@ -183,6 +185,9 @@
 		  		break;
 		  			
 		  	case "eraser":
+		  	   if( this.img_mode === "image/jpeg"){
+		  	   	this.ctx.fillStyle= "white";
+		  	   }
 		  	   this.strokeWidth = brush_size_value;
 		  	   this.brushSizeRange.disabled = false;
 		  	   this.changeBrushSize (brush_size_value);
@@ -196,7 +201,6 @@
 			case "text":
 		  		this.brushSizeRange.disabled = true;
 		  		this.changeBrushSize (brush_size_value);
-		  		
 			   break;
 		}
 	}
@@ -272,7 +276,11 @@
 				//context.fillStyle= this.fillStyle;
 				var rect_x = this.currX - half_width;
 				var rect_y = this.currY - half_width;
-		  		context.clearRect(rect_x, rect_y, stroke_width, stroke_width );
+		  		if( this.img_mode === "image/jpeg"){
+		  	   	context.fillRect(rect_x, rect_y, stroke_width, stroke_width ); //if jpeg mode we do not 'erase' we just fill in BG white, since if bg is cleared transparent spots would become black 
+		  	   }else{
+		  			context.clearRect(rect_x, rect_y, stroke_width, stroke_width );
+		  		}
 		  		break;
 	    }	
 	}
@@ -309,8 +317,9 @@
 		selected_color = target.value;
 		this.addColorToHistory(selected_color);
 		this.fillStyle = selected_color;
-		this.setCtxColor();
+		
 		if( this.brush_mode !== "eraser" ){
+			this.setCtxColor();
 			this.changeBrushUIColor( selected_color );
 		}
 	}
@@ -337,7 +346,6 @@
 	Drawer.prototype.handleDragDrop = function(e){
 		e.stopPropagation();
 		e.preventDefault();
-		console.log(e.dataTransfer);
 		var allowed_types = ["image/gif","image/png","image/jpeg"],
 		dt = e.dataTransfer;
 		
@@ -356,45 +364,77 @@
 			   }
 			}
 		}else{
-			alert("Data Transfer Unsucessful");
+			var img_html = e.dataTransfer.getData('text/html');
+			if( img_html !== "" ){
+				this.handleUrlDraggedImgLoad(img_html);
+			}else{
+				alert("Data Transfer Unsucessful");
+			}
 		}
 	}
 	
-	Drawer.prototype.handleImgLoad = function(e){
+	Drawer.prototype.loadResizedImage = function(img){ 
+		if(img.width > this.max_canvas_width){  //resize image to canvas size using ratio forumla
+         var ratio = img.width/img.height,
+         resized_height = this.max_canvas_width/ratio;		
+ 			resized_height = Math.ceil(resized_height * 10) / 10;
+ 			img.width = this.max_canvas_width;
+ 			img.height = resized_height;
+	   }
+	   
+	   if(img.height > this.max_canvas_height){ //resize height if to tall 
+	   	var ratio = img.height/img.width,
+         resized_width = this.max_canvas_height/ratio;		
+ 			resized_width = Math.ceil(resized_width * 10) / 10;
+ 			img.width = resized_width;
+ 			img.height = this.max_canvas_height;
+	   }
+	   
+	   this.canvas.width = img.width;
+		this.canvas.height = img.height;
+		this.ctx.drawImage(img,0,0,img.width,img.height);
+		this.modeSelector(this.brush_mode); //reset mode after drawing image, or else color is black 
+	}
+	
+	Drawer.prototype.handleUrlDraggedImgLoad = function( img_html ){  //handle image file dragged from html
+		var holder = document.createElement("div");
+		holder.innerHTML = img_html,
+		tag = holder.firstElementChild,
+		tag_src = tag.getAttribute("src");
+		
+		if( tag.nodeName === "IMG" && tag_src !== null ){
+			this.loadResizedImage(tag); 
+		}else{
+			alert("can only drag images to canvas");
+		}
+	}
+	
+	Drawer.prototype.handleImgLoad = function(e){ 
 		console.log(e.target);
 		var data = e.target.result;
 		var img = new Image();
 		img.src = data;
 		img.onload = function(){
-           
-			if(img.width > this.max_canvas_width){  //resize image to canvas size using ratio forumla
-            var ratio = img.width/img.height,
-            resized_height = this.max_canvas_width/ratio;		
-    			resized_height = Math.ceil(resized_height * 10) / 10;
-    			img.width = this.max_canvas_width;
-    			img.height = resized_height;
-		   }
-		   
-		   if(img.height > this.max_canvas_height){ //resize height if to tall 
-		   	var ratio = img.height/img.width,
-            resized_width = this.max_canvas_height/ratio;		
-    			resized_width = Math.ceil(resized_width * 10) / 10;
-    			img.width = resized_width;
-    			img.height = this.max_canvas_height;
-		   }
-
-			this.canvas.width = img.width;
-			this.canvas.height = img.height;
-			this.ctx.drawImage(img,0,0,img.width,img.height);
-			this.modeSelector(this.brush_mode); //reset mode after drawing image, or else color is black 		   
+			this.loadResizedImage(img);  
 		}.bind(this);
 	}
 	
 	Drawer.prototype.imgToPage = function(e){  //just a test will remove
-		var dataURL = this.canvas.toDataURL("image/jpeg", 0.5);
-		var img = new Image();
-		img.src = dataURL;
-		document.body.appendChild(img);
+		try{
+			var dataURL = this.canvas.toDataURL(this.img_mode, 0.35);
+			var img = new Image();
+			img.src = dataURL;
+			document.body.appendChild(img);
+		}catch(e){
+			//if image was loaded from external URL with no CORS headers this will throw security error 
+			console.log(e);
+		}
+	}
+	
+	Drawer.prototype.fillJpegBackground = function(){ 
+		this.ctx.fillStyle= "white";
+		console.log(this.canvas.width)
+		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height );
 	}
 	
 	Drawer.prototype.init = function(){
@@ -409,6 +449,10 @@
 		this.canvas.setAttribute("width", canvas_width );  
 		this.max_canvas_width = canvas_width;  //reset this value to the actual canvas size 
 		this.bottomBar.style.width = ( canvas_width + toolbar_width + 3 )+"px";  //+3 to align borders 
+		
+		if( this.img_mode === "image/jpeg"){
+			this.fillJpegBackground();
+		}
 		
 		this.modeSelector(this.brush_mode);
 		this.addColorToHistory(this.fillStyle);
