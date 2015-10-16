@@ -1,6 +1,7 @@
 	window.Drawer = function( canvas_box ){
 		this.max_KB_img_upload = 200;
-		this.max_canvas_width = 600;
+		this.max_canvas_width = 400;
+		this.max_canvas_height = 325;
 		this.container = canvas_box;
 		this.canvas = canvas_box.querySelector("canvas");
 		this.selectionContainer = canvas_box.querySelector("ul.selections");
@@ -402,14 +403,12 @@
 		var toolbar = this.container.querySelector("ul");
 		var toolbar_width = toolbar.clientWidth;
 		var toolbar_height = toolbar.clientHeight;
-		this.max_canvas_height = toolbar_height;  //make it so canvasnever stretches higher than toolbar 
-      var calculated_width = (container_width - toolbar_width); 
-      var canvas_width = ( calculated_width <=  this.max_canvas_width )? calculated_width : this.max_canvas_width;
-		canvas_width = canvas_width - 3; //3 px extra width from borders
-		this.canvas.setAttribute("height", toolbar_height );
-		this.canvas.setAttribute("width", canvas_width - 3 );  
-		this.max_canvas_width = canvas_width - 3;  //reset this value to the actual canvas size 
-		this.bottomBar.style.width = ( canvas_width + toolbar_width )+"px";  //-1 to align borders 
+        var calculated_width = (container_width - toolbar_width); 
+        var canvas_width = ( calculated_width <=  this.max_canvas_width )? calculated_width : this.max_canvas_width;
+		this.canvas.setAttribute("height", this.max_canvas_height );
+		this.canvas.setAttribute("width", canvas_width );  
+		this.max_canvas_width = canvas_width;  //reset this value to the actual canvas size 
+		this.bottomBar.style.width = ( canvas_width + toolbar_width + 3 )+"px";  //+3 to align borders 
 		
 		this.modeSelector(this.brush_mode);
 		this.addColorToHistory(this.fillStyle);
