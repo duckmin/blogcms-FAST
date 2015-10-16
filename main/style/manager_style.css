@@ -271,6 +271,10 @@ ul.form-list > li {
 	vertical-align: top;
 }
 
+section[data-tab='posts'] ul.form-list > li {
+	vertical-align: baseline;
+}
+
 section[data-tab='posts'] ul.form-list > li > span {
     font-size: 1.1em;
 }

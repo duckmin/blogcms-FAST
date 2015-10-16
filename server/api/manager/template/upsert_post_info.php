@@ -97,7 +97,7 @@
 			if( $procedure === 2 && isset( $json["id"] ) ){
 				$mongo_id = new MongoId( $json["id"] ); 
 				$update_array = array( 
-					'$set'=> array( 
+						'$set'=> array( 
 						"title"=>$title, 
 						"description"=>$desc, 
 						"post_data"=>$post_data, 

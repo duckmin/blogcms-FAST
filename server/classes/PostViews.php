@@ -57,10 +57,15 @@
 			foreach( $post_data_array as $post_item ){
 				$post_type = $post_item["data-posttype"];
 				if( $post_type === "markdown" ){
-					 preg_match_all( "/#{1}([A-z0-9]+)/", $post_item["text"], $hash_matches );
-					 if( isset($hash_matches[1]) ){ 
-					 	 $hashes = array_merge ( $hashes, array_map("strtolower", $hash_matches[1]) );  //lower case all hashes
-					 }
+					preg_match_all( "/#{1}([A-z0-9]+)/", $post_item["text"], $hash_matches );
+					if( isset($hash_matches[1]) ){ 
+						$tmp = array_map("strtolower", $hash_matches[1]);  //lower case al hashes found in block
+						foreach( $tmp as $hsh ){  //check each found hash to see if it has already been added if not add it
+							if( !in_array($hsh, $hashes) ){
+					 	 		array_push( $hashes, $hsh );
+					 	 	}
+					 	}
+					}
 				}
 			}
 			return $hashes;

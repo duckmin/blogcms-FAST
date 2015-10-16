@@ -16,10 +16,10 @@
 	//echo print_r($json);
 	//echo print_r($_APIVALS);
 	$file = Api::getApiPath($service);
-    if( $file !== false ){
-       include $file;
-    }else{
-       echo "$service is not a valid api call";   
-    }
+	if( $file !== false ){
+		include $file;
+   }else{
+		echo "$service is not a valid api call";   
+   }
     
 ?>
