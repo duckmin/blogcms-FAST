@@ -15,7 +15,7 @@ define("MONGO_DB_NAME", "blog");
 //string used to connect to mongo instance, example: "mongodb:///tmp/mongodb-27017.sock"
 define("MONGO_CONNECTION_STRING", "");
 
-//keyword used to access manager page (no spaces!),  this should be changed to something random to make your manager page hard to find 
+//keyword used to access manager page (no spaces!),  this should be changed to something random to make your manager page not obvious
 define("MANAGER_KEYWORD", "manager");
 
 //where page cache saves txt files 
@@ -48,7 +48,9 @@ define("AMOUNT_OF_NEXT_POSTS", 4);
 define("AMOUNT_ON_MANAGER_TAB", 5);
 
 //minutes until cache file expires
+//caching is only used in file ./server/pages/html/date_blog.php,  removing the caching logic and keeping the mongo/display logic in this file can remove this feature
 define("MAX_PAGE_CACHE_MINS", -5);//turned off for dev turn on for prod to reasonable amount of mins
+
 //max # of characters in post title 
 define("MAX_TITLE_LENGTH", 500);
 

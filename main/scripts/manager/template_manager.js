@@ -299,21 +299,17 @@
 		form_class = new FormClass( save_form ),
 		form_data = form_class.getValues(),
 		post_data = { template_data:template_data, post_data:form_data };
-		console.log(   );
 		
 		if( template_data.length > 0 ){
-			controller.postJson( constants.ajax_url+'?action=1', post_data, function(d){
-				console.log( d );
+			controller.callApi( 'ManagerTemplateGet_post_preview_html', post_data, function(d){
 				if( d.length > 0 ){
 					gEBI("preview").innerHTML = d;
-					//tab_actions.tabShow( document.querySelector('[data-tab=preview]') );
 					window.location.hash = "#preview";
 				}
-			})
+			});
 		}else{
 			showAlertMessage("Template is Empty", false );
 		}
-		//console.log( holder );
 	}
 	
 	function savePost( save_form ){
@@ -322,23 +318,15 @@
 		values = form_class.getValues();
 		console.log( values );
 		
-		if( post_data.length > 0/*safty check*/ ){
+		if( post_data.length > 0/*safety check*/ ){
 			values.post_data = post_data;
-			controller.postJson( constants.ajax_url+'?action=3&procedure=1', values, function(d){
+			values.procedure = 1;
+			controller.callApi( "ManagerTemplateUpsert_post_info", values, function(d){
 				var resp = JSON.parse( d);
 				if( resp.result ){
-					//save_form.nearestParentClass("dark-shade").addClass("hide");
-					//form_class.clearForm();
-					//save_form.querySelectorAll("ul.multi-replace > li.selected-multi" ).each( function(li){
-					//	li.removeClass("selected-multi");
-					//} )
-					//gEBI('template').removeChildren();
-					//tab_actions.tabShow( document.querySelector('[data-tab=template]') );
-					//window.location.hash = "#template";
 					templateaction.clearTemplateForm();
 					gEBI('template').removeChildren(); //clear preview from template
-					window.location.hash = "#template";
-					
+					window.location.hash = "#template";	
 				}
 				showAlertMessage( resp.message, resp.result );
 			})
@@ -710,7 +698,8 @@
 		values.id = edit_mode.id_in_edit;
 		if( post_data.length > 0 ){
 			values.post_data = post_data;
-			controller.postJson( constants.ajax_url+'?action=3&procedure=2', values, function(d){
+			values.procedure = 2;
+			controller.callApi( "ManagerTemplateUpsert_post_info", values, function(d){
 				var resp = JSON.parse( d);
 				if( resp.result ){
 					//if post being edited is in view on posts tab ajax back the id_in_edit

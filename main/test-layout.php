@@ -15,7 +15,7 @@
 		}
 		
 		window.onload = function(){
-			controller.callApi( 'test-service', {hello:"hello"}, cb);
+			controller.callApi( 'ManagerTemplateUpsert_post_info', {hello:"hello"}, cb);
 		}	
 	</script>
 </head>

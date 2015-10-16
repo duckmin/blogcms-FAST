@@ -11,9 +11,15 @@
 		exit;		
 	}
 	
+	$service = $json["service"];
 	$_APIVALS = $json["values"];
-	echo print_r($json);
-	echo print_r($_APIVALS);
-	
-	//TODO put service value through switch statement and include file
+	//echo print_r($json);
+	//echo print_r($_APIVALS);
+	$file = Api::getApiPath($service);
+    if( $file !== false ){
+       include $file;
+    }else{
+       echo "$service is not a valid api call";   
+    }
+    
 ?>

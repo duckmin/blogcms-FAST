@@ -59,7 +59,7 @@ window.controller={
 			Ajaxer({
 				method:'POST',
 				url:"/api",
-				content_type:"text/html",
+				content_type:"application/json",
 				send: JSON.stringify( post_obj ),
 				success:function( d ){
 					constants.ajax_in_progress=false;

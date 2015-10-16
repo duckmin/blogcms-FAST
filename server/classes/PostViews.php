@@ -34,7 +34,7 @@
 					 foreach( $split as $block ){
 					 	if( !preg_match( "/^(!{1,6}|>|-)/", $block ) ){ //only get block that do not begin with special symbol (paragraphs)
 					 		$block = preg_replace ( "#\bhttp://[^\s]+\b#", "", $block );  //strip out any hrefs
-					 		$block = preg_replace ( "#_{2}#", "", $block );  //take out __ which our <em> in blogdown they are treated as A-z in regex
+					 		$block = preg_replace ( "#_{2}#", "", $block );  //take out __ which are <em> in blogdown they are treated as A-z in regex
 					 		$word_matches = array();
 					 		preg_match_all( "/\b[\w\d\']+\b(\,|\.|\'|!|\?|)/", $block, $word_matches );  //this way only words and punctuation get targeted and no markdown
 					 		foreach( $word_matches[0] as $single_word ){

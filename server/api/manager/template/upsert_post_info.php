@@ -1,13 +1,14 @@
-<?php	
+<?php
+
 	$success = false; 
 	$message = "";
 	$valid_inputs = true;
 	$logged_in = ManagerActions::isLoggedIn();	
 	//if not logged in all validations will skip and go straight to message
 	
-	if( $valid_inputs && $logged_in && isset( $_GET["procedure"] ) && isset( $_POST["json"] ) ){  //if all required fields are set set up vars
-		$json = json_decode( $_POST['json'], true );
-		$procedure = (int)$_GET["procedure"];
+	if( $valid_inputs && $logged_in && isset( $_APIVALS["procedure"] ) ){  //if all required fields are set set up vars
+		$json = $_APIVALS;
+		$procedure = (int)$_APIVALS["procedure"];
 
 		$title = trim( strip_tags( $json["title"] ) );
 		$desc = trim( strip_tags( $json["description"] ) );
