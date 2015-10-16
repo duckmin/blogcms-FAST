@@ -27,7 +27,7 @@
 				break;
 				
 			case "api":
-				$file = '/server/api/api_router.php';
+				$file = '/server/pages/api_router.php';
 				break;
 				
 			case "submit-search":

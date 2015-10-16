@@ -111,7 +111,7 @@ resources_action.deleteResource = function( elm ){
 			var thumbnail_key = parent_li.getAttribute("data-thumbkey");
 			send.thumbnail_key = thumbnail_key;
 		}
-		//controller.callApi( 'ManagerResourcesDelete_resource', {dir_path:path},
+
 		controller.callApi( 'ManagerResourcesDelete_resource', send, function(d){
 			if( d !== "" ){
 				var resp = JSON.parse( d );
@@ -152,7 +152,7 @@ function newFolder( element ){
 	parent_li = element.nearestParent('li'),
 	folder_list = parent_li.querySelector( "ul.folders" ),
 	folder_first_child = folder_list.firstElementChild;
-	console.log(folder_first_child);
+
 	if( folder_list !== null && ( folder_first_child === null || !folder_first_child.hasClass("add-folder-li") ) ){ //first child of parent li will eiter be null 'empty' or it will not be an add folder element
 		var add_folder_li = createElement( "li", {
 			"class":"add-folder-li",
@@ -247,7 +247,7 @@ function addFolderAction( e ){
 	showConfirm( message, false, elm, function(element){ //calback function fired if yes is selected
 		//var file_path = element.getAttribute( 'data-filepath' ),//path from file from /main root	
 		send=vals;
-		controller.postJson( constants.ajax_url+'?action=13', send, function(d){
+		controller.callApi( 'ManagerResourcesAdd_new_resource_directory', send, function(d){
 			var resp = JSON.parse( d);
 			if( resp.result ){
 				var item = resp.data;

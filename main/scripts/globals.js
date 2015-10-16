@@ -48,10 +48,12 @@ window.controller={
 		}
 	},
 	
-	"callApi":function( service, values_obj, callback ){
-		var self=this;
-		if( !constants.ajax_in_progress ){
-			constants.ajax_in_progress=true;
+	"callApi":function( service, values_obj, callback, wait ){  //if wait is set to false do not check ajax in progress status
+		var self=this,
+		wait_check = ( wait === false )? false : true;
+		
+		if( !wait_check || !constants.ajax_in_progress ){
+			if( wait_check ){ constants.ajax_in_progress=true };
 			var post_obj = {
 				service:service,
 				values:values_obj
@@ -62,11 +64,11 @@ window.controller={
 				content_type:"application/json",
 				send: JSON.stringify( post_obj ),
 				success:function( d ){
-					constants.ajax_in_progress=false;
+					if( wait_check ){ constants.ajax_in_progress=false };
 					callback(d);
 				},
 				error:function( e_code, e_message ){
-					constants.ajax_in_progress=false;
+					if( wait_check ){ constants.ajax_in_progress=false };
 					alert(  e_code+" "+e_message );
 				}
 			})

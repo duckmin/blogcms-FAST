@@ -2,13 +2,19 @@
 
 addEvent(window, "beforeunload", function(e){
 	var analytics_key = document.querySelector("article.post").id,
-	send = encodeURIComponent("url")+"="+encodeURIComponent(analytics_key);	
+	send = {
+		service:"PagesCount_page_view",
+		values:{
+			url:analytics_key
+		}
+	};
+	
 	Ajaxer({
-		url:constants.ajax_url+'?action=10',
+		url:"/api",
 		method:"POST",
-		send:send,
+		send:JSON.stringify( send ),
 		async:false,
-		success:function( data ){  },
+		success:function( data ){ alert(data) },
 		error:function( e_code, e_message ){  }
 	})
 })

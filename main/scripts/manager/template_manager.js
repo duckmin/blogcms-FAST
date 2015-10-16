@@ -352,9 +352,14 @@
 		vals = popup_form_class.getValues();
 		
 		//take the filename and path of image and create a thumbnail and store in mongo (if it does not exist)
-		var picture_path = encodeURIComponent(vals.picture_path),
-		thumbnail_key = encodeURIComponent(vals.thumbkey);
-		controller.getText( constants.ajax_url+'?action=16&path='+picture_path+'&thumbname='+thumbnail_key, function(data){
+		var picture_path = vals.picture_path,
+		thumbnail_key = vals.thumbkey,
+		send = {
+			path:picture_path,
+			thumbname:thumbnail_key
+		};
+		
+		controller.callApi( 'ManagerResourcesMake_thumbnail_if_not_exist', send, function(data){
 			var resp = JSON.parse(data),
 			thumbnail_space = gEBI("thumbnail-space"),
     		thumbnail_form_class = new FormClass( thumbnail_space );
@@ -595,9 +600,8 @@
 			return form_values;
 		},
 		getPostHtml:function( id, callback ){
-		    controller.getText( constants.ajax_url+'?action=15&id='+id, function(post_html){
-	            callback( post_html );
-		    });
+		    var send = { id:id };
+		    controller.callApi( "ManagerPostsGet_article_html_by_id", send, callback);
 		}
 	}
 	
@@ -605,8 +609,9 @@
 		var form_values=table_actions.getTrValues( element ),
 		send = { url:form_values.id },
 		table_div = element.nearestParent("div"), //send id to get all view for posting
-		chart_div = 
-		controller.postJson( constants.ajax_url+'?action=12', send, function(d){
+		chart_div = "";
+		
+		controller.callApi( "ManagerPostsGet_article_view_counts_by_daterange", send, function(d){
 			var resp = JSON.parse( d);
 			if( resp.length > 0 ){
 				console.log( resp );
@@ -624,7 +629,8 @@
 			send={ "id":form_values.id };
 			//make sure we are not deleting post being edited
 			if( edit_mode.id_in_edit !== form_values.id ){
-    			controller.postJson( constants.ajax_url+'?action=5', send, function(d){
+    			
+    			controller.callApi( "ManagerPostsDelete_article_by_id", send, function(d){
     				var resp = JSON.parse( d);
     				if( resp.result ){
     					loadTablePage();
@@ -643,8 +649,8 @@
 		    //this post is currently being edited switch to manager
 		    window.location.hash = "#template";
 		}else{
-    		var qs = "?action=6&id="+form_values.id;
-    		controller.getText( constants.ajax_url+qs, function(d){
+    		var send = { id:form_values.id };
+    		controller.callApi( "ManagerPostsGet_article_data_by_id", send, function(d){
     			//var resp = JSON.parse( d);
     			if( d !== "" ){
     				if( edit_mode.active() ){
@@ -682,7 +688,7 @@
 		showConfirm( message, false, element, function(elm){ //calback function fired if yes is selected
 			var form_values=table_actions.getTrValues( element ),
 			send={ "id":form_values.id };
-			controller.postJson( constants.ajax_url+'?action=8', send, function(d){
+			controller.callApi( "ManagerPostsUpdate_article_date_by_id", send, function(d){
 				if( d !== "" ){
 					var resp = JSON.parse( d );
 					showAlertMessage( resp.message, resp.result );

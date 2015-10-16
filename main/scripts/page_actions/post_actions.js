@@ -21,21 +21,16 @@ function articleAtBottom(){
 
 function loadNextPostPreview(){
 	var ts = document.querySelector("section.main > article > p:first-of-type > time[data-ts]").getAttribute("data-ts"),
-	html_area = gEBI("next-posts");
-	Ajaxer({
-		url:constants.ajax_url+'?action=14&ts='+ts,
-		method:"GET",
-		send:null,
-		async:true,
-		success:function( data ){ 
-			if(data.length > 0){
-				html_area.innerHTML+=data;
-			}else{
-				html_area.style.display = "none";
-			}
-		},
-		error:function( e_code, e_message ){  }
-	})
+	html_area = gEBI("next-posts"),
+	send = {ts:ts};
+	
+	controller.callApi( 'PagesGet_next_posts_by_timestamp', send, function( data ){ 
+		if(data.length > 0){
+			html_area.innerHTML+=data;
+		}else{
+			html_area.style.display = "none";
+		}
+	}, false)
 }
 
 function loadRelatedHashtagsPreview(){
@@ -45,13 +40,13 @@ function loadRelatedHashtagsPreview(){
 	html_area = gEBI("related-hashtags");
 	delete vals.created; //do not send timestamp back 
 	
-	controller.postJson( constants.ajax_url+'?action=17', vals, function(data){
+	controller.callApi( 'PagesGet_posts_related_hashtags', vals, function(data){
 		if(data.length > 0){
 			html_area.innerHTML+=data;
 		}else{
 			html_area.style.display = "none";
 		}
-	})
+	}, false)
 }
 
 addEvent(window, "load", function(e){
