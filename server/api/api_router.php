@@ -1,18 +1,18 @@
 <?php
-	$json = file_get_contents("php://input");
-	if( $json === "" ){
+	$post_data = file_get_contents("php://input");
+	if( $post_data === "" ){
 		echo "no data provided";
 		exit;
 	}
 		
-	$json = json_decode( $json, true );
-	if( !array_key_exists("service", $json) || !array_key_exists("values", $json) ){ //does not have keys service and values
+	$json_data = json_decode( $post_data, true );
+	if( !array_key_exists("service", $json_data) || !array_key_exists("values", $json_data) ){ //does not have keys service and values
 		echo "wrong json keys could not complete request";
 		exit;		
 	}
 	
-	$service = $json["service"];
-	$_APIVALS = $json["values"];
+	$service = $json_data["service"];
+	$_APIVALS = $json_data["values"];
 	//echo print_r($json);
 	//echo print_r($_APIVALS);
 	$file = Api::getApiPath($service);

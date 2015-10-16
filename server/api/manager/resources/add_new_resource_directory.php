@@ -1,13 +1,13 @@
 <?php
-	include_once dirname(__FILE__)."/../configs.php";
+
 	$result = false;
 	$message = "";
 	$data = null;
 	$logged_in = ManagerActions::isLoggedIn();
 	
-	if( $logged_in && isset( $_POST['json'] ) ){ //logged in
-	
-		$json = json_decode( $_POST['json'], true );
+	if( $logged_in ){
+		
+		$json = $_APIVALS;
 		$folder_name = $json["folder_name"];
 		$folder_path = $json["folder_path"];
 		$illegal_chars = preg_match( "/[\/\s\\\\]/", $folder_name ); //4 /'s in a row match backslash

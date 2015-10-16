@@ -1,7 +1,7 @@
 <?php
 	
-	if( isset( $_GET["ts"] ) ){
-		$time = floatval( $_GET["ts"] );
+	if( isset( $_APIVALS["ts"] ) ){
+		$time = floatval( $_APIVALS["ts"] );
 		$time_stamp = $time/1000; //js use milliseconds mongo uses seconds convert milliseconds to seconds		
 		
 		try{			

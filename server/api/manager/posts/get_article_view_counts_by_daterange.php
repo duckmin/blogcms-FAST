@@ -1,13 +1,11 @@
 <?php
-	include_once dirname(__FILE__)."/../../configs.php";
 	
 	$holder = array();
 
-	if( isset( $_POST['json'] ) ){	
+	if( isset( $_APIVALS['url'] ) ){	
 		$db = MongoConnection();
 		$db_getter = new MongoGetter( $db );
-		$json = json_decode( $_POST['json'], true );
-		$url = $json['url'];
+		$url = $_APIVALS['url'];
 		//$start_date = new DateTime( $json['start_date'] );
 		//$end_date = new DateTime( $json['end_date'] );
 		//$start = $start_date->format( DateTime::ISO8601 );

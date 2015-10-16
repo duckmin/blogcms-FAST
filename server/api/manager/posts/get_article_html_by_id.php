@@ -1,10 +1,8 @@
 <?php
-	include_once dirname(__FILE__)."/../configs.php";
 	
-	if( isset( $_GET["id"] ) ){
+	if( isset( $_APIVALS["id"] ) ){
 		
-		$id = $_GET["id"];
-		
+		$id = $_APIVALS["id"];		
 		try{			
 			$db = MongoConnection();
 			$db_getter = new MongoGetter( $db );
@@ -20,6 +18,7 @@
 			
 		} catch( MongoCursorException $e ) {;
 			//echo "error message: ".$e->getMessage()."\n";
+			echo "";
 		}
 		
 	}

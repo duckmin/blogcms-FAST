@@ -4,12 +4,12 @@
 	$data = null;
 	$logged_in = ManagerActions::isLoggedIn();
 	
-	if( $logged_in && isset($_GET["path"]) && isset($_GET["thumbname"]) ){
+	if( $logged_in && isset($_APIVALS["path"]) && isset($_APIVALS["thumbname"]) ){
 		
-		$image_path = INDEX_PATH.$_GET["path"];
+		$image_path = INDEX_PATH.$_APIVALS["path"];
 		//this is the filename of the image prepended with the last modified date
 		//this will be the key we save to mongo with (has a unique key index for "filename")
-		$thumbname = $_GET["thumbname"]; 
+		$thumbname = $_APIVALS["thumbname"]; 
 		
 		if( file_exists( $image_path ) ){
 			//even if thumb will not be stored in mongo we still create a thumb every time
@@ -33,6 +33,7 @@
 		    	    $success = true;
 		    	    $message = "Thumbnail Created";
 		    	}catch( MongoGridFSException $e ){
+		    		//if exception is throw it is a duplicate error on the 'filename' field which means thumbnail already exists
 		    		$message = "Already a thumbnail";
 		    		//$message = $e->getMessage();
 		    	}

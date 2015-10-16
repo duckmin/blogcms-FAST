@@ -1,7 +1,7 @@
 <?php
 
-	if( isset( $_POST["json"] ) ){
-		$json = json_decode( $_POST["json"], true );
+	if( isset( $_APIVALS["hashtags"] ) ){
+		$json = $_APIVALS;
 		$hashtags = $json["hashtags"]; //hashtags of current post
 		$id = $json["id"]; //id of current pos
 		
