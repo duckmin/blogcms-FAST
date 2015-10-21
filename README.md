@@ -2,7 +2,7 @@
 BlogCms is fully responsive, and searchable, and **FAST**.
 BlogCms is an appication that revolves around an authenticated UI interface that is used to build individual postings under. Posts can be grouped by realted #hashtags.  The UI is very easy to use, from the manager you can 
 - create postings with any combination of images, embedded videos, audio files, and blogdown
-- edit/deleting any post at any time after creation
+- edit/delete/renew any post at any time after creation
 - upload jpg,png,gif images
 - upload mp3 audio files
 - dynamically add uploaded resoures to a post template
