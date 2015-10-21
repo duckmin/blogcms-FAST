@@ -57,4 +57,16 @@ define("MAX_TITLE_LENGTH", 500);
 //max # of characters in post description
 define("MAX_DESC_LENGTH", 500);
 
+//autoload any class in /server/classes naming scheme with this function
+spl_autoload_register('myAutoloader');
+
+function myAutoloader( $className ){
+    $path = SERVER_PATH.'/classes/';
+    include $path.$className.'.php';
+}
+
+function MongoConnection(){
+	return new MongoClient(MONGO_CONNECTION_STRING);
+}
+
 ?>

@@ -13,24 +13,10 @@ function returnMessage( $success, $message, $data ){
 	return json_encode( $holder );
 };
 	
-//autoload any class with this function
-spl_autoload_register('myAutoloader');
-
-function myAutoloader( $className )
-{
-    $path = dirname(__FILE__).'/classes/';
-    include $path.$className.'.php';
-}
-
 function goTo404(){
 	$error_box = SERVER_PATH."/pages/html/404.php";
 	header( $_SERVER["SERVER_PROTOCOL"]." 404 Not Found" );	
 	include $error_box;	
 }
 
-
-//mongo connection string can be changed here
-function MongoConnection(){
-	return new MongoClient(MONGO_CONNECTION_STRING);
-}
 ?>

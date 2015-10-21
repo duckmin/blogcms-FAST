@@ -34,13 +34,15 @@ BlogCms is an appication that revolves around an authenticated UI interface that
     </Directory>
 </VirtualHost>
 ```
+- to add a user to log into the admin interface you must run the command line script /blogcms/create_user.php -u <username> -p <password> -l <user_level>
+- **ATM -l (level) is not used for anything validations in code,  but may be in the future** 
 - in blogcms/server/configs.php you will find many configuration settings most are obvious as to what they are and can be changed easily 
-- In the /blogcms/server/includes/logins.json file set a user name and password used to enter the manager.php page ( use same format as examples ) **ATM json property "level" is not used leave at 1**
 - run both commands in the /blogcms/mongo_instructions.txt one to put search indexs on the correct fields, the other to put on index on the main date field for faster pagination
 - Navigate to { host }/manager in your browser and log in with credentials
--  Start creating posts!  
+- Start creating posts!  
 
 ##Things to note
+- create_user.php script inserts an admin UI interface user and password into database,  If you wish to remove a user or modify a user property it must be done manually at the database level, I would suggest deleting user row directly from console and re creating user
 - make sure permissions on the /blogcms/main/pics/ folder and sub folders give full permissions to the user server is running as
 - if you "edit" a post form the "Posts" tab on the manager page, and wish to cancel an edit.  You must click cancel from the "Template" tab, this will exit edit mode, and allow you to start creating new posts again ( editing a post and then saving the edit will also make you exit edit mode ).  
 - If you wish to change the look and feel of the blog /blogcms/main/style/blog.css is where most the styles for the main page are located and can be changed **carefully** 

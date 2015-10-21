@@ -4,14 +4,10 @@
 	/* this script is used to add a user into the mongo users collection to login to the manager page with */
 	include dirname(__FILE__)."/server/constants.php";
 	
-	$mongo_con = new MongoClient(MONGO_CONNECTION_STRING);
-	$db_name = MONGO_DB_NAME;
-	
 	$options = getopt( "u:p:l:" );
-	echo print_r($options);
 	
 	if( array_key_exists("u", $options) ){
-		$username = $options["u"];
+		$username = strtolower($options["u"]);
 	}else{
 		echo "must include the option -u <username>\n";
 		exit;
@@ -47,17 +43,27 @@
 		exit;
 	}
 	
-	$password = password_hash($password, PASSWORD_DEFAULT);
-	echo "$password\n";	
+	$salt = ManagerActions::genSalt();
+	$digest = crypt($password, $salt);		
 	
-	//$collection = $mongo_con->$db_name->users;
-	/*date_default_timezone_set('America/New_York');
-	$mongo_con = new MongoClient();
-	$today = date( "Y-m-d" );
-	$ts = strtotime( $today."-30 days" );
-	
-	$mongo_date = new MongoDate( $ts );
-	$collection = $mongo_con->blog->analytics;	
-	$cursor = $collection->remove( array( "date"=>array( '$lt'=>$mongo_date ) ) );
-	$amount_removed = $cursor["n"];*/
+	try{
+	   $mongo_con = MongoConnection();
+		$db_name = MONGO_DB_NAME;
+		$collection = $mongo_con->$db_name->users;
+		$mongo_id = new MongoId();			
+		$document = array( 
+			"_id"=>$mongo_id,
+			"username"=>$username,
+			"password"=>$digest,
+			"level"=>$level						    	
+		);
+		$write_result = $collection->insert($document);				
+		$written = ( $write_result['ok'] >= 1 )? true : false;			 
+		$message = ( $written )? "User $username added" : "Failed to add user to database";
+		echo $message."\n";
+	}catch( MongoException $e ){
+		//echo $e->getMessage()."\n";
+		echo "User $username already exists\n";
+	}		
+
 ?>
