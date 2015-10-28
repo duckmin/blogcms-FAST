@@ -683,6 +683,12 @@ function gEBI(id)
 		headers=( obj.hasOwnProperty('content_type') )? obj.content_type : "application/x-www-form-urlencoded",
 		async = ( obj.hasOwnProperty('async') )? obj.async : true;
 		xmlHttp.open( obj.method, obj.url, async );
+		if( obj.hasOwnProperty('headers') ){
+			var additional_headers = obj.headers;
+			for( prop in additional_headers ){
+				xmlHttp.setRequestHeader( prop, additional_headers[prop] );
+			}
+		}
 		xmlHttp.setRequestHeader( "Content-type", headers );
 		xmlHttp.send( send_info );
 

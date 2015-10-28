@@ -5,16 +5,15 @@
 		exit;
 	}
 		
-	$json_data = json_decode( $post_data, true );
-	if( !array_key_exists("service", $json_data) || !array_key_exists("values", $json_data) ){ //does not have keys service and values
-		echo "wrong json keys could not complete request";
+	$service = Api::getServiceFromHeaders();  //the service is recieved by a request header 
+	if( $service === false ){
+		echo "API request is missing the ".Api::API_SERVICE_HEADER." request header";
 		exit;		
 	}
 	
-	$service = $json_data["service"];
-	$_APIVALS = $json_data["values"];
-	//echo print_r($json);
-	//echo print_r($_APIVALS);
+	$json_data = json_decode( $post_data, true ); //whatever json we POST is used as the params 
+	$_APIVALS = $json_data;
+	
 	$file = Api::getApiPath($service);
 	if( $file !== false ){
 		include $file;

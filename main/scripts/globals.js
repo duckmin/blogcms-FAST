@@ -54,15 +54,14 @@ window.controller={
 		
 		if( !wait_check || !constants.ajax_in_progress ){
 			if( wait_check ){ constants.ajax_in_progress=true };
-			var post_obj = {
-				service:service,
-				values:values_obj
-			};
 			Ajaxer({
 				method:'POST',
 				url:"/api",
 				content_type:"application/json",
-				send: JSON.stringify( post_obj ),
+				headers:{
+					"X-Api-Service":service //custom request header to tell api which service to call
+				},
+				send: JSON.stringify( values_obj ),
 				success:function( d ){
 					if( wait_check ){ constants.ajax_in_progress=false };
 					callback(d);

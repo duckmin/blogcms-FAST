@@ -1,6 +1,13 @@
 <?php	
 	
 	class Api {
+	
+		const API_SERVICE_HEADER = "X-Api-Service";	
+	
+		public static function getServiceFromHeaders(){  //name of service should be in the X-Api_Service request header
+			$headers = getallheaders();
+			return ( array_key_exists(self::API_SERVICE_HEADER, $headers) )? $headers[self::API_SERVICE_HEADER] : false;
+		}
  
 		public static function getApiPath($service){
 			$path = "";
