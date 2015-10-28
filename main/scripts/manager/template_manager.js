@@ -605,23 +605,6 @@
 		}
 	}
 	
-	window.getAnalyticsGraph = function( element ){
-		var form_values=table_actions.getTrValues( element ),
-		send = { url:form_values.id },
-		table_div = element.nearestParent("div"), //send id to get all view for posting
-		chart_div = "";
-		
-		controller.callApi( "ManagerPostsGet_article_view_counts_by_daterange", send, function(d){
-			var resp = JSON.parse( d);
-			if( resp.length > 0 ){
-				console.log( resp );
-				//use d3 to generate a graph?	
-			}else{
-				//showAlertMessage( "No Data For Date Range Selected", false );
-			}
-		})
-	}
-	
 	window.deletePostAction = function( element ){
 		var message = "Are you sure you want to delete this post?";
 		showConfirm( message, false, element, function(elm){ //calback function fired if yes is selected
@@ -748,6 +731,77 @@
 		}else{
 			showAlertMessage("Template is Empty", false );
 		}
+	}
+	
+	//ANALYTICS RELATED CODE ISOLATED BELOW
+	Chart.defaults.global.animation = false; //turn off chartjs animation of charts 
+	
+	function massageAnalyticData( data ){  //take json returned from api call and put each propery into own array for graphing function
+		var totals = {
+			date:[],
+			unique:[],
+			views:[]
+		};
+		
+		data.forEach(function(obj){
+			for( prop in obj ){
+				totals[prop].push( obj[prop] );
+			}
+		});
+		
+		return totals;
+	}
+	
+	window.getAnalyticsGraph = function( element ){
+		var form_values=table_actions.getTrValues( element ),
+		send = { url:form_values.id },
+		table_div = element.nearestParent("div"); //send id to get all view for posting
+		
+		controller.callApi( "ManagerPostsGet_article_view_counts_by_daterange", send, function(d){
+			var resp = JSON.parse( d);
+			if( resp.length > 0 ){
+				
+				canvas = document.createElement("canvas");
+				canvas.height = "300";
+				canvas.width = "500";
+				var ctx = table_div.appendChild(canvas).getContext("2d"),
+				massaged_data = massageAnalyticData( resp ),				
+				data = {
+					labels: massaged_data.date,
+					datasets: [
+						{
+							label: "Views",
+							fillColor: "lightblue",
+							strokeColor: "black",
+							highlightFill: "lightblue",
+							highlightStroke: "orange",
+							data: massaged_data.views
+						},
+						{
+							label: "Unique",
+							fillColor: "lightgray",
+							strokeColor: "black",
+							highlightFill: "lightgray",
+							highlightStroke: "orange",
+							data: massaged_data.unique
+						}
+					]
+				},
+				options = {
+					scaleGridLineColor : "rgba(0,0,0,0.2)",
+					scaleShowVerticalLines: false,
+					barShowStroke : true,
+					barStrokeWidth : 1,
+					barDatasetSpacing : -1
+				
+				};
+				new Chart(ctx).Bar(data, options);
+				element.removeAttribute("onclick");  //remove onclick after show graph 
+
+			}else{
+				showAlertMessage( "No Relevant Analytics Data", false );
+			}
+		})
 	}
 	
 })(window);

@@ -13,7 +13,7 @@
 	<link rel='stylesheet' type='text/css' href='style/manager_style.css'>
 	<link rel='stylesheet' type='text/css' href='style/blog_style.css'>
 	<link rel='stylesheet' type='text/css' href='style/date_picker.css'>
-	<!--script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script-->	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script><!-- ChartingJS lib CDN (http://www.chartjs.org) -->	
 	<script src="scripts/element_extender.js" ></script>
 	<script src="scripts/forms.js" ></script>
 	<script src="scripts/globals.js" ></script>	

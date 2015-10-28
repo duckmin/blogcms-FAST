@@ -397,6 +397,11 @@ div#post-space > article:last-of-type{
 	background-color: lightgoldenrodyellow;
 }
 
+.manage-table + canvas {
+	display:block;
+	margin-top:1rem;
+}
+
 
 .manage-table tr td{
 	text-align: left;
